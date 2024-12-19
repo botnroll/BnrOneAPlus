@@ -23,9 +23,9 @@ The Bot´n Roll One A+ is a versatile and customizable robot designed for studen
 ## Documentation and Resources
 To get started with your Bot´n Roll One A+, refer to the following manuals:
 
-- [Manual de Montagem (Assembly Manual)](https://botnroll.com/onea/downloads/Manual-Montagem-Bot'n-Roll-ONE-A.pdf)
-- [Manual de Software (Software Manual)](https://botnroll.com/onea/downloads/Manual-Software-Bot'n-Roll-ONE-A.pdf)
-- [Manual de Montagem de Extras (Extras Manual)](https://botnroll.com/onea/downloads/Manual-Extras-Bot'n-Roll-ONE-A.pdf)
+- [Assembly Manual](https://botnroll.com/onea/downloads/Manual-Montagem-Bot'n-Roll-ONE-A.pdf)
+- [Software Manual](https://botnroll.com/onea/downloads/Manual-Software-Bot'n-Roll-ONE-A.pdf)
+- [Extras Manual](https://botnroll.com/onea/downloads/Manual-Extras-Bot'n-Roll-ONE-A.pdf)
 
 For further assistance, visit the [Support Page](https://www.botnroll.com/onea/).
 
