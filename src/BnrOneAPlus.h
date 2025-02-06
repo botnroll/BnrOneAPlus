@@ -10,6 +10,8 @@
 #define BnrOneAPlus_h
 
 #include "Arduino.h"
+#include "utility/Config.h"
+#include "utility/LineDetector.h"
 
 #define KEY1 0xAA // key used in critical commands
 #define KEY2 0x55 // key used in critical commands
@@ -39,20 +41,29 @@
 #define COMMAND_STOP            0xF7 //Stop motors freeley
 #define COMMAND_MOVE            0xF6 //Move motors
 #define COMMAND_BRAKE           0xF5 //Stop motors with brake torque
-#define COMMAND_BAT_MIN         0xF4 //Configure low battery level
-#define COMMAND_MOVE_PID		    0xF3 //Move motor with PID control
+#define COMMAND_SET_BAT_MIN     0xF4 //Set low battery voltage
+
+//Comandos a remover:
+//#define COMMAND_MOVE_PID		    0xF3 //Move motor with PID control
 #define COMMAND_MOVE_CALIBRATE  0xF2 //Move motors for calibration
 #define COMMAND_SAVE_CALIBRATE  0xF1 //Save calibration data
+
+//Comandos a adiconar:
+#define COMMAND_SET_PID	  	    0xF3 //Set kp,ki,kd values for PID control
+//#define COMMAND_SET_RAMP      0xF2 //Set slope value for acceleration ramp
+//#define COMMAND_MOT_CALIBRATE   0xF1 //Acquire motors and encoders information
+
+
 #define COMMAND_ENCL_RESET		  0xF0 //Preset the value of encoder1
 #define COMMAND_ENCR_RESET      0xEF //Preset the value of encoder2
-#define COMMAND_FUTURE_USE1     0xEE 
+#define COMMAND_FUTURE_USE1     0xEE   
 #define COMMAND_FUTURE_USE2     0xED 
 #define COMMAND_FUTURE_USE3     0xEC 
 #define COMMAND_FUTURE_USE4     0xEB 
 #define COMMAND_MOVE_1M         0xEA //Move 1 motor
 #define COMMAND_STOP_1M         0xE9 //Stop 1 motor
 #define COMMAND_BRAKE_1M        0xE8 //Brake 1 motor
-#define COMMAND_FUTURE_USE5		0xE7 
+#define COMMAND_FUTURE_USE5		  0xE7 
 
 /*Read Commands-> requests to Bot'n Roll ONE A+ */
 #define COMMAND_ADC0            0xDF //Read ADC0
@@ -63,15 +74,15 @@
 #define COMMAND_ADC5            0xDA //Read ADC5
 #define COMMAND_ADC6            0xD9 //Read ADC6
 #define COMMAND_ADC7            0xD8 //Read ADC7
-#define COMMAND_BAT_READ		0xD7 //Read ADC battery
-#define COMMAND_BUT_READ		0xD6 //Read ADC button
-#define COMMAND_OBSTACLES       0xD5 //Read IR obstacle sensors
-#define COMMAND_IR_SENSORS      0xD4 //Read IR sensors instant value
+#define COMMAND_BAT_READ		    0xD7 //Read ADC battery
+#define COMMAND_BUT_READ		    0xD6 //Read ADC button
+#define COMMAND_FUTURE_USE6     0xD5 
+#define COMMAND_FUTURE_USE7     0xD4 
 #define COMMAND_ENCL            0xD3 //Read Encoder1 position
 #define COMMAND_ENCR            0xD2 //Read Encoder2 position
-#define COMMAND_ENCL_INC		0xD1 //Read Encoder1 Incremental value
-#define COMMAND_ENCR_INC		0xD0 //Read Encoder2 Incremental value
-#define COMMAND_LINE_READ		0xCF //Read Line Value (-100 +100)
+#define COMMAND_ENCL_INC		    0xD1 //Read Encoder1 Incremental value
+#define COMMAND_ENCR_INC		    0xD0 //Read Encoder2 Incremental value
+#define COMMAND_FUTURE_USE8		  0xCF 
 #define COMMAND_RANGE_LEFT      0xCE //Read IR obstacles distance range
 #define COMMAND_RANGE_RIGHT     0xCD //Read IR obstacles distance range
 
@@ -106,27 +117,24 @@ class BnrOneAPlus
   public:
         //setup routines
         void spiConnect(byte sspin);
-        void minBat(float batmin);
+        void setBatMin(float batmin);
         void saveCalibrate(float bat,byte speedL,byte speedR);
+        void setPid(int Kp, int Ki, int Kd);
+//		    void setRamp(int slope, int Kl);
+//        void saveCalibrate(int dbgInt1, int dbgInt2, byte dbgByte1, byte dbgbyte2);
+        void saveCalibrateDbg(int,int,int);
+
         void obstacleEmitters(boolean state);// ON/OFF
 
         //reading routines
-        byte obstacleSensors();
-        byte readIRSensors();
         byte readRangeL();
         byte readRangeR();
         int readAdc(byte);
-        int readAdc0();
-        int readAdc1();
-        int readAdc2();
-        int readAdc3();
-        int readAdc4();
-        int readAdc5();
-        int readAdc6();
-        int readAdc7();
         byte readButton();
         float readBattery();
         int readLine();
+        int readLineGaussian();
+        int* readLineSensor();        
         int readEncL();
         int readEncR();
         int readEncLInc();
@@ -139,7 +147,7 @@ class BnrOneAPlus
         void servo2(byte position);
         void led(boolean state);// ON/OFF
         void move(int speedL,int speedR);
-        void moveCalibrate(int powerL,int powerR);
+        void moveRAW(int powerL,int powerR);
         void move1m(byte motor, int speed);
         void movePID(int speedL,int speedR);
         void stop();
@@ -196,7 +204,8 @@ class BnrOneAPlus
         int  spiRequestWord(byte command);
         void spiSendData(byte command, byte buffer[], byte numBytes);
         byte _sspin;
-		byte fmw1=0, fmw2=0, fmw3=0;
+        byte fmw1=0, fmw2=0, fmw3=0;
+        LineDetector _lineDetector;
 };
 #endif
 

@@ -36,11 +36,11 @@ byte BnrOneAPlus::spiRequestByte(byte command)
     byte buffer[]={KEY1,KEY2};
 	byte numBytes=2;
 	digitalWrite(_sspin, LOW); // Select the SPI Slave device to start communication.
-    byte dummy=SPI.transfer(command);        // Sends one byte
+    SPI.transfer(command);        // Sends one byte
     delayMicroseconds(delayTR);
     for(i=0; i<numBytes;i++)
     {
-        dummy=SPI.transfer(buffer[i]);  // Sends one byte
+        SPI.transfer(buffer[i]);  // Sends one byte
 		delayMicroseconds(delayTR);
     }	
     value=SPI.transfer(0x00);  // Reads one byte    
@@ -56,11 +56,11 @@ int BnrOneAPlus::spiRequestWord(byte command)
     byte buffer[]={KEY1,KEY2};
 	byte numBytes=2;
 	digitalWrite(_sspin, LOW); // Select the SPI Slave device to start communication.
-    byte dummy=SPI.transfer(command);        // Sends one byte
+    SPI.transfer(command);        // Sends one byte
     delayMicroseconds(delayTR);
     for(i=0; i<numBytes;i++)
     {
-        dummy=SPI.transfer(buffer[i]);  // Sends one byte
+        SPI.transfer(buffer[i]);  // Sends one byte
 		delayMicroseconds(delayTR);
     }
     for (i=0; i<2; i++)
@@ -78,13 +78,12 @@ int BnrOneAPlus::spiRequestWord(byte command)
 }
 void BnrOneAPlus::spiSendData(byte command, byte buffer[], byte numBytes)
 {
-	byte dummy;
     digitalWrite(_sspin, LOW); // Select the SPI Slave device to start communication.
-    dummy=SPI.transfer(command);        // Sends one byte
+    SPI.transfer(command);        // Sends one byte
     delayMicroseconds(delayTR);
     for (int k =0; k< numBytes;k++)
     {
-        dummy=SPI.transfer(buffer[k]);  // Sends one byte
+        SPI.transfer(buffer[k]);  // Sends one byte
 		delayMicroseconds(delayTR);
     }
     digitalWrite(_sspin, HIGH); // Close communication with slave device.	
@@ -104,6 +103,7 @@ void BnrOneAPlus::move(int speedL,int speedR)
     spiSendData(COMMAND_MOVE,buffer,sizeof(buffer));
     delay(2);//Wait while command is processed
 }
+/*
 void BnrOneAPlus::movePID(int speedL,int speedR)
 {
     byte speedL_H=highByte(speedL);
@@ -115,7 +115,8 @@ void BnrOneAPlus::movePID(int speedL,int speedR)
     spiSendData(COMMAND_MOVE_PID,buffer,sizeof(buffer));
     delay(2);//Wait while command is processed
 }
-void BnrOneAPlus::moveCalibrate(int powerL,int powerR)
+*/
+void BnrOneAPlus::moveRAW(int powerL,int powerR)
 {
     byte powerL_H=highByte(powerL);
     byte powerL_L=lowByte(powerL);
@@ -179,20 +180,12 @@ void BnrOneAPlus::resetEncR()
 }
 void BnrOneAPlus::led(boolean state)
 {
-    if(state>1)
-    {
-        state=1;
-    }
     byte buffer[]={KEY1,KEY2,(byte)state};
     spiSendData(COMMAND_LED,buffer,sizeof(buffer));
     delay(2);//Wait while command is processed
 }
 void BnrOneAPlus::obstacleEmitters(boolean state)
 {
-    if(state>1)
-    {
-        state=1;
-    }
     byte buffer[]={KEY1,KEY2,(byte)state};
     spiSendData(COMMAND_IR_EMITTERS,buffer,sizeof(buffer));
     delay(4);//Wait while command is processed
@@ -209,7 +202,7 @@ void BnrOneAPlus::servo2(byte position)
     spiSendData(COMMAND_SERVO2,buffer,sizeof(buffer));
     delay(2);//Wait while command is processed
 }
-void BnrOneAPlus::minBat(float batmin)
+void BnrOneAPlus::setBatMin(float batmin)
 {
     int intg=(int)batmin;
     int dec=(int)((batmin-intg)*1000);
@@ -218,9 +211,52 @@ void BnrOneAPlus::minBat(float batmin)
     byte dec_H=highByte(dec);
     byte dec_L=lowByte(dec);
     byte buffer[]={KEY1,KEY2,intg_H,intg_L,dec_H,dec_L};
-    spiSendData(COMMAND_BAT_MIN,buffer,sizeof(buffer));
+    spiSendData(COMMAND_SET_BAT_MIN,buffer,sizeof(buffer));
     delay(25);//Wait while command is processed
 }
+
+void BnrOneAPlus::setPid(int Kp, int Ki, int Kd)
+{
+  byte Kp_H=highByte(Kp);
+  byte Kp_L=lowByte(Kp);
+  byte Ki_H=highByte(Ki);
+  byte Ki_L=lowByte(Ki);
+  byte Kd_H=highByte(Kd);
+  byte Kd_L=lowByte(Kd);
+  byte buffer[]={Kp_H,Kp_L,Ki_H,Ki_L,Kd_H,Kd_L};
+  spiSendData(COMMAND_SET_PID,buffer,sizeof(buffer));
+  delay(35);//Delay for EEPROM writing
+}
+
+
+void BnrOneAPlus::saveCalibrateDbg(int dbgInt1, int dbgInt2, int dbgInt3)
+{
+
+    byte int1H=highByte(dbgInt1);
+    byte int1L=lowByte(dbgInt1);
+    byte int2H=highByte(dbgInt2);
+    byte int2L=lowByte(dbgInt2);
+    byte int3H=highByte(dbgInt3);
+    byte int3L=lowByte(dbgInt3);
+    byte buffer[]={KEY1,KEY2,int1H,int1L,int2H,int2L,int3H,int3L};
+    spiSendData(COMMAND_SAVE_CALIBRATE,buffer,sizeof(buffer));
+    delay(25);//Wait while command is processed
+
+}
+
+/*
+void BnrOneAPlus::saveCalibrate(int dbgInt1, int dbgInt2, byte dbgByte1, byte dbgbyte2)
+{
+    byte int1H=highByte(dbgInt1);
+    byte int1L=lowByte(dbgInt1);
+    byte int2H=highByte(dbgInt2);
+    byte int2L=lowByte(dbgInt2);
+    byte buffer[]={KEY1,KEY2,int1H,int1L,int2H,int2L,dbgByte1,dbgbyte2};
+    spiSendData(COMMAND_SAVE_CALIBRATE,buffer,sizeof(buffer));
+    delay(35);//Wait while command is processed
+}
+*/
+
 void BnrOneAPlus::saveCalibrate(float bat,byte powerL,byte powerR)
 {
     int intg=(int)bat;
@@ -233,6 +269,7 @@ void BnrOneAPlus::saveCalibrate(float bat,byte powerL,byte powerR)
     spiSendData(COMMAND_SAVE_CALIBRATE,buffer,sizeof(buffer));
     delay(35);//Wait while command is processed
 }
+
 //////////////////////////////////////////////////////////////////////////////////////
 // Read routines
 //////////////////////////////////////////////////////////////////////////////////////
@@ -297,14 +334,6 @@ void BnrOneAPlus::readFirmware(byte *firm1,byte *firm2,byte *firm3)
     *firm3=value[2];
     digitalWrite(_sspin, HIGH); // Close communication with slave device.
 }
-byte BnrOneAPlus::obstacleSensors()
-{
-    return spiRequestByte(COMMAND_OBSTACLES);
-}
-byte BnrOneAPlus::readIRSensors()
-{
-    return spiRequestByte(COMMAND_IR_SENSORS);
-}
 byte BnrOneAPlus::readRangeL()
 {
     return spiRequestByte(COMMAND_RANGE_LEFT);
@@ -345,38 +374,7 @@ int BnrOneAPlus::readAdc(byte channel)
   }
   return spiRequestWord(command);
 }
-int BnrOneAPlus::readAdc0()
-{
-    return spiRequestWord(COMMAND_ADC0);
-}
-int BnrOneAPlus::readAdc1()
-{
-    return spiRequestWord(COMMAND_ADC1);
-}
-int BnrOneAPlus::readAdc2()
-{
-    return spiRequestWord(COMMAND_ADC2);
-}
-int BnrOneAPlus::readAdc3()
-{
-    return spiRequestWord(COMMAND_ADC3);
-}
-int BnrOneAPlus::readAdc4()
-{
-    return spiRequestWord(COMMAND_ADC4);
-}
-int BnrOneAPlus::readAdc5()
-{
-    return spiRequestWord(COMMAND_ADC5);
-}
-int BnrOneAPlus::readAdc6()
-{
-    return spiRequestWord(COMMAND_ADC6);
-}
-int BnrOneAPlus::readAdc7()
-{
-    return spiRequestWord(COMMAND_ADC7);
-}
+
 int BnrOneAPlus::readDBG(byte index)
 {
   byte command=0x00;
@@ -517,7 +515,7 @@ void BnrOneAPlus::lcd1(long int number)
 }
 void BnrOneAPlus::lcd1(double number)
 {
-    int i,a;
+    int i;
     int intg;
 	int dec;
     byte buffer[18];
@@ -531,7 +529,7 @@ void BnrOneAPlus::lcd1(double number)
 	}
 	dec = round((number-((double)(int)number))*100.0) % 100;
 	intg = (dec==0 ? round(number):(int)number);
-    a=sprintf(string,"%d.%02d            ",intg,dec);
+    sprintf(string,"%d.%02d            ",intg,dec);
 	
     buffer[0]=KEY1;
     buffer[1]=KEY2;
@@ -571,7 +569,7 @@ void BnrOneAPlus::lcd1(const char string[],int number)
 }
 void BnrOneAPlus::lcd1(const char string[],unsigned int number)
 {
-    int i, a, b,c;
+    int i, a, b;
     byte buffer[18];
     char string1[19],string2[19];
     for(i=0;i<16;i++){
@@ -681,7 +679,7 @@ void BnrOneAPlus::lcd1(unsigned char stringA[8],unsigned char stringB[8])
         buffer[i+2]=' ';
     }
     spiSendData(COMMAND_LCD_L1,buffer,sizeof(buffer));
-    delay(12);//Wait while command is processed
+    delay(4);//Wait while command is processed
 }
 void BnrOneAPlus::lcd1(unsigned int num1, unsigned int num2)
 {
@@ -905,7 +903,7 @@ void BnrOneAPlus::lcd2(long int number)
 }
 void BnrOneAPlus::lcd2(double number)
 {
-    int i,a;
+    int i;
     int intg;
 	int dec;
     byte buffer[18];
@@ -919,7 +917,7 @@ void BnrOneAPlus::lcd2(double number)
 	}
 	dec = round((number-((double)(int)number))*100.0) % 100;
 	intg = (dec==0 ? round(number):(int)number);
-    a=sprintf(string,"%d.%02d            ",intg,dec);
+    sprintf(string,"%d.%02d            ",intg,dec);
     buffer[0]=KEY1;
     buffer[1]=KEY2;
 	if (flag_neg==1)
@@ -1068,7 +1066,7 @@ void BnrOneAPlus::lcd2(unsigned char stringA[] ,unsigned char stringB[])
         buffer[i+2]=' ';
     }
     spiSendData(COMMAND_LCD_L2,buffer,sizeof(buffer));
-    delay(12);//Wait while command is processed
+    delay(4);//Wait while command is processed
 }
 void BnrOneAPlus::lcd2(unsigned int num1, unsigned int num2)
 {
@@ -1173,6 +1171,25 @@ void BnrOneAPlus::lcd2(int num1, int num2, int num3, int num4)
     delay(4);//Wait while command is processed
 }
 
+int BnrOneAPlus::readLineGaussian()
+{
+    auto reading = readLineSensor();
+    return _lineDetector.ComputeLine(reading);
+}
+
+
+int* BnrOneAPlus::readLineSensor()
+{
+    static int reading[8];
+    //Leitura dos valores dos 8 sensores
+    for(int i = 0; i < 8; ++i)
+    {
+        reading[i] = readAdc(i);
+    }
+    return reading;
+}
+
+
 /***********************************************************************************************/
 int BnrOneAPlus::readLine()
 {	
@@ -1188,8 +1205,8 @@ int BnrOneAPlus::readLine()
       int SValN[10]={Vrt1,0,0,0,0,0,0,0,0,Vrt2};    
       int idMax=-1, SMax=-1;
       int lineValue=-1;
-      int flag=-1;
       static int prevLineValue=0;
+      int blackCount=0;
 
 	  if(loadFlag==0)
 	  {
@@ -1227,8 +1244,10 @@ int BnrOneAPlus::readLine()
       for(int i=0;i<8;i++)
       {
           SValR[i]=readAdc(i);
+          if(SValR[i]>500) blackCount++;
       }
 
+    if(blackCount<8){
       //Normalizar valores entre 0 e 1000
       for(int i=1;i<9;i++)
       {
@@ -1243,19 +1262,16 @@ int BnrOneAPlus::readLine()
       if(SMax>Vtrans && SValN[idMax-1]>=SValN[idMax+1]) //Se o anterior for maior que o seguinte
       {
           lineValue=VMAX*(idMax-1)+SValN[idMax];     
-             flag=0;
       }
       else if(SMax>Vtrans && SValN[idMax-1]<SValN[idMax+1]) //Se o anterior for menor que o seguinte
       {
           if(idMax!=8) // Se n�o � o �ltimo sensor
           {
              lineValue=VMAX*idMax+SValN[idMax+1];
-             flag=1;
           }
           else //Se � o �ltimo sensor
           {
              lineValue=VMAX*idMax+VMAX-SValN[idMax];
-             flag=2;
           }
       }
 
@@ -1280,6 +1296,9 @@ int BnrOneAPlus::readLine()
       }
 //      return lineValue;  // Valores de 0 a 9000
       return (int)((double)(lineValue+1)*0.022222)-100;  // Valores de -100 a 100
+    }
+    else
+     return 200;
 }
 
 /***********************************************************************************************/
