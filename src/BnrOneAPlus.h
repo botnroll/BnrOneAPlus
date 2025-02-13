@@ -9,13 +9,14 @@
 #ifndef BnrOneAPlus_h
 #define BnrOneAPlus_h
 
+#include <string.h>
 #include "Arduino.h"
 #include "utility/Config.h"
 #include "utility/LineDetector.h"
 
 #define KEY1 0xAA // key used in critical commands
 #define KEY2 0x55 // key used in critical commands
-#define BRAKE_TORQUE 100
+//#define BRAKE_TORQUE 100
 #define OFF 0
 #define ON  1
 #define AN0 0
@@ -33,37 +34,28 @@
 #define COMMAND_FIRMWARE        0xFE //Read firmware value (integer value)
 /*Write Commands->Don't require response from Bot'n Roll ONE A+ */
 #define COMMAND_LED             0xFD //LED
-#define COMMAND_SERVO1          0xFC //Move Servo1
-#define COMMAND_SERVO2          0xFB //Move Servo2
+//#define COMMAND_SERVO1          0xFC //Move Servo1
+//#define COMMAND_SERVO2          0xFB //Move Servo2
 #define COMMAND_LCD_L1          0xFA //Write LCD line1
 #define COMMAND_LCD_L2          0xF9 //Write LCD line2
 #define COMMAND_IR_EMITTERS     0xF8 //IR Emmiters ON/OFF
 #define COMMAND_STOP            0xF7 //Stop motors freeley
 #define COMMAND_MOVE            0xF6 //Move motors
-#define COMMAND_BRAKE           0xF5 //Stop motors with brake torque
+#define COMMAND_BRAKE_SET_T     0xF5 //Stop motors setting brake torque
 #define COMMAND_SET_BAT_MIN     0xF4 //Set low battery voltage
-
-//Comandos a remover:
-//#define COMMAND_MOVE_PID		    0xF3 //Move motor with PID control
-#define COMMAND_MOVE_CALIBRATE  0xF2 //Move motors for calibration
-#define COMMAND_SAVE_CALIBRATE  0xF1 //Save calibration data
-
-//Comandos a adiconar:
-#define COMMAND_SET_PID	  	    0xF3 //Set kp,ki,kd values for PID control
-//#define COMMAND_SET_RAMP      0xF2 //Set slope value for acceleration ramp
-//#define COMMAND_MOT_CALIBRATE   0xF1 //Acquire motors and encoders information
-
-
-#define COMMAND_ENCL_RESET		  0xF0 //Preset the value of encoder1
+#define COMMAND_SET_PID  	      0xF3 //Set kp,ki,kd values for PID control
+#define COMMAND_MOVE_RAW        0xF2 //Set motors calibration parameters (SPow, Ks, ctrlPulses)
+#define COMMAND_SET_MOTORS      0xF1 //Save calibration data
+#define COMMAND_ENCL_RESET      0xF0 //Preset the value of encoder1
 #define COMMAND_ENCR_RESET      0xEF //Preset the value of encoder2
-#define COMMAND_FUTURE_USE1     0xEE   
-#define COMMAND_FUTURE_USE2     0xED 
-#define COMMAND_FUTURE_USE3     0xEC 
-#define COMMAND_FUTURE_USE4     0xEB 
+#define COMMAND_FUTURE_USE2     0xEE   
+#define COMMAND_FUTURE_USE3     0xED 
+#define COMMAND_FUTURE_USE4     0xEC 
+#define COMMAND_BRAKE_MAX_T     0xEB //Stop motors with MAX brake torque
 #define COMMAND_MOVE_1M         0xEA //Move 1 motor
 #define COMMAND_STOP_1M         0xE9 //Stop 1 motor
 #define COMMAND_BRAKE_1M        0xE8 //Brake 1 motor
-#define COMMAND_FUTURE_USE5		  0xE7 
+#define COMMAND_FUTURE_USE5	    0xE7 
 
 /*Read Commands-> requests to Bot'n Roll ONE A+ */
 #define COMMAND_ADC0            0xDF //Read ADC0
@@ -74,15 +66,15 @@
 #define COMMAND_ADC5            0xDA //Read ADC5
 #define COMMAND_ADC6            0xD9 //Read ADC6
 #define COMMAND_ADC7            0xD8 //Read ADC7
-#define COMMAND_BAT_READ		    0xD7 //Read ADC battery
-#define COMMAND_BUT_READ		    0xD6 //Read ADC button
-#define COMMAND_FUTURE_USE6     0xD5 
+#define COMMAND_BAT_READ	0xD7 //Read ADC battery
+#define COMMAND_BUT_READ	0xD6 //Read ADC button
+#define COMMAND_OBSTACLES       0xD5 //Read IR obstacle sensors -> RobertaLab compatibility
 #define COMMAND_FUTURE_USE7     0xD4 
 #define COMMAND_ENCL            0xD3 //Read Encoder1 position
 #define COMMAND_ENCR            0xD2 //Read Encoder2 position
-#define COMMAND_ENCL_INC		    0xD1 //Read Encoder1 Incremental value
-#define COMMAND_ENCR_INC		    0xD0 //Read Encoder2 Incremental value
-#define COMMAND_FUTURE_USE8		  0xCF 
+#define COMMAND_ENCL_INC	0xD1 //Read Encoder1 Incremental value
+#define COMMAND_ENCR_INC	0xD0 //Read Encoder2 Incremental value
+#define COMMAND_LINE_READ	0xCF //Read 16bytes line buffer at once
 #define COMMAND_RANGE_LEFT      0xCE //Read IR obstacles distance range
 #define COMMAND_RANGE_RIGHT     0xCD //Read IR obstacles distance range
 
@@ -119,14 +111,12 @@ class BnrOneAPlus
         void spiConnect(byte sspin);
         void setBatMin(float batmin);
         void saveCalibrate(float bat,byte speedL,byte speedR);
-        void setPid(int Kp, int Ki, int Kd);
-//		    void setRamp(int slope, int Kl);
-//        void saveCalibrate(int dbgInt1, int dbgInt2, byte dbgByte1, byte dbgbyte2);
-        void saveCalibrateDbg(int,int,int);
-
+        void setPid(int Kp, int Ki, int Kd);  //Set kp,ki,kd values for PID control
+        void setMotors(int SMPow, int Ks, int ctrlPulses); //Set Start Moving power, ks gain, pulses every 25ms at max speed. 
         void obstacleEmitters(boolean state);// ON/OFF
 
         //reading routines
+        byte obstacleSensors(); //RobertaLab compatibility
         byte readRangeL();
         byte readRangeR();
         int readAdc(byte);
@@ -140,21 +130,20 @@ class BnrOneAPlus
         int readEncLInc();
         int readEncRInc();
         int readDBG(byte);
+        float readDBGf();
         void readFirmware(byte*,byte*,byte*);
 
         //write routines
-        void servo1(byte position);
-        void servo2(byte position);
         void led(boolean state);// ON/OFF
         void move(int speedL,int speedR);
         void moveRAW(int powerL,int powerR);
         void move1m(byte motor, int speed);
-        void movePID(int speedL,int speedR);
+//        void movePID(int speedL,int speedR);
         void stop();
+        void brake();                           //Brake with MAX torque
+        void brake(byte torqueL,byte torqueR);  //Brake setting the torque
         void stop1m(byte motor);
-        void brake(byte torqueL,byte torqueR);
         void brake1m(byte motor, byte torque);
-        void brake1m(byte motor);
         void resetEncL();
         void resetEncR();
 
@@ -202,6 +191,7 @@ class BnrOneAPlus
   private:
         byte spiRequestByte(byte command);
         int  spiRequestWord(byte command);
+        float spiRequestFloat(byte command);
         void spiSendData(byte command, byte buffer[], byte numBytes);
         byte _sspin;
         byte fmw1=0, fmw2=0, fmw3=0;

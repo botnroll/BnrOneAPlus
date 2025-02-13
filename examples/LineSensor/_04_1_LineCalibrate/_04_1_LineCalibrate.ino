@@ -64,7 +64,8 @@ void setup()
   Serial.begin(57600);     //sets baud rate to 57600bps for printing values at serial monitor.
   one.spiConnect(SSPIN);   //starts the SPI communication module
   one.stop();              //stop motors
-  one.minBat(batmin);      //safety voltage for discharging the battery
+  one.setBatMin(batmin);    //safety voltage for discharging the battery
+  one.setPid(1200,500,200); //Set kp,ki,kd values for PID control
   delay(1000);
   calibrateLine();         //calibrate line sensor <> Calibração do sensor de linha
   setupLine();   //read line calibrate values from EEPROM <> Ler valores de calibração da linha da EEPROM
@@ -101,7 +102,7 @@ void calibrateLine()
   }
 
  //Calibrates during 4 seconds <> Calibra durante 4 segundos
-  one.move(5,-5);            
+  one.move(15,-15);            
   unsigned long time=millis();
   while(millis()<time+10000)
   {
