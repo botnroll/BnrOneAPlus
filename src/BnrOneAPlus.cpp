@@ -36,11 +36,11 @@ byte BnrOneAPlus::spiRequestByte(byte command)
     byte buffer[]={KEY1,KEY2};
 	byte numBytes=2;
 	digitalWrite(_sspin, LOW); // Select the SPI Slave device to start communication.
-    SPI.transfer(command);        // Sends one byte
+    SPI.transfer(command);        // Send one byte
     delayMicroseconds(delayTR);
     for(i=0; i<numBytes;i++)
     {
-        SPI.transfer(buffer[i]);  // Sends one byte
+        SPI.transfer(buffer[i]);  // Send one byte
 		delayMicroseconds(delayTR);
     }	
     value=SPI.transfer(0x00);  // Reads one byte    
@@ -56,11 +56,11 @@ int BnrOneAPlus::spiRequestWord(byte command)
     byte buffer[]={KEY1,KEY2};
 	byte numBytes=2;
 	digitalWrite(_sspin, LOW); // Select the SPI Slave device to start communication.
-    SPI.transfer(command);        // Sends one byte
+    SPI.transfer(command);        // Send one byte
     delayMicroseconds(delayTR);
     for(i=0; i<numBytes;i++)
     {
-        SPI.transfer(buffer[i]);  // Sends one byte
+        SPI.transfer(buffer[i]);  // Send one byte
 		delayMicroseconds(delayTR);
     }
     for (i=0; i<2; i++)
@@ -85,11 +85,11 @@ float BnrOneAPlus::spiRequestFloat(byte command)
     byte buffer[]={KEY1,KEY2};
 	byte numBytes=2;
 	digitalWrite(_sspin, LOW);    // Select the SPI Slave device to start communication.
-    SPI.transfer(command);        // Sends one byte
+    SPI.transfer(command);        // Send one byte
     delayMicroseconds(delayTR);
     for(i=0; i<numBytes;i++)
     {
-        SPI.transfer(buffer[i]);  // Sends one byte
+        SPI.transfer(buffer[i]);  // Send one byte
 		delayMicroseconds(delayTR);
     }
     for (i=0; i<4; i++)
@@ -106,11 +106,11 @@ float BnrOneAPlus::spiRequestFloat(byte command)
 void BnrOneAPlus::spiSendData(byte command, byte buffer[], byte numBytes)
 {
     digitalWrite(_sspin, LOW); // Select the SPI Slave device to start communication.
-    SPI.transfer(command);        // Sends one byte
+    SPI.transfer(command);        // Send one byte
     delayMicroseconds(delayTR);
     for (int k =0; k< numBytes;k++)
     {
-        SPI.transfer(buffer[k]);  // Sends one byte
+        SPI.transfer(buffer[k]);  // Send one byte
 		delayMicroseconds(delayTR);
     }
     digitalWrite(_sspin, HIGH); // Close communication with slave device.	
@@ -1152,8 +1152,8 @@ void BnrOneAPlus::lcd2(int num1, int num2, int num3, int num4)
     delay(4);//Wait while command is processed
 }
 
-/*
-    //Leitura dos valores dos 8 sensores
+
+//Leitura dos valores dos 8 sensores
 int* BnrOneAPlus::readLineSensor()
 {
     static int reading[8];
@@ -1162,11 +1162,11 @@ int* BnrOneAPlus::readLineSensor()
     byte buffer[]={KEY1,KEY2};
 	byte numBytes=2;
 	digitalWrite(_sspin, LOW);       // Select the SPI Slave device to start communication.
-    SPI.transfer(COMMAND_LINE_READ); // Sends one byte
+    SPI.transfer(COMMAND_LINE_READ); // Send one byte
     delayMicroseconds(delayTR);
     for(int i=0; i<numBytes;i++)
     {
-        SPI.transfer(buffer[i]);  // Sends one byte
+        SPI.transfer(buffer[i]);  // Send one byte
 		delayMicroseconds(delayTR);
     }
     for (i=0; i<16; i++)
@@ -1176,11 +1176,18 @@ int* BnrOneAPlus::readLineSensor()
     }
     digitalWrite(_sspin, HIGH); // Close communication with slave device.
 	delayMicroseconds(delaySS);
-    memcpy(&reading, value, sizeof reading);    // receive data
+
+    for(i=0;i<8;i++)
+    {
+        reading[i]=value[i*2];
+        reading[i]=reading[i]<<8;
+        reading[i]+=value[1+i*2];
+    }
     return reading;
 }
-*/
 
+
+/*
 int* BnrOneAPlus::readLineSensor()
 {
     static int reading[8];
@@ -1191,7 +1198,7 @@ int* BnrOneAPlus::readLineSensor()
     }
     return reading;
 }
-
+*/
 
 int BnrOneAPlus::readLineGaussian()
 {
