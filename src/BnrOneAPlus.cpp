@@ -1179,9 +1179,9 @@ int* BnrOneAPlus::readLineSensor()
 
     for(i=0;i<8;i++)
     {
-        reading[i]=value[i*2];
+        reading[i]=(int)value[i*2];
         reading[i]=reading[i]<<8;
-        reading[i]+=value[1+i*2];
+        reading[i]+=(int)value[1+i*2];
     }
     return reading;
 }
