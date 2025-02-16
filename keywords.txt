@@ -12,10 +12,10 @@ BnrOneAPlus	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 spiConnect	KEYWORD2
-obstacleSensors	KEYWORD2
+readObstacleSensors	KEYWORD2
 readIRSensors	KEYWORD2
-readRangeL	KEYWORD2
-readRangeR	KEYWORD2
+readLeftRangeSensor	KEYWORD2
+readRightRangeSensor	KEYWORD2
 readAdc	KEYWORD2
 readAdc0	KEYWORD2
 readAdc1	KEYWORD2
@@ -33,14 +33,14 @@ readLinePic	KEYWORD2
 readLineLib	KEYWORD2
 calibrateLine	KEYWORD2
 sendCalibrate	KEYWORD2
-readEncL	KEYWORD2
-readEncR	KEYWORD2
-readEncLInc	KEYWORD2
-readEncRInc	KEYWORD2
+readAndResetLeftEncoder	KEYWORD2
+readAndResetRightEncoder	KEYWORD2
+readAndIncrementLeftEncoder	KEYWORD2
+readAndIncrementRightEncoder	KEYWORD2
 servo1	KEYWORD2
 servo2	KEYWORD2
-obstacleEmitters	KEYWORD2
-led	KEYWORD2
+obstacleSensorsEmitters	KEYWORD2
+setLed	KEYWORD2
 move	KEYWORD2
 move_pid	KEYWORD2
 moveCalibrate	KEYWORD2
@@ -49,7 +49,7 @@ brake	KEYWORD2
 move1m	KEYWORD2
 stop1m	KEYWORD2
 brake1m	KEYWORD2
-resetEncL	KEYWORD2
+resetLeftEncoder	KEYWORD2
 resetEncR	KEYWORD2
 minBat	KEYWORD2
 saveCalibrate	KEYWORD2
