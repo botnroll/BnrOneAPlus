@@ -7,8 +7,6 @@
 
 #include "EEPROM.h"
 #include "SPI.h"
-#include "include/ArduinoCommands.h"
-#include "include/SpiCommands.h"
 
 #define DELAY_TR 20  // 20 MinStable:15  Crash:14
 #define DELAY_SS 20  // 20 Crash: No crash even with 0 (ZERO)

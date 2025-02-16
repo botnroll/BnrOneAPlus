@@ -41,15 +41,15 @@ void setup() {
 }
 
 bool automatic_start() {
-  bool actstate = one.readIRSensors();  // read actual IR sensors state
+  bool actstate = one.readObstacleSensors();  // read actual IR sensors state
 
   if (!actstate)  // If state is LOW
   {
     unsigned long int tempo_A = millis();  // read time
     while (!actstate)                      // while state is LOW
     {
-      actstate = one.readIRSensors();  // read actual IR sensors state
-      if ((millis() - tempo_A) > 50)   // if time is low for more than 50ms
+      actstate = one.readObstacleSensors();  // read actual IR sensors state
+      if ((millis() - tempo_A) > 50)  // if time is low for more than 50ms
       {
         return true;  // start Race
       }
