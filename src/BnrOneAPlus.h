@@ -8,8 +8,6 @@
 #include <string.h>
 
 #include "Arduino.h"
-#include "include/ArduinoCommands.h"
-#include "include/SpiCommands.h"
 #include "utility/LineDetector.h"
 
 class BnrOneAPlus {
