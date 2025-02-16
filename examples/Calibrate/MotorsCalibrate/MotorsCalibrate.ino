@@ -3,7 +3,7 @@
  * The robot wheels must rotate freely and should not touch the floor. Motors must have encoders.
  * This process is done in 3 steps:
  * Step 1: PWM will increase from 0 until movement is detected from the encoders.
- * Setp 2: with motors at maximum power, encoders counting will be aqquired every 25ms. 
+ * Setp 2: with motors at maximum power, encoders counting will be aqquired every 25ms.
  * Step 3: send data to PIC to be stored in EEPROM.
 */
 
@@ -22,12 +22,12 @@ int encRMax=0;
 bool errorFlag=false;
 int ks=750;
 
-void setup() 
+void setup()
 {
   Serial.begin(115200);   // set baud rate to 57600bps for printing values at serial monitor.
   one.spiConnect(SSPIN);  // start SPI communication module
   one.stop();             // stop motors
-  one.setBatMin(9.5);
+  one.setMinBatteryV(9.5);
   one.lcd1(" Press a button ");
   one.lcd2("   to start!    ");
   while(one.readButton()==0);
@@ -56,16 +56,16 @@ void loop()
 
 void startMoveDetection(){
   bool exitFlag=false;
-  int encL=one.readEncL(); //Clear encoder count
-  int encR=one.readEncR(); //Clear encoder count
+  int encL=one.readAndResetLeftEncoder(); //Clear encoder count
+  int encR=one.readAndResetRightEncoder(); //Clear encoder count
   unsigned long t1sec=millis()+1000;
   while(!exitFlag){
 
     if(millis()>=t1sec){
       t1sec+=1000;   //Every second
       one.moveRAW(mPow,mPow);
-      encL=one.readEncL();
-      encR=one.readEncR();
+      encL=one.readAndResetLeftEncoder();
+      encR=one.readAndResetRightEncoder();
       one.lcd2(mPow,encL,encR);
       Serial.print("  Pow:"); Serial.print(mPow);
       Serial.print("  EncL:"); Serial.print(encL);
@@ -77,7 +77,7 @@ void startMoveDetection(){
             one.lcd1("Motor 1 -> ERROR");
             Serial.println("ERROR: Motor 1 encoder is counting in reverse!!");
             errorFlag=true;
-        } 
+        }
         else if(encR<0){ //if encoderR is Not ok
             one.lcd2("Motor 2 -> ERROR");
             Serial.println("ERROR: Motor 2 encoder is counting in reverse!!");
@@ -98,13 +98,13 @@ void maxPulsesDetection(){
     delay(1500);
     tCycle=millis();
     endTime=millis()+5000;
-    int encL=one.readEncL(); //Clear encoder count
-    int encR=one.readEncR(); //Clear encoder count
+    int encL=one.readAndResetLeftEncoder(); //Clear encoder count
+    int encR=one.readAndResetRightEncoder(); //Clear encoder count
     while(millis()<endTime){
     if(millis()>=tCycle){
       tCycle+=25;
-      encL=one.readEncL();
-      encR=one.readEncR();
+      encL=one.readAndResetLeftEncoder();
+      encR=one.readAndResetRightEncoder();
       if(encL>encLMax) encLMax=encL;
       if(encR>encRMax) encRMax=encR;
       Serial.print("  EncL:"); Serial.print(encL);

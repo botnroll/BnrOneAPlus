@@ -27,10 +27,10 @@ void setup()
 
 void loop()
 {    
-    one.led(HIGH);             // turn LED ON
+    one.setLed(HIGH);             // turn LED ON
     Serial.println("LED ON");  // print data on serial monitor.
     delay(1000);               // wait 1 second
-    one.led(LOW);              // turn LED OFF
+    one.setLed(LOW);              // turn LED OFF
     Serial.println("LED OFF"); // print data on serial monitor.
     delay(1000);               // wait 1 second
 }

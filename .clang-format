@@ -1,0 +1,30 @@
+---
+Language: Cpp
+BasedOnStyle: Google
+IndentWidth: 2
+UseTab: Never
+ColumnLimit: 80
+
+# Spacing
+SpaceBeforeAssignmentOperators: true
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+SpacesInAngles: false
+SpaceAfterCStyleCast: false
+SpaceAfterTemplateKeyword: true
+SpaceBeforeParens: ControlStatements
+
+# Function spacing
+SeparateDefinitionBlocks: Always
+MaxEmptyLinesToKeep: 1
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+# Alignment
+AlignOperands: true
+AlignTrailingComments: true
+AlignEscapedNewlines: Left
+
+# Breaking
+BreakBeforeBraces: Attach
+BinPackParameters: false
+BinPackArguments: false
