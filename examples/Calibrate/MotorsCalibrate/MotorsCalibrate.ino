@@ -113,6 +113,8 @@ void maxPulsesDetection(){
       }
     }
     one.stop();
+    encLMax=(int)((float)encLMax/4.0);
+    encRMax=(int)((float)encRMax/4.0);a
     one.lcd2(0,encLMax,encRMax);
     Serial.print("  EncLMax:"); Serial.print(encLMax);
     Serial.print("  EncRMax:"); Serial.print(encRMax);
