@@ -102,7 +102,7 @@ void maxPulsesDetection(){
     int encR=one.readEncR(); //Clear encoder count
     while(millis()<endTime){
     if(millis()>=tCycle){
-      tCycle+=25;
+      tCycle+=100;
       encL=one.readEncL();
       encR=one.readEncR();
       if(encL>encLMax) encLMax=encL;
@@ -113,6 +113,8 @@ void maxPulsesDetection(){
       }
     }
     one.stop();
+    encLMax=(int)((float)encLMax/4.0);
+    encRMax=(int)((float)encRMax/4.0);a
     one.lcd2(0,encLMax,encRMax);
     Serial.print("  EncLMax:"); Serial.print(encLMax);
     Serial.print("  EncRMax:"); Serial.print(encRMax);
