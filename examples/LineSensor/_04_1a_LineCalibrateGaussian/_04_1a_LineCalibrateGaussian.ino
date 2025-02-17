@@ -571,7 +571,7 @@ void setup()
 {
   one.spiConnect(SSPIN);   //starts the SPI communication module
   one.stop();              //stop motors
-  one.setBatMin(9.5);        //safety voltage for discharging the battery
+  one.setMinBatteryV(9.5);        //safety voltage for discharging the battery
   time.Start();
   config.Load();
   config.Print();

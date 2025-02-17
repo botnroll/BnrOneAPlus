@@ -1,7 +1,7 @@
-/* 
- This example was created by José Cruz on December 2024 
- 
- This code example is in the public domain. 
+/*
+ This example was created by José Cruz on December 2024
+
+ This code example is in the public domain.
  http://www.botnroll.com
 
 Line sensor calibrate
@@ -20,9 +20,9 @@ The robot rotates during 4 seconds acquiring the 8 sensor max and min values.
 The registered values are displayed on the LCD. Use the push buttons to see more values.
 Calibration ends after you define Vtrans value.
 In order to adjust Vtrans, sensor reading values should be analysed in real time and at different places on the track.
- 
-<> 
- 
+
+<>
+
 Calibração do sensor de linha.
 A rotina de calibração é chamada do Setup()
 Analisa e regista os valores máximos e mínimos de cada sensor usando os vectores SValMax[8] e SValMin[8].
@@ -37,7 +37,7 @@ Para calibrar deve-se colocar o robô em cima da linha com a linha no centro do 
 O robô roda durante 4 segundos adquirindo os valores maximos e mínimos dos 8 sensores.
 
 Os valores registados são apresentados no LCD. Usar botões para apresentar mais valores.
-A calibração só termina depois de definido o valor de transição Vtrans.  
+A calibração só termina depois de definido o valor de transição Vtrans.
 Para ajustar Vtrans devem ser analisados os valores de leitura em tempo real e em diferentes posições da pista.
 */
 
@@ -57,24 +57,24 @@ float batmin=10.5;  // safety voltage for discharging the battery
 int SValMax[8]={1023,1023,1023,1023,1023,1023,1023,1023};
 int SValMin[8]={0,0,0,0,0,0,0,0};
 double SFact[8];
-int Vtrans=50;  //Line follower limit between white and black 
+int Vtrans=50;  //Line follower limit between white and black
 
-void setup() 
-{  
+void setup()
+{
   Serial.begin(57600);     //sets baud rate to 57600bps for printing values at serial monitor.
   one.spiConnect(SSPIN);   //starts the SPI communication module
   one.stop();              //stop motors
-  one.setBatMin(batmin);    //safety voltage for discharging the battery
+  one.setMinBatteryV(batmin);    //safety voltage for discharging the battery
   one.setPid(1200,500,200); //Set kp,ki,kd values for PID control
   delay(1000);
   calibrateLine();         //calibrate line sensor <> Calibração do sensor de linha
   setupLine();   //read line calibrate values from EEPROM <> Ler valores de calibração da linha da EEPROM
 }
 
-void loop() 
+void loop()
 {
   int line=one.readLine(); // Read line <> Ler a linha
-  Serial.print(" Line:"); Serial.println(line); 
+  Serial.print(" Line:"); Serial.println(line);
   one.lcd1("     Line:"); //Print values on the LCD <> Apresenta valores no LCD
   one.lcd2("      ",line); //Print values on the LCD <> Apresenta valores no LCD
   delay(50);
@@ -90,19 +90,19 @@ void calibrateLine()
   one.lcd1("   Calibrate   ");
   one.lcd2("   starting!    ");
   delay(1000);
-  
-  static int SVal[8]={0,0,0,0,0,0,0,0};    
+
+  static int SVal[8]={0,0,0,0,0,0,0,0};
   static int SValMax[8]={0,0,0,0,0,0,0,0};
   static int SValMin[8]={1023,1023,1023,1023,1023,1023,1023,1023};
   int butt=0;
-  
+
   while(one.readButton()!=0)
   {
     delay(50);
   }
 
  //Calibrates during 4 seconds <> Calibra durante 4 segundos
-  one.move(15,-15);            
+  one.move(15,-15);
   unsigned long time=millis();
   while(millis()<time+10000)
   {
@@ -117,26 +117,26 @@ void calibrateLine()
           if(SVal<SValMin[i])
           {
             SValMin[i]=SVal;
-          }          
-          Serial.print(SVal);Serial.print("  ");          
-      }  
+          }
+          Serial.print(SVal);Serial.print("  ");
+      }
       Serial.println(); Serial.print("Max: ");
-      
+
       for(int i=0;i<8;i++)
       {
-          Serial.print(SValMax[i]);Serial.print("  ");          
-      }  
+          Serial.print(SValMax[i]);Serial.print("  ");
+      }
       Serial.println(); Serial.print("Min: ");
-    
+
       Vtrans=0;
       for(int i=0;i<8;i++)
       {
          Serial.print(SValMin[i]);Serial.print("  ");
          if(SValMin[i]>Vtrans)
            Vtrans=SValMin[i];
-      }    
-      Serial.println();   
-      delay(50);  
+      }
+      Serial.println();
+      delay(50);
    }
    Serial.print("Vtrans:");Serial.println(Vtrans);
    one.stop();
@@ -168,7 +168,7 @@ void calibrateLine()
        while(one.readButton()!=0)
        {
           delay(100);
-       }       
+       }
        while(one.readButton()==0)
        {
           delay(100);
@@ -178,7 +178,7 @@ void calibrateLine()
        while(one.readButton()!=0)
        {
           delay(100);
-       }       
+       }
        while(one.readButton()==0)
        {
           delay(100);
@@ -188,7 +188,7 @@ void calibrateLine()
        while(one.readButton()!=0)
        {
           delay(100);
-       }       
+       }
        while(one.readButton()==0)
        {
           delay(100);
@@ -198,25 +198,25 @@ void calibrateLine()
        while(one.readButton()!=0)
        {
           delay(100);
-       }       
+       }
        while(one.readButton()==0)
        {
           delay(100);
-       }         
+       }
        one.lcd1("  Test Vtrans   ");
        one.lcd2(" on white color ");
        while(one.readButton()!=0)
        {
           delay(100);
-       }       
+       }
        while(one.readButton()==0)
        {
           delay(100);
-       }              
+       }
        while(one.readButton()!=0)
        {
           delay(100);
-       }           
+       }
        while(one.readButton()==0)
        {
           for(int i=0;i<8;i++)
@@ -232,8 +232,8 @@ void calibrateLine()
        while(one.readButton()!=0)
        {
           delay(100);
-       }   
-       butt=0;    
+       }
+       butt=0;
        while(butt!=3)
        {
         butt=one.readButton();
@@ -259,18 +259,18 @@ void calibrateLine()
        while(one.readButton()!=0)
        {
           delay(100);
-       }       
+       }
        while(one.readButton()==0)
        {
           delay(100);
        }
-   }   
+   }
    one.lcd1("Calibrate Done!");
    delay(2000);
 }
 
 void setupLine()
-{  
+{
    //Read EEPROM values <> Ler valores da EEPROM
    byte eepromADD=100;
    Serial.println("Setup:"); Serial.print("Max: ");
@@ -292,13 +292,13 @@ void setupLine()
        SValMin[i]+=(int)EEPROM.read(eepromADD);
        eepromADD++;
        Serial.print(SValMin[i]);Serial.print("  ");
-   }   
+   }
    Vtrans=(int)EEPROM.read(eepromADD);
    Vtrans=Vtrans<<8;
    eepromADD++;
    Vtrans+=(int)EEPROM.read(eepromADD);
    Serial.println(); Serial.print("Vtrans: "); Serial.print(Vtrans); Serial.println();
-   
+
    for(int i=0;i<8;i++)
    {
       SFact[i]=(double)VMAX/(double)(SValMax[i]-SValMin[i]); //Calculate factor for each sensor <> Calcular fator de cada sensor
