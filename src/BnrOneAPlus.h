@@ -130,6 +130,7 @@ class BnrOneAPlus {
    */
   int readAndResetLeftEncoder();
 
+
   /**
    * @brief reads the value of the right encoder and resets its value
    *

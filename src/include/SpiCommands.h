@@ -12,10 +12,9 @@
 #define AN6 6
 #define AN7 7
 
-
 /*User Commands*/
 /*Read Firmware version*/
-#define COMMAND_FIRMWARE        0xFE //Read firmware value (integer value)
+#define COMMAND_FIRMWARE 0xFE  // Read firmware value (integer value)
 /*Write Commands->Don't require response from Bot'n Roll ONE A+ */
 #define COMMAND_LED             0xFD //LED
 //#define COMMAND_SERVO1          0xFC //Move Servo1
@@ -61,3 +60,4 @@
 #define COMMAND_LINE_READ	    0xCF //Read 16bytes line buffer at once
 #define COMMAND_RANGE_LEFT      0xCE //Read IR obstacles distance range
 #define COMMAND_RANGE_RIGHT     0xCD //Read IR obstacles distance range
+

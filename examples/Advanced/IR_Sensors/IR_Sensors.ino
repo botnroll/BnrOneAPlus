@@ -13,6 +13,7 @@ the start of the race!
 
 */
 
+
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
 #include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
@@ -37,4 +38,5 @@ void loop() {
   Serial.print("IR Sensors ");          // print data on serial monitor.
   Serial.println(ir_sensors);           // print data on serial monitor.
   one.lcd2("IR Sensors:", ir_sensors);  // print text on LCD line 2
+
 }

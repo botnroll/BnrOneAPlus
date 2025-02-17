@@ -17,7 +17,7 @@
 #include <Servo.h>  // Gripper
 #include <Wire.h>   // Compass
 
-BnrOneAPlus
+BnrOneAPlus 
     one;  // declaration of object variable to control the Bot'n Roll ONE A+
 Servo gripper1;
 Servo gripper2;
@@ -106,6 +106,7 @@ void le_trama() {
     delay(CONTROL);
   }
   //  }
+
 }
 
 void setup() {
@@ -265,6 +266,7 @@ void loop() {
         case COMMAND_RANGE_LEFT:  //  0xCE //Read IR obstacles distance range
           break;
         case COMMAND_RANGE_RIGHT:  //  0xCD //Read IR obstacles distance range
+
           break;
 
           /* Arduino Write Commands->Don't require response from Bot'n Roll ONE
