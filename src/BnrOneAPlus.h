@@ -8,8 +8,6 @@
 #include <string.h>
 
 #include "Arduino.h"
-#include "include/ArduinoCommands.h"
-#include "include/SpiCommands.h"
 #include "utility/LineDetector.h"
 
 class BnrOneAPlus {
@@ -131,6 +129,7 @@ class BnrOneAPlus {
    * @return int
    */
   int readAndResetLeftEncoder();
+
 
   /**
    * @brief reads the value of the right encoder and resets its value

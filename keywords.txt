@@ -13,7 +13,7 @@ BnrOneAPlus	KEYWORD1
 #######################################
 spiConnect	KEYWORD2
 readObstacleSensors	KEYWORD2
-readObstacleSensors	KEYWORD2
+readIRSensors	KEYWORD2
 readLeftRangeSensor	KEYWORD2
 readRightRangeSensor	KEYWORD2
 readAdc	KEYWORD2
