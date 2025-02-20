@@ -12,6 +12,7 @@
 #include "Arduino.h"
 #include "utility/LineDetector.h"
 #include "utility/BnrColorSensor.h"
+#include "utility/BnrCompass.h"
 
 class BnrOneAPlus {
  public:
