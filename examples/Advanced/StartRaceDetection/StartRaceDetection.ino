@@ -27,29 +27,28 @@ void setup() {
   delay(4000);  // time to stabilize IR sensors (DO NOT REMOVE!!!)
   static byte start = 0;
   while (!start) {
-    start = automatic_start();
+    start = automaticStart();
   }
   one.move(50, 50);  // the robot move forward
   one.lcd2("GO");    // remove when racing for best performance!
 }
 
-bool automatic_start() {
-  bool actstate = one.readIRSensors();  // read actual IR sensors state
+bool automaticStart() {
+  bool current_state = one.readIRSensors();  // read actual IR sensors state
 
-  if (!actstate)  // If state is LOW
+  if (!current_state)  // If state is LOW
   {
     unsigned long int tempo_A = millis();  // read time
-    while (!actstate)                      // while state is LOW
+    while (!current_state)                 // while state is LOW
     {
-      actstate = one.readIRSensors();  // read actual IR sensors state
-      if ((millis() - tempo_A) > 50)   // if time is low for more than 50ms
+      current_state = one.readIRSensors();  // read actual IR sensors state
+      if ((millis() - tempo_A) > 50)        // if time is low for more than 50ms
       {
         return true;  // start Race
       }
     }
   }
   return false;
-
 }
 
 void loop() {}
