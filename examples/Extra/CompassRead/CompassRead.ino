@@ -8,14 +8,9 @@
  *
  */
 
-/****************************************************************
- *                  Arduino CMPS11 example code                  *
- *                    CMPS11 running I2C mode                    *
- *                    by James Henderson, 2012                   *
- *****************************************************************/
-#include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
-#include <Wire.h>
+#include <BnrOneAPlus.h>   // Bot'n Roll ONE A+ library
+#include <EEPROM.h>    // EEPROM reading and writing
+#include <SPI.h>       // SPI communication library required by BnrOneAPlus.cpp
 
 BnrOneAPlus one;    // declaration of object variable to control the Bot'n Roll ONE A+
 BnrCompass compass; // declaration of object variable to control the CMPS11 compass
