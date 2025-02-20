@@ -26,23 +26,23 @@ class BnrCompass
         void i2cConnect(byte sensorAddress);    //Enable I2C communication
         
         /**
-         * @brief Reads the current RGB values of the left Sensor and writes it on the bytes given as parameter
+         * @brief Reads the current bearing of the Compass
          * 
-         * @return void
+         * @return float
          */
         float read_bearing();
         
         /**
-         * @brief Reads the current RGB values of the left Sensor and writes it on the bytes given as parameter
+         * @brief Reads the current roll value of the Compass
          * 
-         * @return void
+         * @return char
          */
         char read_roll();
         
         /**
-         * @brief Reads the current RGB values of the left Sensor and writes it on the bytes given as parameter
+         * @brief Reads the current pitch value of the Compass
          * 
-         * @return void
+         * @return char
          */
         char read_pitch();
 
