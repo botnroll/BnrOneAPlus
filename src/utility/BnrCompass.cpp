@@ -1,6 +1,6 @@
 ﻿/*
-  BnrCompass.cpp - Library for interfacing with Bot'n Roll Color Sensor for Bot'n Roll ONE A Plus (www.botnroll.com)
-  Created by José Cruz, November 18, 2024.
+  BnrCompass.h - Library for interfacing with the Compass for Bot'n Roll ONE A Plus (www.botnroll.com)
+  Created by José  Cruz, February 20, 2025.
   v_1.0.0
   Released into the public domain.
 */
