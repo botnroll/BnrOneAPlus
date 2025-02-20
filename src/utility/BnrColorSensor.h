@@ -28,7 +28,9 @@
 class BnrColorSensor
 {
     public:
-        //setup routines
+        /********************************
+         * @brief  setup routines        *
+         *********************************/
         
         /**
          * @brief Initializes the I2C communication given an Address
@@ -121,4 +123,3 @@ class BnrColorSensor
         byte _sensorAddress;
 };
 
-#endif
