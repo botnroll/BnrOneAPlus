@@ -1,23 +1,23 @@
-/*
- This example was created by José Cruz on December 2024
+/**
+ * This example was created by José Cruz on December 2024
+ *
+ * This code example is in the public domain.
+ * http://www.botnroll.com
+ *
+ * Line Following:
+ * Test which sensor detects the line by comparing sensor values.
+ * The motors speed is set for each sensor detecting the line.
+ * <>
+ * Seguimento de linha:
+ * Testa qual o sensor que deteta a linha comparando os valores dos sensores.
+ * A velocidade dos motores é definida para cada uma das 8 posições da linha no
+ * sensor.
+ */
 
- This code example is in the public domain.
- http://www.botnroll.com
-
-Line Following:
-Test which sensor detects the line by comparing sensor values.
-The motors speed is set for each sensor detecting the line.
-<>
-Seguimento de linha:
-Testa qual o sensor que deteta a linha comparando os valores dos sensores.
-A velocidade dos motores é definida para cada uma das 8 posições da linha no
-sensor.
-*/
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
 #include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
-BnrOneAPlus
-    one;  // declaration of object variable to control the Bot'n Roll ONE A+
+BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // Constants definitions
 // Definir constantes
@@ -27,11 +27,11 @@ BnrOneAPlus
 
 // Transition value between white and black
 // Valor de transição entre branco e preto
-#define Vtrans 300
+#define BW_THRESHOLD 300
 
 // Battery protection (lower voltage)
 // Protecção da bateria (tensão mínima)
-float batmin = 10.5;
+float min_battery_V = 10.5;
 
 // Speed for the robot movement
 // Velocidade do robô
@@ -42,7 +42,7 @@ void setup() {
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
   one.stop();             // stop motors
-  one.setMinBatteryV(batmin);
+  one.setMinBatteryV(min_battery_V);
   one.lcd1(" Bot'n Roll ONE");
   // Wait for a button to be pressed to move motors
   // Espera pressionar um botão para mover motores
@@ -68,31 +68,31 @@ void loop() {
 
   // From left to centre
   // Lado esquerdo do exterior para o centro
-  if (sensor0 > Vtrans)  // 10000000
+  if (sensor0 > BW_THRESHOLD)  // 10000000
   {
     one.move(-1, 40);
-  } else if (sensor1 > Vtrans)  // 01000000
+  } else if (sensor1 > BW_THRESHOLD)  // 01000000
   {
     one.move(5, 40);
-  } else if (sensor2 > Vtrans)  // 00100000
+  } else if (sensor2 > BW_THRESHOLD)  // 00100000
   {
     one.move(20, 40);
-  } else if (sensor3 > Vtrans)  // 00010000
+  } else if (sensor3 > BW_THRESHOLD)  // 00010000
   {
     one.move(vel, vel);
   }
   // From right to centre
   // Lado direito do exterior para o centro
-  else if (sensor7 > Vtrans)  // 00000001
+  else if (sensor7 > BW_THRESHOLD)  // 00000001
   {
     one.move(40, -1);
-  } else if (sensor6 > Vtrans)  // 00000010
+  } else if (sensor6 > BW_THRESHOLD)  // 00000010
   {
     one.move(40, 5);
-  } else if (sensor5 > Vtrans)  // 00000100
+  } else if (sensor5 > BW_THRESHOLD)  // 00000100
   {
     one.move(40, 20);
-  } else if (sensor4 > Vtrans)  // 00001000
+  } else if (sensor4 > BW_THRESHOLD)  // 00001000
   {
     one.move(vel, vel);
   }

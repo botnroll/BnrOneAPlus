@@ -1,34 +1,32 @@
-/*
- This example was created by José Cruz on December 2024
-
- This code example is in the public domain.
- http://www.botnroll.com
-
-Line Following:
-15 possible values for line position:-100 -87 -75 -62 -50 -37 -25 0 +25 +37 +50
-+62 +75 +87 +100 The speed of the motors is set for every possible case. The RGB
-LED allows identifying the line position in every moment.
-<>
-Seguimento de linha:
-15 valores possiveis para a posiçao da linha: -100 -87 -75 -62 -50 -37 -25 0 +25
-+37 +50 +62 +75 +87 +100 A velocidade dos motores é ajustada para cada um dos
-casos. O LED RGB permite identificar que caso se verifica a cada momento.
-*/
+/**
+ * This example was created by José Cruz on December 2024
+ *
+ * This code example is in the public domain.
+ * http://www.botnroll.com
+ *
+ * Line Following:
+ * 15 possible values for line position:-100 -87 -75 -62 -50 -37 -25 0 +25 +37
+ * +50 +62 +75 +87 +100 The speed of the motors is set for every possible case.
+ * The RGB LED allows identifying the line position in every moment.
+ * <>
+ * Seguimento de linha:
+ * 15 valores possiveis para a posiçao da linha: -100 -87 -75 -62 -50 -37 -25 0
+ * +25 +37 +50 +62 +75 +87 +100 A velocidade dos motores é ajustada para cada um
+ * dos casos. O LED RGB permite identificar que caso se verifica a cada momento.
+ */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
 #include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
-BnrOneAPlus
-    one;  // declaration of object variable to control the Bot'n Roll ONE A+
+BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definitions
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
 #define M1 1     // Motor1
 #define M2 2     // Motor2
 
-#define Vtrans 300  // Line follower limit between white and black
-
-float batmin = 10.5;  // safety voltage for discharging the battery
+#define BW_THRESHOLD 300    // Line follower limit between white and black
+#define MIN_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 int vel = 50;
 
@@ -37,13 +35,14 @@ void setup() {
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
   one.stop();             // stop motors
-  one.setMinBatteryV(batmin);  // safety voltage for discharging the battery
+  // safety voltage for discharging the battery
+  one.setMinBatteryV(MIN_BATTERY_V);
   delay(1000);
 }
 
 void loop() {
-  int v25 =
-      10;  // Speed for line value 25 <> Velocidade para o valor da linha 25
+  // Speed for line value 25 <> Velocidade para o valor da linha 25
+  int v25 = 10;
   int v37 = 15;
   int v50 = 20;
   int v62 = 25;
@@ -121,37 +120,37 @@ void loop() {
 int readLine() {
   int lineValue = 0;
   int sensorCount = 0;
-  if (one.readAdc(0) > Vtrans)  // Test Sensor1  <>  Testa o sensor1
+  if (one.readAdc(0) > BW_THRESHOLD)  // Test Sensor1  <>  Testa o sensor1
   {
     lineValue -= 100;
     sensorCount++;
   }
-  if (one.readAdc(1) > Vtrans)  // Test Sensor2  <>  Testa o sensor2
+  if (one.readAdc(1) > BW_THRESHOLD)  // Test Sensor2  <>  Testa o sensor2
   {
     lineValue -= 75;
     sensorCount++;
   }
-  if (one.readAdc(2) > Vtrans) {
+  if (one.readAdc(2) > BW_THRESHOLD) {
     lineValue -= 50;
     sensorCount++;
   }
-  if (one.readAdc(3) > Vtrans) {
+  if (one.readAdc(3) > BW_THRESHOLD) {
     lineValue -= 25;
     sensorCount++;
   }
-  if (one.readAdc(4) > Vtrans) {
+  if (one.readAdc(4) > BW_THRESHOLD) {
     lineValue += 25;
     sensorCount++;
   }
-  if (one.readAdc(5) > Vtrans) {
+  if (one.readAdc(5) > BW_THRESHOLD) {
     lineValue += 50;
     sensorCount++;
   }
-  if (one.readAdc(6) > Vtrans) {
+  if (one.readAdc(6) > BW_THRESHOLD) {
     lineValue += 75;
     sensorCount++;
   }
-  if (one.readAdc(7) > Vtrans)  // Test Sensor8  <>  Testa o sensor8
+  if (one.readAdc(7) > BW_THRESHOLD)  // Test Sensor8  <>  Testa o sensor8
   {
     lineValue += 100;
     sensorCount++;
