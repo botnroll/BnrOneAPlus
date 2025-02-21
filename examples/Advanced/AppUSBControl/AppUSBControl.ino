@@ -17,7 +17,7 @@
 #include <Servo.h>  // Gripper
 #include <Wire.h>   // Compass
 
-BnrOneAPlus 
+BnrOneAPlus
     one;  // declaration of object variable to control the Bot'n Roll ONE A+
 Servo gripper1;
 Servo gripper2;
@@ -50,8 +50,7 @@ float read_bearing() {
   Wire.endTransmission();
 
   Wire.requestFrom(ADDRESS, 2);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 2)
-    ;  // Wait for bytes to become available
+  while (Wire.available() < 2);  // Wait for bytes to become available
   highByte = Wire.read();
   lowByte = Wire.read();
 
@@ -67,8 +66,7 @@ char read_roll() {
   Wire.endTransmission();
 
   Wire.requestFrom(ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1)
-    ;  // Wait for bytes to become available
+  while (Wire.available() < 1);  // Wait for bytes to become available
   roll = Wire.read();
   return roll;
 }
@@ -82,8 +80,7 @@ char read_pitch() {
   Wire.endTransmission();
 
   Wire.requestFrom(ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1)
-    ;  // Wait for bytes to become available
+  while (Wire.available() < 1);  // Wait for bytes to become available
   pitch = Wire.read();
 
   return pitch;
@@ -106,7 +103,6 @@ void le_trama() {
     delay(CONTROL);
   }
   //  }
-
 }
 
 void setup() {
@@ -189,7 +185,7 @@ void loop() {
           break;
         case COMMAND_BAT_MIN:  //  0xF4 // Configure low battery level
           tempfloatp = (float *)trama.data;
-          one.minBat(*tempfloatp);
+          one.setMinBatteryV*tempfloatp);
           break;
         case COMMAND_MOVE_PID:  //  0xF3 // Move motor with PID control
           break;

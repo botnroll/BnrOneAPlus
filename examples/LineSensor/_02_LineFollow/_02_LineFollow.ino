@@ -35,7 +35,7 @@ float min_battery_V = 10.5;
 
 // Speed for the robot movement
 // Velocidade do robô
-int vel = 40;
+int speed = 40;
 
 void setup() {
   Serial.begin(57600);    // sets baud rate to 57600bps for printing values at
@@ -50,7 +50,7 @@ void setup() {
     one.lcd2("Press a button!");
     delay(50);
   }
-  one.move(vel, vel);
+  one.move(speed, speed);
   one.lcd2("Line Following!");
 }
 
@@ -79,7 +79,7 @@ void loop() {
     one.move(20, 40);
   } else if (sensor3 > BW_THRESHOLD)  // 00010000
   {
-    one.move(vel, vel);
+    one.move(speed, speed);
   }
   // From right to centre
   // Lado direito do exterior para o centro
@@ -94,6 +94,6 @@ void loop() {
     one.move(40, 20);
   } else if (sensor4 > BW_THRESHOLD)  // 00001000
   {
-    one.move(vel, vel);
+    one.move(speed, speed);
   }
 }

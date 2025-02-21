@@ -28,7 +28,7 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 #define BW_THRESHOLD 300    // Line follower limit between white and black
 #define MIN_BATTERY_V 10.5  // safety voltage for discharging the battery
 
-int vel = 50;
+int speed = 50;
 
 void setup() {
   Serial.begin(57600);    // sets baud rate to 57600bps for printing values at
@@ -56,63 +56,63 @@ void loop() {
 
   switch (line) {
     case -100:
-      one.move(-1, vel + v100);
+      one.move(-1, speed + v100);
       break;
 
     case -87:
-      one.move(-1, vel + v87);
+      one.move(-1, speed + v87);
       break;
 
     case -75:
-      one.move(vel - v75, vel + v75);
+      one.move(speed - v75, speed + v75);
       break;
 
     case -62:
-      one.move(vel - v62, vel + v62);
+      one.move(speed - v62, speed + v62);
       break;
 
     case -50:
-      one.move(vel - v50, vel + v50);
+      one.move(speed - v50, speed + v50);
       break;
 
     case -37:
-      one.move(vel - v37, vel + v37);
+      one.move(speed - v37, speed + v37);
       break;
 
     case -25:
-      one.move(vel - v25, vel + v25);
+      one.move(speed - v25, speed + v25);
       break;
 
     case 0:
-      one.move(vel, vel);
+      one.move(speed, speed);
       break;
 
     case 25:
-      one.move(vel + v25, vel - v25);
+      one.move(speed + v25, speed - v25);
       break;
 
     case 37:
-      one.move(vel + v37, vel - v37);
+      one.move(speed + v37, speed - v37);
       break;
 
     case 50:
-      one.move(vel + v50, vel - v50);
+      one.move(speed + v50, speed - v50);
       break;
 
     case 62:
-      one.move(vel + v62, vel - v62);
+      one.move(speed + v62, speed - v62);
       break;
 
     case 75:
-      one.move(vel + v75, vel - v75);
+      one.move(speed + v75, speed - v75);
       break;
 
     case 87:
-      one.move(vel + v87, -1);
+      one.move(speed + v87, -1);
       break;
 
     case 100:
-      one.move(vel + v100, -1);
+      one.move(speed + v100, -1);
       break;
   }
 }
