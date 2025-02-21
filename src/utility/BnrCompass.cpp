@@ -26,9 +26,16 @@ float BnrCompass::read_bearing()
    Wire.endTransmission();
 
    Wire.requestFrom(_sensorAddress, 2);       // Request 4 bytes from CMPS11
-   while(Wire.available() < 2);        // Wait for bytes to become available
-   highByte = Wire.read();
-   lowByte = Wire.read();
+   
+  unsigned long startTime = millis();
+  while (Wire.available() < 2) {
+    if (millis() - startTime > 100) { // Timeout after 100ms
+      // Serial.println("Timeout: Compass not responding.");
+      return -1; // Return an error value (e.g., -1)
+    }
+  }
+  highByte = Wire.read();
+  lowByte = Wire.read();
    
   return (float)((highByte<<8)+lowByte)/10;
 }
@@ -42,7 +49,13 @@ char BnrCompass::read_roll()
   Wire.endTransmission();
 
   Wire.requestFrom(_sensorAddress, 1);        // Request 4 bytes from CMPS11
-  while(Wire.available() < 1);         // Wait for bytes to become available
+  unsigned long startTime = millis();
+  while (Wire.available() < 1) {
+    if (millis() - startTime > 100) { // Timeout after 100ms
+      // Serial.println("Timeout: Compass not responding.");
+      return -1; // Return an error value (e.g., -1)
+    }
+  }
   roll = Wire.read();
   return roll;
 }
@@ -56,7 +69,13 @@ char BnrCompass::read_pitch()
    Wire.endTransmission();
 
    Wire.requestFrom(_sensorAddress, 1);        // Request 4 bytes from CMPS11
-   while(Wire.available() < 1);         // Wait for bytes to become available
+   unsigned long startTime = millis();
+   while (Wire.available() < 1) {
+    if (millis() - startTime > 100) { // Timeout after 100ms
+      // Serial.println("Timeout: Compass not responding.");
+      return -1; // Return an error value (e.g., -1)
+    }
+  }
    pitch = Wire.read();
 
   return pitch;
