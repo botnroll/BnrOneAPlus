@@ -1,5 +1,5 @@
 /*
-  BnrOneA.cpp - Library for interfacing with Bot'n Roll ONE A+ Arduino
+  BnrOneAPlus.cpp - Library for interfacing with Bot'n Roll ONE A+ Arduino
   Compatible from www.botnroll.com Created by José Cruz, December 18, 2024.
   Released into the public domain.
 */
