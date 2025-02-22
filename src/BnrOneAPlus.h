@@ -1,9 +1,11 @@
-/*
-  BnrOneAPlus.h - Library for interfacing with Bot'n Roll ONE A+ Arduino
-  Compatible from www.botnroll.com Released into public domain.
-*/
+/**
+ * BnrOneAPlus.h - Library for interfacing with Bot'n Roll ONE A+
+ * Arduino Compatible
+ * Released into public domain
+ * www.botnroll.com
+ */
 
-#pragma once BnrOneAPlus_h
+#pragma once
 
 #include <string.h>
 
@@ -21,23 +23,23 @@ class BnrOneAPlus {
    *
    * @param sspin
    */
-  void spiConnect(byte sspin);
+  void spiConnect(const byte sspin);
 
   /**
    * @brief Set the minimum battery voltage for battery protection
    *
-   * @param minBatteryV
+   * @param min_battery_V
    */
-  void setMinBatteryV(float minBatteryV);
+  void setMinBatteryV(const float min_battery_V) const;
 
   /**
    * @brief Set the PID parameters for PID control
    *
-   * @param Kp proportional gain
-   * @param Ki integral gain
-   * @param Kd differential gain
+   * @param kp proportional gain
+   * @param ki integral gain
+   * @param kd differential gain
    */
-  void setPid(int Kp, int Ki, int Kd);
+  void setPid(const int kp, const int ki, const int kd) const;
 
   /**
    * @brief Set the Motors configuration params:
@@ -45,18 +47,20 @@ class BnrOneAPlus {
    *    - ks gain
    *    - number of pulses per iteration at max speed
    *
-   * @param movingPower
+   * @param moving_power
    * @param ks
-   * @param pulsesAtMaxSpeed
+   * @param max_speed_pulses
    */
-  void setMotors(int movingPower, int ks, int pulsesAtMaxSpeed);
+  void setMotors(const int moving_power,
+                 const int ks,
+                 const int max_speed_pulses) const;
 
   /**
    * @brief Turn on/off the obstacle sensors IR emitters
    *
    * @param state
    */
-  void obstacleSensorsEmitters(bool state);
+  void obstacleSensorsEmitters(const bool state) const;
 
   /********************************
    * @brief  reading routines      *
@@ -71,29 +75,29 @@ class BnrOneAPlus {
    *   2 if obstacle on the right side only
    *   3 if obstacles on both sides
    */
-  byte readObstacleSensors();
+  byte readObstacleSensors() const;
 
   /**
    * @brief reads the value of the left range sensor
    *
    * @return byte
    */
-  byte readLeftRangeSensor();
+  byte readLeftRangeSensor() const;
 
   /**
    * @brief reads the value of the right range sensor
    *
    * @return byte
    */
-  byte readRightRangeSensor();
+  byte readRightRangeSensor() const;
 
   /**
    * @brief reads the value of the specified ADC channel
    *
-   * @param adcChannel id of the Adc channel to read
+   * @param adc_channel id of the Adc channel to read
    * @return int
    */
-  int readAdc(byte adcChannel);
+  int readAdc(const byte adc_channel) const;
 
   /**
    * @brief reads the value of the button pressed
@@ -104,14 +108,14 @@ class BnrOneAPlus {
    *  2 if button 2 is pressed
    *  3 if button 3 is pressed
    */
-  byte readButton();
+  byte readButton() const;
 
   /**
    * @brief reads the battery voltage
    *
    * @return float
    */
-  float readBattery();
+  float readBattery() const;
 
   /**
    * @brief computes a line value in the range [-100, 100]
@@ -121,22 +125,21 @@ class BnrOneAPlus {
   /**
    * @brief reads the line sensor and outputs a vector of 8 integers
    */
-  int* readLineSensor();
+  int* readLineSensor() const;
 
   /**
    * @brief reads the value of the left encoder and resets its value
    *
    * @return int
    */
-  int readAndResetLeftEncoder();
-
+  int readAndResetLeftEncoder() const;
 
   /**
    * @brief reads the value of the right encoder and resets its value
    *
    * @return int
    */
-  int readAndResetRightEncoder();
+  int readAndResetRightEncoder() const;
 
   /**
    * @brief reads the value of the left encoder and keep it's current value
@@ -144,7 +147,7 @@ class BnrOneAPlus {
    *
    * @return int
    */
-  int readAndIncrementLeftEncoder();
+  int readAndIncrementLeftEncoder() const;
 
   /**
    * @brief reads the value of the right encoder and keep it's current value
@@ -152,27 +155,27 @@ class BnrOneAPlus {
    *
    * @return int
    */
-  int readAndIncrementRightEncoder();
+  int readAndIncrementRightEncoder() const;
 
   /**
    * @brief reads the value of the debug registers
    *
    * @return int
    */
-  int readDBG(byte registerIndex);
+  int readDBG(const byte register_index) const;
 
   /**
    * @brief reads the value of the debug registers
    *
    * @return float
    */
-  float readDBGf();
+  float readDBGf() const;
 
   /**
    * @brief reads the firmware version of the board
    *
    */
-  void readFirmware(byte*, byte*, byte*);
+  void readFirmware(byte*, byte*, byte*) const;
 
   /********************************
    * @brief  writing routines      *
@@ -183,156 +186,172 @@ class BnrOneAPlus {
    *
    * @param state
    */
-  void setLed(bool state);
+  void setLed(const bool state) const;
 
   /**
    * @brief sets the speed of the motors
    *
-   * @param leftSpeed speed of the left motor
-   * @param rightSpeed speed of the right motor
+   * @param left_speed speed of the left motor
+   * @param right_speed speed of the right motor
    */
-  void move(int leftSpeed, int rightSpeed);
+  void move(const int left_speed, const int right_speed) const;
 
   /**
    * @brief sets the speed of the motors by specifying the pwm values
    *
-   * @param leftDutyCycle
-   * @param rightDutyCycle
+   * @param left_duty_cycle
+   * @param right_duty_cycle
    */
-  void moveRAW(int leftDutyCycle, int rightDutyCycle);
+  void moveRAW(const int left_duty_cycle, cont int right_duty_cycle) const;
 
   /**
    * @brief sets the speed of a single motor
    *
-   * @param motorId motor id (0 for left, 1 for right)
+   * @param motor_id motor id (0 for left, 1 for right)
    * @param speed
    */
-  void move1m(byte motorId, int speed);
+  void move1m(const byte motor_id, const int speed) const;
 
   /**
    * @brief stops the motors
    *
    */
-  void stop();
+  void stop() const;
 
   /**
    * @brief stops the motors by applying the maximum torque
    *
    */
-  void brake();
+  void brake() const;
 
   /**
    * @brief stops the motors by applying the specified torque
    *
-   * @param leftTorque
-   * @param rightTorque
+   * @param left_torque
+   * @param right_torque
    */
-  void brake(byte leftTorque, byte rightTorque);
+  void brake(const byte left_torque, const byte right_torque) const;
 
   /**
    * @brief stops a single motor by applying the maximum torque
    *
-   * @param motorId motor id (0 for left, 1 for right)
+   * @param motor_id motor id (0 for left, 1 for right)
    */
-  void stop1m(byte motorId);
+  void stop1m(const byte motor_id) const;
 
   /**
    * @brief stops a single motor by applying the specified torque
    *
-   * @param motorId
+   * @param motor_id
    * @param torque
    */
-  void brake1m(byte motorId, byte torque);
+  void brake1m(const byte motor_id, const byte torque) const;
 
   /**
    * @brief resets the left encoder
    *
    */
-  void resetLeftEncoder();
+  void resetLeftEncoder() const;
 
   /**
    * @brief resets the right encoder
    *
    */
-  void resetEncR();
+  void resetRightEncoder() const;
 
   // LCD Line 1 write routines
-  void lcd1(String string);        //<-- writes a string to the LCD
-  void lcd1(byte string[]);        //<-- writes a string to the LCD
-  void lcd1(const char string[]);  //<-- writes a string to the LCD
-  void lcd1(int number);           //<-- writes a number to the LCD
-  void lcd1(unsigned int number);  //<-- writes a number to the LCD
-  void lcd1(long int number);      //<-- writes a number to the LCD
-  void lcd1(double number);        //<-- writes a number to the LCD
+  void lcd1(const String string) const;        //<-- writes a string to the LCD
+  void lcd1(const byte string[]) const;        //<-- writes a string to the LCD
+  void lcd1(const char string[]) const;        //<-- writes a string to the LCD
+  void lcd1(const int number) const;           //<-- writes a number to the LCD
+  void lcd1(const unsigned int number) const;  //<-- writes a number to the LCD
+  void lcd1(const long int number) const;      //<-- writes a number to the LCD
+  void lcd1(const double number) const;        //<-- writes a number to the LCD
+  void lcd1(
+      const char string[],
+      const int number) const;  //<-- writes a string and a number to the LCD
   void lcd1(const char string[],
-            int number);  //<-- writes a string and a number to the LCD
+            const unsigned int number)
+      const;  //<-- writes a string and a number to the LCD
   void lcd1(const char string[],
-            unsigned int number);  //<-- writes a string and a number to the LCD
-  void lcd1(const char string[],
-            long int number);  //<-- writes a string and a number to the LCD
-  void lcd1(const char string[],
-            double number);  //<-- writes a string and a number to the LCD
-  void lcd1(unsigned char stringA[8],
-            unsigned char stringB[8]);  //<-- writes two strings to the LCD
-  void lcd1(int num1, int num2);        //<-- writes two numbers to the LCD
-  void lcd1(unsigned int num1,
-            unsigned int num2);  //<-- writes two numbers to the LCD
-  void lcd1(int num1,
-            int num2,
-            int num3);  //<-- writes three numbers to the LCD
-  void lcd1(int num1,
-            int num2,
-            int num3,
-            int num4);  //<-- writes four numbers to the LCD
-  void lcd1(unsigned int num1,
-            unsigned int num2,
-            unsigned int num3);  //<-- writes three numbers to the LCD
-  void lcd1(unsigned int num1,
-            unsigned int num2,
-            unsigned int num3,
-            unsigned int num4);  //<-- writes four numbers to the LCD
+            const long int number)
+      const;  //<-- writes a string and a number to the LCD
+  void lcd1(
+      const char string[],
+      const double number) const;  //<-- writes a string and a number to the LCD
+  void lcd1(const unsigned char string_a[8],
+            const unsigned char string_b[8])
+      const;  //<-- writes two strings to the LCD
+  void lcd1(const int num1,
+            const int num2) const;  //<-- writes two numbers to the LCD
+  void lcd1(const unsigned int num1,
+            const unsigned int num2) const;  //<-- writes two numbers to the LCD
+  void lcd1(const int num1,
+            const int num2,
+            const int num3) const;  //<-- writes three numbers to the LCD
+  void lcd1(const int num1,
+            const int num2,
+            const int num3,
+            const int num4) const;  //<-- writes four numbers to the LCD
+  void lcd1(
+      const unsigned int num1,
+      const unsigned int num2,
+      const unsigned int num3) const;  //<-- writes three numbers to the LCD
+  void lcd1(
+      const unsigned int num1,
+      const unsigned int num2,
+      const unsigned int num3,
+      const unsigned int num4) const;  //<-- writes four numbers to the LCD
 
   // LCD Line 2 write routines
-  void lcd2(String string);        //<-- writes a string to the LCD
-  void lcd2(byte string[]);        //<-- writes a string to the LCD
-  void lcd2(const char string[]);  //<-- writes a string to the LCD
-  void lcd2(int number);           //<-- writes a number to the LCD
-  void lcd2(unsigned int number);  //<-- writes a number to the LCD
-  void lcd2(long int number);      //<-- writes a number to the LCD
-  void lcd2(double number);        //<-- writes a number to the LCD
+  void lcd2(const String string) const;        //<-- writes a string to the LCD
+  void lcd2(const byte string[]) const;        //<-- writes a string to the LCD
+  void lcd2(const char string[]) const;        //<-- writes a string to the LCD
+  void lcd2(const int number) const;           //<-- writes a number to the LCD
+  void lcd2(const unsigned int number) const;  //<-- writes a number to the LCD
+  void lcd2(const long int number) const;      //<-- writes a number to the LCD
+  void lcd2(const double number) const;        //<-- writes a number to the LCD
   void lcd2(const char string[],
-            int number);  //<-- writes a string and a number to the LCD
+            int number) const;  //<-- writes a string and a number to the LCD
+  void lcd2(
+      const char string[],
+      unsigned int number) const;  //<-- writes a string and a number to the LCD
+  void lcd2(
+      const char string[],
+      long int number) const;  //<-- writes a string and a number to the LCD
   void lcd2(const char string[],
-            unsigned int number);  //<-- writes a string and a number to the LCD
-  void lcd2(const char string[],
-            long int number);  //<-- writes a string and a number to the LCD
-  void lcd2(const char string[],
-            double number);  //<-- writes a string and a number to the LCD
-  void lcd2(unsigned char stringA[8],
-            unsigned char stringB[8]);  //<-- writes two strings to the LCD
-  void lcd2(int num1, int num2);        //<-- writes two numbers to the LCD
-  void lcd2(unsigned int num1,
-            unsigned int num2);  //<-- writes two numbers to the LCD
-  void lcd2(int num1,
-            int num2,
-            int num3);  //<-- writes three numbers to the LCD
-  void lcd2(int num1,
-            int num2,
-            int num3,
-            int num4);  //<-- writes four numbers to the LCD
-  void lcd2(unsigned int num1,
-            unsigned int num2,
-            unsigned int num3);  //<-- writes three numbers to the LCD
-  void lcd2(unsigned int num1,
-            unsigned int num2,
-            unsigned int num3,
-            unsigned int num4);  //<-- writes four numbers to the LCD
+            double number) const;  //<-- writes a string and a number to the LCD
+  void lcd2(const unsigned char string_a[8],
+            const unsigned char string_b[8])
+      const;  //<-- writes two strings to the LCD
+  void lcd2(const int num1,
+            const int num2) const;  //<-- writes two numbers to the LCD
+  void lcd2(const unsigned int num1,
+            const unsigned int num2) const;  //<-- writes two numbers to the LCD
+  void lcd2(const int num1,
+            const int num2,
+            const int num3) const;  //<-- writes three numbers to the LCD
+  void lcd2(const int num1,
+            const int num2,
+            const int num3,
+            const int num4) const;  //<-- writes four numbers to the LCD
+  void lcd2(
+      const unsigned int num1,
+      const unsigned int num2,
+      const unsigned int num3) const;  //<-- writes three numbers to the LCD
+  void lcd2(
+      const unsigned int num1,
+      const unsigned int num2,
+      const unsigned int num3,
+      const unsigned int num4) const;  //<-- writes four numbers to the LCD
 
  private:
-  byte spiRequestByte(byte command);
-  int spiRequestWord(byte command);
-  float spiRequestFloat(byte command);
-  void spiSendData(byte command, byte buffer[], byte numBytes);
-  byte _sspin;
-  LineDetector _lineDetector;
+  byte spiRequestByte(const byte command) const;
+  int spiRequestWord(const byte command) const;
+  float spiRequestFloat(const byte command) const;
+  void spiSendData(const byte command,
+                   const byte buffer[],
+                   const byte num_bytes) const;
+  byte sspin_;
+  LineDetector line_detector_;
 };

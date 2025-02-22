@@ -50,7 +50,7 @@ move1m	KEYWORD2
 stop1m	KEYWORD2
 brake1m	KEYWORD2
 resetLeftEncoder	KEYWORD2
-resetEncR	KEYWORD2
+resetRightEncoder	KEYWORD2
 minBat	KEYWORD2
 saveCalibrate	KEYWORD2
 lcd1	KEYWORD2
