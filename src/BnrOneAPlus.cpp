@@ -1,8 +1,3 @@
-/*
-  BnrOneAPlus.cpp - Library for interfacing with Bot'n Roll ONE A+ Arduino
-  Compatible from www.botnroll.com Created by José Cruz, December 18, 2024.
-  Released into the public domain.
-*/
 #include "BnrOneAPlus.h"
 
 #include "EEPROM.h"
@@ -13,12 +8,12 @@
 #define DELAY_TR 20  // 20 MinStable:15  Crash:14
 #define DELAY_SS 20  // 20 Crash: No crash even with 0 (ZERO)
 
-void BnrOneAPlus::spiConnect(byte sspin) {
-  _sspin = sspin;
-  pinMode(_sspin, OUTPUT);
+void BnrOneAPlus::spiConnect(const byte sspin) {
+  sspin_ = sspin;
+  pinMode(sspin_, OUTPUT);
 
-  // Initializes the SPI bus by setting SCK and MOSI to outputs, pulling SCK and
-  // MOSI low.
+  // Initializes the SPI bus by setting SCK and MOSI to outputs,
+  // pulling SCK and MOSI low.
   SPI.begin();
   // Sets the order of the bits shifted out of and into the SPI bus MSBFIRST
   // (most-significant bit first).
@@ -27,41 +22,41 @@ void BnrOneAPlus::spiConnect(byte sspin) {
   SPI.setDataMode(SPI_MODE1);
   SPI.setClockDivider(SPI_CLOCK_DIV2);
   // SPI in hold state by pulling SS high.
-  digitalWrite(_sspin, HIGH);
+  digitalWrite(sspin_, HIGH);
   delayMicroseconds(DELAY_SS);
 }
 
-byte BnrOneAPlus::spiRequestByte(byte command) {
+byte BnrOneAPlus::spiRequestByte(const byte command) const {
   byte value = (byte)0xFF;
   int i;
   byte buffer[] = {KEY1, KEY2};
-  byte numBytes = 2;
+  byte num_bytes = 2;
   // Select the SPI Slave device to start communication
-  digitalWrite(_sspin, LOW);
+  digitalWrite(sspin_, LOW);
   SPI.transfer(command);  // Sends one byte
   delayMicroseconds(DELAY_TR);
 
-  for (i = 0; i < numBytes; ++i) {
+  for (i = 0; i < num_bytes; ++i) {
     SPI.transfer(buffer[i]);  // Sends one byte
     delayMicroseconds(DELAY_TR);
   }
   value = SPI.transfer(0x00);  // Reads one byte
-  digitalWrite(_sspin, HIGH);  // Closes communication with slave device.
+  digitalWrite(sspin_, HIGH);  // Closes communication with slave device.
   delayMicroseconds(DELAY_SS);
 
   return value;
 }
 
-int BnrOneAPlus::spiRequestWord(byte command) {
+int BnrOneAPlus::spiRequestWord(const byte command) const {
   byte value[2] = {0, 0};
   int i;
   byte buffer[] = {KEY1, KEY2};
-  byte numBytes = 2;
-  digitalWrite(_sspin,
-               LOW);      // Select the SPI Slave device to start communication.
+  byte num_bytes = 2;
+  // Select the SPI Slave device to start communication.
+  digitalWrite(sspin_, LOW);
   SPI.transfer(command);  // Send one byte
   delayMicroseconds(DELAY_TR);
-  for (i = 0; i < numBytes; ++i) {
+  for (i = 0; i < num_bytes; ++i) {
     SPI.transfer(buffer[i]);  // Send one byte
     delayMicroseconds(DELAY_TR);
   }
@@ -69,26 +64,27 @@ int BnrOneAPlus::spiRequestWord(byte command) {
     value[i] = SPI.transfer(0x00);  // Reads one byte
     delayMicroseconds(DELAY_TR);
   }
-  digitalWrite(_sspin, HIGH);  // Close communication with slave device.
+  digitalWrite(sspin_, HIGH);  // Close communication with slave device.
   delayMicroseconds(DELAY_SS);
   i = 0;
   i = value[0];
   i = i << 8;
   i = i + value[1];
+
   return i;
 }
 
-float BnrOneAPlus::spiRequestFloat(byte command) {
+float BnrOneAPlus::spiRequestFloat(const byte command) const {
   float f;
   char value[sizeof(float)];
   int i;
   byte buffer[] = {KEY1, KEY2};
-  byte numBytes = 2;
-  digitalWrite(_sspin,
-               LOW);      // Select the SPI Slave device to start communication.
+  byte num_bytes = 2;
+  // Select the SPI Slave device to start communication.
+  digitalWrite(sspin_, LOW);
   SPI.transfer(command);  // Send one byte
   delayMicroseconds(DELAY_TR);
-  for (i = 0; i < numBytes; ++i) {
+  for (i = 0; i < num_bytes; ++i) {
     SPI.transfer(buffer[i]);  // Send one byte
     delayMicroseconds(DELAY_TR);
   }
@@ -96,30 +92,33 @@ float BnrOneAPlus::spiRequestFloat(byte command) {
     value[i] = (char)SPI.transfer(0x00);  // Reads one byte
     delayMicroseconds(DELAY_TR);
   }
-  digitalWrite(_sspin, HIGH);  // Close communication with slave device.
+  digitalWrite(sspin_, HIGH);  // Close communication with slave device.
   delayMicroseconds(DELAY_SS);
   memcpy(&f, value, sizeof f);  // receive data
+
   return f;
 }
 
-void BnrOneAPlus::spiSendData(byte command, byte buffer[], byte numBytes) {
+void BnrOneAPlus::spiSendData(const byte command,
+                              const byte buffer[],
+                              const byte num_bytes) const {
   // Select the SPI Slave device to start communication.
-  digitalWrite(_sspin, LOW);
+  digitalWrite(sspin_, LOW);
   SPI.transfer(command);  // Send one byte
   delayMicroseconds(DELAY_TR);
-  for (int k = 0; k < numBytes; k++) {
+  for (int k = 0; k < num_bytes; k++) {
     SPI.transfer(buffer[k]);  // Send one byte
     delayMicroseconds(DELAY_TR);
   }
-  digitalWrite(_sspin, HIGH);  // Close communication with slave device.
+  digitalWrite(sspin_, HIGH);  // Close communication with slave device.
   delayMicroseconds(DELAY_SS);
 }
 
-void BnrOneAPlus::move(int leftSpeed, int rightSpeed) {
-  byte leftSpeed_H = highByte(leftSpeed);
-  byte leftSpeed_L = lowByte(leftSpeed);
-  byte rightSpeed_H = highByte(rightSpeed);
-  byte rightSpeed_L = lowByte(rightSpeed);
+void BnrOneAPlus::move(const int left_speed, const int right_speed) const {
+  byte leftSpeed_H = highByte(left_speed);
+  byte leftSpeed_L = lowByte(left_speed);
+  byte rightSpeed_H = highByte(right_speed);
+  byte rightSpeed_L = lowByte(right_speed);
 
   byte buffer[] = {
       KEY1, KEY2, leftSpeed_H, leftSpeed_L, rightSpeed_H, rightSpeed_L};
@@ -127,11 +126,12 @@ void BnrOneAPlus::move(int leftSpeed, int rightSpeed) {
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::moveRAW(int leftDutyCycle, int rightDutyCycle) {
-  byte leftPower_H = highByte(leftDutyCycle);
-  byte leftPower_L = lowByte(leftDutyCycle);
-  byte rightPower_H = highByte(rightDutyCycle);
-  byte rightPower_L = lowByte(rightDutyCycle);
+void BnrOneAPlus::moveRAW(const int left_duty_cycle,
+                          const int right_duty_cycle) const {
+  byte leftPower_H = highByte(left_duty_cycle);
+  byte leftPower_L = lowByte(left_duty_cycle);
+  byte rightPower_H = highByte(right_duty_cycle);
+  byte rightPower_L = lowByte(right_duty_cycle);
 
   byte buffer[] = {
       KEY1, KEY2, leftPower_H, leftPower_L, rightPower_H, rightPower_L};
@@ -139,40 +139,40 @@ void BnrOneAPlus::moveRAW(int leftDutyCycle, int rightDutyCycle) {
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::move1m(byte motorId, int speed) {
+void BnrOneAPlus::move1m(const byte motor_id, const int speed) const {
   byte speed_H = highByte(speed);
   byte speed_L = lowByte(speed);
 
-  byte buffer[] = {KEY1, KEY2, motorId, speed_H, speed_L};
+  byte buffer[] = {KEY1, KEY2, motor_id, speed_H, speed_L};
   spiSendData(COMMAND_MOVE_1M, buffer, sizeof(buffer));
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::stop() {
+void BnrOneAPlus::stop() const {
   byte buffer[] = {KEY1, KEY2};
   spiSendData(COMMAND_STOP, buffer, sizeof(buffer));
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::stop1m(byte motorId) {
-  byte buffer[] = {KEY1, KEY2, motorId};
+void BnrOneAPlus::stop1m(const byte motor_id) const {
+  byte buffer[] = {KEY1, KEY2, motor_id};
   spiSendData(COMMAND_STOP_1M, buffer, sizeof(buffer));
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::brake(byte leftTorque, byte rightTorque) {
-  byte buffer[] = {KEY1, KEY2, leftTorque, rightTorque};
+void BnrOneAPlus::brake(const byte left_torque, const byte right_torque) const {
+  byte buffer[] = {KEY1, KEY2, left_torque, right_torque};
   spiSendData(COMMAND_BRAKE_SET_T, buffer, sizeof(buffer));
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::brake1m(byte motorId, byte torque) {
-  byte buffer[] = {KEY1, KEY2, motorId, torque};
+void BnrOneAPlus::brake1m(const byte motor_id, const byte torque) const {
+  byte buffer[] = {KEY1, KEY2, motor_id, torque};
   spiSendData(COMMAND_BRAKE_1M, buffer, sizeof(buffer));
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::brake() {
+void BnrOneAPlus::brake() const {
   byte buffer[] = {KEY1, KEY2};
   spiSendData(COMMAND_BRAKE_MAX_T, buffer, sizeof(buffer));
   delay(2);  // Wait while command is processed
@@ -184,25 +184,25 @@ void BnrOneAPlus::resetLeftEncoder() {
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::resetEncR() {
+void BnrOneAPlus::resetRightEncoder() const {
   byte buffer[] = {KEY1, KEY2};
   spiSendData(COMMAND_ENCR_RESET, buffer, sizeof(buffer));
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::setLed(boolean state) {
+void BnrOneAPlus::setLed(const boolean state) const {
   byte buffer[] = {KEY1, KEY2, (byte)state};
   spiSendData(COMMAND_LED, buffer, sizeof(buffer));
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::obstacleSensorsEmitters(boolean state) {
+void BnrOneAPlus::obstacleSensorsEmitters(const boolean state) const {
   byte buffer[] = {KEY1, KEY2, (byte)state};
   spiSendData(COMMAND_IR_EMITTERS, buffer, sizeof(buffer));
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::setMinBatteryV(float min_battery_V) {
+void BnrOneAPlus::setMinBatteryV(const float min_battery_V) {
   char data[sizeof(float)];                            // 4bytes
   memcpy(data, &min_battery_V, sizeof min_battery_V);  // send data
   byte buffer[] = {
@@ -211,32 +211,35 @@ void BnrOneAPlus::setMinBatteryV(float min_battery_V) {
   delay(25);  // Wait while command is processed
 }
 
-void BnrOneAPlus::setPid(int Kp, int Ki, int Kd) {
-  byte Kp_H = highByte(Kp);
-  byte Kp_L = lowByte(Kp);
-  byte Ki_H = highByte(Ki);
-  byte Ki_L = lowByte(Ki);
-  byte Kd_H = highByte(Kd);
-  byte Kd_L = lowByte(Kd);
-  byte buffer[] = {KEY1, KEY2, Kp_H, Kp_L, Ki_H, Ki_L, Kd_H, Kd_L};
+void BnrOneAPlus::setPid(const int &kp, const int &ki, const int &kd) const {
+  byte buffer[] = {KEY1,
+                   KEY2,
+                   highByte(kp),
+                   lowByte(kp),
+                   highByte(ki),
+                   lowByte(ki),
+                   highByte(kd),
+                   lowByte(kd)};
   spiSendData(COMMAND_SET_PID, buffer, sizeof(buffer));
   delay(35);  // Delay for EEPROM writing
 }
 
-void BnrOneAPlus::setMotors(int SMPow, int Ks, int ctrlPulses) {
-  byte SMPow_H = highByte(SMPow);
-  byte SMPow_L = lowByte(SMPow);
-  byte Ks_H = highByte(Ks);
-  byte Ks_L = lowByte(Ks);
-  byte ctrlPulses_H = highByte(ctrlPulses);
-  byte ctrlPulses_L = lowByte(ctrlPulses);
-  byte buffer[] = {
-      KEY1, KEY2, SMPow_H, SMPow_L, Ks_H, Ks_L, ctrlPulses_H, ctrlPulses_L};
+void BnrOneAPlus::setMotors(const int motor_power,
+                            const int ks,
+                            const int ctrl_pulses) const {
+  const byte buffer[] = {KEY1,
+                         KEY2,
+                         highByte(motor_power),
+                         lowByte(motor_power),
+                         highByte(ks),
+                         lowByte(ks),
+                         highByte(ctrl_pulses),
+                         lowByte(ctrl_pulses)};
   spiSendData(COMMAND_SET_MOTORS, buffer, sizeof(buffer));
   delay(35);  // Delay for EEPROM writing
 }
 
-byte BnrOneAPlus::readButton() {
+byte BnrOneAPlus::readButton() const {
   int adc;
   byte button;
   adc = spiRequestWord(COMMAND_BUT_READ);
@@ -252,38 +255,40 @@ byte BnrOneAPlus::readButton() {
   } else {
     button = 0;
   }
+
   return button;
 }
 
-float BnrOneAPlus::readBattery() {
+float BnrOneAPlus::readBattery() const {
   return (float)((float)(spiRequestWord(COMMAND_BAT_READ)) / 50.7);
 }
 
-int BnrOneAPlus::readAndResetLeftEncoder() {
+int BnrOneAPlus::readAndResetLeftEncoder() const {
   return spiRequestWord(COMMAND_ENCL);
 }
 
-int BnrOneAPlus::readAndResetRightEncoder() {
+int BnrOneAPlus::readAndResetRightEncoder() const {
   return spiRequestWord(COMMAND_ENCR);
 }
 
-int BnrOneAPlus::readAndIncrementLeftEncoder() {
+int BnrOneAPlus::readAndIncrementLeftEncoder() const {
   return spiRequestWord(COMMAND_ENCL_INC);
 }
 
-int BnrOneAPlus::readAndIncrementRightEncoder() {
+int BnrOneAPlus::readAndIncrementRightEncoder() const {
   return spiRequestWord(COMMAND_ENCR_INC);
 }
 
-void BnrOneAPlus::readFirmware(byte *firm1, byte *firm2, byte *firm3) {
+void BnrOneAPlus::readFirmware(const byte *firm1,
+                               const byte *firm2,
+                               const byte *firm3) const {
   byte value[3] = {0, 0, 0};
   int k = 0;
   byte buffer[] = {KEY1, KEY2};
-  spiSendData(COMMAND_FIRMWARE,
-              buffer,
-              sizeof(buffer));  // Request data from master
-  digitalWrite(_sspin,
-               LOW);  // Select the SPI Slave device to start communication.
+  // Request data from master
+  spiSendData(COMMAND_FIRMWARE, buffer, sizeof(buffer));
+  // Select the SPI Slave device to start communication.
+  digitalWrite(sspin_, LOW);
   delayMicroseconds(20);
   for (k = 0; k < 3; k++) {
     value[k] = SPI.transfer(0x00);  // Reads one byte
@@ -292,24 +297,24 @@ void BnrOneAPlus::readFirmware(byte *firm1, byte *firm2, byte *firm3) {
   *firm1 = value[0];
   *firm2 = value[1];
   *firm3 = value[2];
-  digitalWrite(_sspin, HIGH);  // Close communication with slave device.
+  digitalWrite(sspin_, HIGH);  // Close communication with slave device.
 }
 
-byte BnrOneAPlus::readObstacleSensors() {
+byte BnrOneAPlus::readObstacleSensors() const {
   return spiRequestByte(COMMAND_OBSTACLES);
 }
 
-byte BnrOneAPlus::readLeftRangeSensor() {
+byte BnrOneAPlus::readLeftRangeSensor() const {
   return spiRequestByte(COMMAND_RANGE_LEFT);
 }
 
-byte BnrOneAPlus::readRightRangeSensor() {
+byte BnrOneAPlus::readRightRangeSensor() const {
   return spiRequestByte(COMMAND_RANGE_RIGHT);
 }
 
-int BnrOneAPlus::readAdc(byte adcChannel) {
+int BnrOneAPlus::readAdc(const byte adc_channel) const {
   byte command = 0x00;
-  switch (adcChannel) {
+  switch (adc_channel) {
     case 0:
       command = COMMAND_ADC0;
       break;
@@ -335,10 +340,11 @@ int BnrOneAPlus::readAdc(byte adcChannel) {
       command = COMMAND_ADC7;
       break;
   }
+
   return spiRequestWord(command);
 }
 
-int BnrOneAPlus::readDBG(byte index) {
+int BnrOneAPlus::readDBG(const byte index) const {
   byte command = 0x00;
   switch (index) {
     case 0:
@@ -354,23 +360,25 @@ int BnrOneAPlus::readDBG(byte index) {
       command = 0xB6;
       break;
   }
+
   return spiRequestWord(command);
 }
 
 float BnrOneAPlus::readDBGf() {
   byte command = 0xB5;
+
   return spiRequestFloat(command);
 }
 
 /**************************************************************/
 /**** LCD LINE 1 Handlers *************************************/
 /**************************************************************/
-void BnrOneAPlus::lcd1(String string) {
+void BnrOneAPlus::lcd1(const String &string_in) const {
   int i, a;
   byte buffer[18];
   char string1[19], string2[19];
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -386,12 +394,12 @@ void BnrOneAPlus::lcd1(String string) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(byte string[]) {
+void BnrOneAPlus::lcd1(byte string_in[]) {
   int i, a;
   byte buffer[18];
   char string1[19], string2[19];
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -407,12 +415,12 @@ void BnrOneAPlus::lcd1(byte string[]) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(const char string[]) {
+void BnrOneAPlus::lcd1(const char string_in[]) {
   int i, a;
   byte buffer[18];
   char string1[19], string2[19];
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, "%s", string2);
@@ -428,15 +436,15 @@ void BnrOneAPlus::lcd1(const char string[]) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(int number) {
+void BnrOneAPlus::lcd1(const int number) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%d", number);
+  char string_in[17];
+  a = sprintf(string_in, "%d", number);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -445,15 +453,15 @@ void BnrOneAPlus::lcd1(int number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(unsigned int number) {
+void BnrOneAPlus::lcd1(const unsigned int number) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%u", number);
+  char string_in[17];
+  a = sprintf(string_in, "%u", number);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -462,15 +470,15 @@ void BnrOneAPlus::lcd1(unsigned int number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(long int number) {
+void BnrOneAPlus::lcd1(const long int number) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%ld", number);
+  char string_in[17];
+  a = sprintf(string_in, "%ld", number);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -479,12 +487,12 @@ void BnrOneAPlus::lcd1(long int number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(double number) {
+void BnrOneAPlus::lcd1(const double number) const {
   int i;
   int intg;
   int dec;
   byte buffer[18];
-  char string[19];
+  char string_in[19];
   bool flag_neg = 0;
 
   if (number < -0.0001) {
@@ -493,24 +501,24 @@ void BnrOneAPlus::lcd1(double number) {
   }
   dec = round((number - ((double)(int)number)) * 100.0) % 100;
   intg = (dec == 0 ? round(number) : (int)number);
-  sprintf(string, "%d.%02d            ", intg, dec);
+  sprintf(string_in, "%d.%02d            ", intg, dec);
 
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   if (flag_neg == 1) buffer[2] = '-';
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2 + flag_neg] = string[i];
+    buffer[i + 2 + flag_neg] = string_in[i];
   }
   spiSendData(COMMAND_LCD_L1, buffer, sizeof(buffer));
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(const char string[], int number) {
+void BnrOneAPlus::lcd1(const char string_in[], const int number) const {
   int i, a, b;
   byte buffer[18];
   char string1[19], string2[19];
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -531,12 +539,13 @@ void BnrOneAPlus::lcd1(const char string[], int number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(const char string[], unsigned int number) {
+void BnrOneAPlus::lcd1(const char string_in[],
+                       const unsigned int number) const {
   int i, a, b;
   byte buffer[18];
   char string1[19], string2[19];
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -557,12 +566,12 @@ void BnrOneAPlus::lcd1(const char string[], unsigned int number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(const char string[], long int number) {
+void BnrOneAPlus::lcd1(const char string_in[], const long int number) const {
   int i, a, b;
   byte buffer[18];
   char string1[19], string2[19];
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -583,7 +592,7 @@ void BnrOneAPlus::lcd1(const char string[], long int number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(const char string[], double number) {
+void BnrOneAPlus::lcd1(const char string_in[], const double number) const {
   int i, a, b;
   char string1[19];
   char string2[19];
@@ -592,7 +601,7 @@ void BnrOneAPlus::lcd1(const char string[], double number) {
   bool flag_neg = 0;
 
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -620,15 +629,16 @@ void BnrOneAPlus::lcd1(const char string[], double number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(unsigned char stringA[8], unsigned char stringB[8]) {
+void BnrOneAPlus::lcd1(const unsigned char string_a[8],
+                       const unsigned char string_b[8]) const {
   int i, a;
   byte buffer[18];
   char string1[17], string2[17];
   for (i = 0; i < 16; ++i) {
     if (i < 8)
-      string2[i] = stringA[i];
+      string2[i] = string_a[i];
     else
-      string2[i] = stringB[i - 8];
+      string2[i] = string_b[i - 8];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -644,15 +654,15 @@ void BnrOneAPlus::lcd1(unsigned char stringA[8], unsigned char stringB[8]) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(unsigned int num1, unsigned int num2) {
+void BnrOneAPlus::lcd1(const unsigned int num1, const unsigned int num2) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%u %u", num1, num2);
+  char string_in[17];
+  a = sprintf(string_in, "%u %u", num1, num2);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -661,17 +671,17 @@ void BnrOneAPlus::lcd1(unsigned int num1, unsigned int num2) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(unsigned int num1,
-                       unsigned int num2,
-                       unsigned int num3) {
+void BnrOneAPlus::lcd1(const unsigned int num1,
+                       const unsigned int num2,
+                       const unsigned int num3) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%u %u %u", num1, num2, num3);
+  char string_in[17];
+  a = sprintf(string_in, "%u %u %u", num1, num2, num3);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -680,18 +690,18 @@ void BnrOneAPlus::lcd1(unsigned int num1,
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(unsigned int num1,
-                       unsigned int num2,
-                       unsigned int num3,
-                       unsigned int num4) {
+void BnrOneAPlus::lcd1(const unsigned int num1,
+                       const unsigned int num2,
+                       const unsigned int num3,
+                       const unsigned int num4) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%4u%4u%4u%4u", num1, num2, num3, num4);
+  char string_in[17];
+  a = sprintf(string_in, "%4u%4u%4u%4u", num1, num2, num3, num4);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -700,15 +710,15 @@ void BnrOneAPlus::lcd1(unsigned int num1,
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(int num1, int num2) {
+void BnrOneAPlus::lcd1(const int num1, const int num2) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%d %d", num1, num2);
+  char string_in[17];
+  a = sprintf(string_in, "%d %d", num1, num2);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -717,15 +727,15 @@ void BnrOneAPlus::lcd1(int num1, int num2) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(int num1, int num2, int num3) {
+void BnrOneAPlus::lcd1(const int num1, const int num2, const int num3) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%d %d %d", num1, num2, num3);
+  char string_in[17];
+  a = sprintf(string_in, "%d %d %d", num1, num2, num3);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -734,15 +744,18 @@ void BnrOneAPlus::lcd1(int num1, int num2, int num3) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(int num1, int num2, int num3, int num4) {
+void BnrOneAPlus::lcd1(const int num1,
+                       const int num2,
+                       const int num3,
+                       const int num4) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%4d%4d%4d%4d", num1, num2, num3, num4);
+  char string_in[17];
+  a = sprintf(string_in, "%4d%4d%4d%4d", num1, num2, num3, num4);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -754,12 +767,12 @@ void BnrOneAPlus::lcd1(int num1, int num2, int num3, int num4) {
 /**************************************************************/
 /**** LCD LINE 2 Handlers *************************************/
 /**************************************************************/
-void BnrOneAPlus::lcd2(String string) {
+void BnrOneAPlus::lcd2(const String &string_in) const {
   int i, a;
   byte buffer[18];
   char string1[19], string2[19];
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -775,12 +788,12 @@ void BnrOneAPlus::lcd2(String string) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(byte string[]) {
+void BnrOneAPlus::lcd2(const byte string_in[]) const {
   int i, a;
   byte buffer[18];
   char string1[19], string2[19];
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -796,12 +809,12 @@ void BnrOneAPlus::lcd2(byte string[]) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(const char string[]) {
+void BnrOneAPlus::lcd2(const char string_in[]) {
   int i, a;
   byte buffer[18];
   char string1[19], string2[19];
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -817,15 +830,15 @@ void BnrOneAPlus::lcd2(const char string[]) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(int number) {
+void BnrOneAPlus::lcd2(const int number) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%d", number);
+  char string_in[17];
+  a = sprintf(string_in, "%d", number);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -834,15 +847,15 @@ void BnrOneAPlus::lcd2(int number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(unsigned int number) {
+void BnrOneAPlus::lcd2(const unsigned int number) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%u", number);
+  char string_in[17];
+  a = sprintf(string_in, "%u", number);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -851,15 +864,15 @@ void BnrOneAPlus::lcd2(unsigned int number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(long int number) {
+void BnrOneAPlus::lcd2(const long int number) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%ld", number);
+  char string_in[17];
+  a = sprintf(string_in, "%ld", number);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -868,12 +881,12 @@ void BnrOneAPlus::lcd2(long int number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(double number) {
+void BnrOneAPlus::lcd2(const double number) const {
   int i;
   int intg;
   int dec;
   byte buffer[18];
-  char string[19];
+  char string_in[19];
   bool flag_neg = 0;
 
   if (number < -0.0001) {
@@ -882,23 +895,23 @@ void BnrOneAPlus::lcd2(double number) {
   }
   dec = round((number - ((double)(int)number)) * 100.0) % 100;
   intg = (dec == 0 ? round(number) : (int)number);
-  sprintf(string, "%d.%02d            ", intg, dec);
+  sprintf(string_in, "%d.%02d            ", intg, dec);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   if (flag_neg == 1) buffer[2] = '-';
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2 + flag_neg] = string[i];
+    buffer[i + 2 + flag_neg] = string_in[i];
   }
   spiSendData(COMMAND_LCD_L2, buffer, sizeof(buffer));
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(const char string[], int number) {
+void BnrOneAPlus::lcd2(const char string_in[], const int number) const {
   int i, a, b;
   byte buffer[18];
   char string1[19], string2[19];
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -919,12 +932,13 @@ void BnrOneAPlus::lcd2(const char string[], int number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(const char string[], unsigned int number) {
+void BnrOneAPlus::lcd2(const char string_in[],
+                       const unsigned int number) const {
   int i, a, b;
   byte buffer[18];
   char string1[19], string2[19];
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -945,12 +959,12 @@ void BnrOneAPlus::lcd2(const char string[], unsigned int number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(const char string[], long int number) {
+void BnrOneAPlus::lcd2(const char string_in[], const long int number) const {
   int i, a, b;
   byte buffer[18];
   char string1[19], string2[19];
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -971,7 +985,7 @@ void BnrOneAPlus::lcd2(const char string[], long int number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(const char string[], double number) {
+void BnrOneAPlus::lcd2(const char string_in[], const double number) const {
   int i, a, b;
   char string1[19];
   char string2[19];
@@ -980,7 +994,7 @@ void BnrOneAPlus::lcd2(const char string[], double number) {
   bool flag_neg = 0;
 
   for (i = 0; i < 16; ++i) {
-    string2[i] = string[i];
+    string2[i] = string_in[i];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -1008,15 +1022,16 @@ void BnrOneAPlus::lcd2(const char string[], double number) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(unsigned char stringA[], unsigned char stringB[]) {
+void BnrOneAPlus::lcd2(const unsigned char string_a[],
+                       const unsigned char string_b[]) const {
   int i, a;
   byte buffer[18];
   char string1[17], string2[17];
   for (i = 0; i < 16; ++i) {
     if (i < 8)
-      string2[i] = stringA[i];
+      string2[i] = string_a[i];
     else
-      string2[i] = stringB[i - 8];
+      string2[i] = string_b[i - 8];
   }
   string2[16] = 0;
   a = sprintf(string1, string2);
@@ -1032,15 +1047,15 @@ void BnrOneAPlus::lcd2(unsigned char stringA[], unsigned char stringB[]) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(unsigned int num1, unsigned int num2) {
+void BnrOneAPlus::lcd2(const unsigned int num1, const unsigned int num2) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%u %u", num1, num2);
+  char string_in[17];
+  a = sprintf(string_in, "%u %u", num1, num2);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -1049,17 +1064,17 @@ void BnrOneAPlus::lcd2(unsigned int num1, unsigned int num2) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(unsigned int num1,
-                       unsigned int num2,
-                       unsigned int num3) {
+void BnrOneAPlus::lcd2(const unsigned int num1,
+                       const unsigned int num2,
+                       const unsigned int num3) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%u %u %u", num1, num2, num3);
+  char string_in[17];
+  a = sprintf(string_in, "%u %u %u", num1, num2, num3);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -1068,18 +1083,18 @@ void BnrOneAPlus::lcd2(unsigned int num1,
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(unsigned int num1,
-                       unsigned int num2,
-                       unsigned int num3,
-                       unsigned int num4) {
+void BnrOneAPlus::lcd2(const unsigned int num1,
+                       const unsigned int num2,
+                       const unsigned int num3,
+                       const unsigned int num4) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%4u%4u%4u%4u", num1, num2, num3, num4);
+  char string_in[17];
+  a = sprintf(string_in, "%4u%4u%4u%4u", num1, num2, num3, num4);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -1088,15 +1103,15 @@ void BnrOneAPlus::lcd2(unsigned int num1,
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(int num1, int num2) {
+void BnrOneAPlus::lcd2(const int num1, const int num2) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%d %d", num1, num2);
+  char string_in[17];
+  a = sprintf(string_in, "%d %d", num1, num2);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -1105,15 +1120,15 @@ void BnrOneAPlus::lcd2(int num1, int num2) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(int num1, int num2, int num3) {
+void BnrOneAPlus::lcd2(const int num1, const int num2, const int num3) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%d %d %d", num1, num2, num3);
+  char string_in[17];
+  a = sprintf(string_in, "%d %d %d", num1, num2, num3);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -1122,15 +1137,18 @@ void BnrOneAPlus::lcd2(int num1, int num2, int num3) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(int num1, int num2, int num3, int num4) {
+void BnrOneAPlus::lcd2(const int num1,
+                       const int num2,
+                       const int num3,
+                       const int num4) const {
   int i, a = 0;
   byte buffer[18];
-  char string[17];
-  a = sprintf(string, "%4d%4d%4d%4d", num1, num2, num3, num4);
+  char string_in[17];
+  a = sprintf(string_in, "%4d%4d%4d%4d", num1, num2, num3, num4);
   buffer[0] = KEY1;
   buffer[1] = KEY2;
   for (i = 0; i < 16; ++i) {
-    buffer[i + 2] = string[i];
+    buffer[i + 2] = string_in[i];
   }
   for (i = a; i < 16; ++i) {
     buffer[i + 2] = (' ');
@@ -1139,17 +1157,17 @@ void BnrOneAPlus::lcd2(int num1, int num2, int num3, int num4) {
   delay(4);  // Wait while command is processed
 }
 
-int *BnrOneAPlus::readLineSensor() {
+int *BnrOneAPlus::readLineSensor() const {
   static int reading[8];
   byte value[16];
   int i;
   byte buffer[] = {KEY1, KEY2};
-  byte numBytes = 2;
-  digitalWrite(_sspin,
-               LOW);  // Select the SPI Slave device to start communication.
+  byte num_bytes = 2;
+  // Select the SPI Slave device to start communication.
+  digitalWrite(sspin_, LOW);
   SPI.transfer(COMMAND_LINE_READ);  // Send one byte
   delayMicroseconds(DELAY_TR);
-  for (int i = 0; i < numBytes; ++i) {
+  for (int i = 0; i < num_bytes; ++i) {
     SPI.transfer(buffer[i]);  // Send one byte
     delayMicroseconds(DELAY_TR);
   }
@@ -1157,7 +1175,7 @@ int *BnrOneAPlus::readLineSensor() {
     value[i] = (char)SPI.transfer(0x00);  // Reads one byte
     delayMicroseconds(DELAY_TR);
   }
-  digitalWrite(_sspin, HIGH);  // Close communication with slave device.
+  digitalWrite(sspin_, HIGH);  // Close communication with slave device.
   delayMicroseconds(DELAY_SS);
 
   for (i = 0; i < 8; ++i) {
@@ -1165,10 +1183,12 @@ int *BnrOneAPlus::readLineSensor() {
     reading[i] = reading[i] << 8;
     reading[i] += (int)value[1 + (i * 2)];
   }
+
   return reading;
 }
 
 int BnrOneAPlus::readLine() {
-  auto reading = readLineSensor();
-  return _lineDetector.ComputeLine(reading);
+  const auto reading = readLineSensor();
+
+  return line_detector_.ComputeLine(reading);
 }
