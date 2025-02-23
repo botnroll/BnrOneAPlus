@@ -16,19 +16,20 @@ The robot has new readings every 25ms (40 readings per second)
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
 #include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
-BnrOneAPlus
-    one;  // declaration of object variable to control the Bot'n Roll ONE A+
+BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
-#define SSPIN 2          // Slave Select (SS) pin for SPI communication
-int motL = 0, motR = 0;  // Motor speed
-int speed = 10;          // Max speed
-unsigned long tcycle;    // Control cycle time in loop
-float rangeGain = 2.5;  // Range Linear gain <> Ganho linear do obstáculo (2500)
-byte rangeL;            // Left obstacle sensor range
-byte rangeR;            // Right obstacle sensor range
-byte maxRange = 19;     // Maximum range value for obstacle
-byte minRange = 1;      // Minimum range value for obstacle
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+int left_speed = 0;
+int right_speed = 0;
+int speed = 10;        // Max speed
+unsigned long tcycle;  // Control cycle time in loop
+// Range Linear gain <> Ganho linear do obstáculo (2500)
+float linear_gain = 2.5;
+byte left_range;      // Left obstacle sensor range
+byte right_range;     // Right obstacle sensor range
+byte max_range = 19;  // Maximum range value for obstacle
+byte min_range = 1;   // Minimum range value for obstacle
 
 void setup() {
   one.spiConnect(SSPIN);            // start SPI communication module
@@ -39,10 +40,11 @@ void setup() {
   one.obstacleSensorsEmitters(ON);  // activate IR emitters
   one.lcd1("Avoid Obstacles ");
   one.lcd2("Press a Button!!");
-  while (one.readButton() ==
-         0);  // Wait a button to be pressed <> Espera que pressione um botão
-  while (one.readButton() !=
-         0);  // Wait for button release <> Espera que largue o botão
+  // Wait a button to be pressed <> Espera que pressione um botão
+  while (one.readButton() == 0);
+  // Wait for button release <> Espera que largue o botão
+  while (one.readButton() != 0);
+
   one.lcd1(" RgL SpL RgR SpR");
   tcycle = millis();  // Set start value for tcycle
 }
@@ -51,8 +53,8 @@ void loop() {
   if (millis() > tcycle) {
     tcycle += 25;      // Loop every 25ms
     readAndProcess();  // Read obstacles and decide how to move
-    one.move(motL, motR);
-    one.lcd2(rangeL, motL, rangeR, motR);
+    one.move(left_speed, right_speed);
+    one.lcd2(left_range, left_speed, right_range, right_speed);
 
     // Configuration menu <> Menu de configuração
     if (one.readButton() == 3)
@@ -61,41 +63,41 @@ void loop() {
 }
 
 void readAndProcess() {
-  rangeL = one.readLeftRangeSensor();   // read left obstacle sensor range
-  rangeR = one.readRightRangeSensor();  // read right obstacle sensor range
+  left_range = one.readLeftRangeSensor();    // read left obstacle sensor range
+  right_range = one.readRightRangeSensor();  // read right obstacle sensor range
 
   // if obstacle is near the left sensor - Upper limit range
-  if (rangeL >= maxRange) {
-    motR = -speed;
-    motL = speed;
-    //      delay(rotTime);
+  if (left_range >= max_range) {
+    right_speed = -speed;
+    left_speed = speed;
   }
   // if obstacle is near the right sensor - Upper limit range
-  else if (rangeR >= maxRange) {
-    motR = speed;
-    motL = -speed;
-    //      delay(rotTime);
+  else if (right_range >= max_range) {
+    right_speed = speed;
+    left_speed = -speed;
   }
   // If obstacle is far away it is ignored - Lower limit range
-  if (rangeL <= minRange && rangeR <= minRange) {
-    motR = speed;
-    motL = speed;
+  if ((left_range <= min_range) && (right_range <= min_range)) {
+    right_speed = speed;
+    left_speed = speed;
   }
   // If obstacle is in the active range
   else {
     // if obstacle is closer to the left sensor
-    if (rangeL > rangeR) {
-      // motL=speed;
-      motL = (speed + (int)((float)rangeL / 2.0));
-      motR = (speed - (int)((float)rangeL * (float)rangeGain));
-      if (motR < -speed) motR = -speed;
+    if (left_range > right_range) {
+      left_speed = (speed + (int)((float)left_range / 2.0));
+      right_speed = (speed - (int)((float)left_range * (float)linear_gain));
+      if (right_speed < -speed) {
+        right_speed = -speed;
+      }
     }
     // if obstacle is closer to the right sensor
     else {
-      // motR=speed;
-      motR = (speed + (int)((float)rangeR / 2.0));
-      motL = (speed - (int)((float)rangeR * (float)rangeGain));
-      if (motL < -speed) motL = -speed;
+      right_speed = (speed + (int)((float)right_range / 2.0));
+      left_speed = (speed - (int)((float)right_range * (float)linear_gain));
+      if (left_speed < -speed) {
+        left_speed = -speed;
+      }
     }
   }
 }
@@ -106,74 +108,70 @@ void menu() {
   one.lcd1("  Menu Config:  ");
   one.lcd2("PB1+ PB2- PB3ok");
   delay(500);
-  while (one.readButton() ==
-         3)  // Wait PB3 to be released <> Espera que se largue o botão 3
-  {
+  // Wait PB3 to be released <> Espera que se largue o botão 3
+  while (one.readButton() == 3) {
     delay(150);
   }
   //*****  Adjust sensor distance <> Ajustar a distância dos sensores  ******
   while (one.readButton() != 3) {
     readAndProcess();
     one.lcd1(" RgL SpL RgR SpR");
-    one.lcd2(rangeL, motL, rangeR, motR);
+    one.lcd2(left_range, left_speed, right_range, right_speed);
   }
-  while (one.readButton() ==
-         3)  // Wait PB3 to be released <> Espera que se largue o botão 3
-    one.lcd1("  Menu Config:  ");
+  // Wait PB3 to be released <> Espera que se largue o botão 3
+  while (one.readButton() == 3) one.lcd1("  Menu Config:  ");
 
   /****** Range mínimo para iniciar o desvio de obstáculos *****/
-  temp_var = (int)minRange;
+  var = (int)min_range;
   while (one.readButton() != 3) {
-    one.lcd2("  minRange: ", temp_var);
+    one.lcd2("  min_range: ", var);
     if (one.readButton() == 1) {
-      ++temp_var;
+      ++var;
       delay(150);
     }
     if (one.readButton() == 2) {
-      --temp_var;
+      --var;
       delay(150);
     }
   }
-  while (one.readButton() ==
-         3)  // Wait PB3 to be released <> Espera que se largue o botão 3
-    minRange = (byte)temp_var;
+  // Wait PB3 to be released <> Espera que se largue o botão 3
+  while (one.readButton() == 3) min_range = (byte)var;
 
   /****** Range máximo a partir do qual faz rotação ***********/
-  temp_var = (int)maxRange;
+  var = (int)max_range;
   while (one.readButton() != 3) {
-    one.lcd2("  maxRange: ", temp_var);
+    one.lcd2("  max_range: ", var);
     if (one.readButton() == 1) {
-      ++temp_var;
+      ++var;
       delay(150);
     }
     if (one.readButton() == 2) {
-      --temp_var;
+      --var;
       delay(150);
     }
   }
-  while (one.readButton() ==
-         3)  // Wait PB3 to be released <> Espera que se largue o botão 3
-    maxRange = (byte)temp_var;
+  // Wait PB3 to be released <> Espera que se largue o botão 3
+  while (one.readButton() == 3) max_range = (byte)var;
 
   /****** Maximum speed <> velObst Maxima ******************/
   temp_var = speed;
   while (one.readButton() != 3) {
     one.lcd2(" velObstMax: ", temp_var);
     if (one.readButton() == 1) {
-      ++temp_var;
+      ++var;
       delay(150);
     }
     if (one.readButton() == 2) {
-      --temp_var;
+      --var;
       delay(150);
     }
   }
-  while (one.readButton() ==
-         3)  // Wait PB3 to be released <> Espera que se largue o botão 3
-    speed = temp_var;
+  // Wait PB3 to be released <> Espera que se largue o botão 3
+  while (one.readButton() == 3) speed = var;
 
   //**** Linear gain kLinear <> Ganho linear kLinear ****
-  temp_var = (int)(rangeGain * 1000.0);
+  var = (int)(linear_gain * 1000.0);
+
   while (one.readButton() != 3) {
     one.lcd2(" DistGain: ", temp_var);
     if (one.readButton() == 1) {
@@ -185,9 +183,8 @@ void menu() {
       delay(150);
     }
   }
-  while (one.readButton() ==
-         3)  // Wait PB3 to be released <> Espera que se largue o botão 3
-    rangeGain = (float)temp_var / 1000.0;
+  // Wait PB3 to be released <> Espera que se largue o botão 3
+  while (one.readButton() == 3) linear_gain = (float)var / 1000.0;
 
   /**** Configuration end <> Termina Configuração *****/
   writeMenuEEPROM();  // Write control values to EEPROM <> Escrever valores de
@@ -203,50 +200,60 @@ void menu() {
 // Write Menu values on EEPROM <> Escrever valores na EEPROM
 void writeMenuEEPROM() {
   byte eeprom_address = 30;
-  int temp_var = 0;
+  int var = 0;
 
-  temp_var = speed;
-  EEPROM.write(eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
+  var = speed;
+  EEPROM.write(eeprom_address, lowByte(var));  // Guardar em EEPROM
   ++eeprom_address;
 
-  temp_var = (int)(rangeGain * 1000.0);
-  EEPROM.write(eeprom_address, highByte(temp_var));  // Guardar em EEPROM
+  var = (int)(linear_gain * 1000.0);
+  EEPROM.write(eeprom_address, highByte(var));  // Guardar em EEPROM
   ++eeprom_address;
-  EEPROM.write(eeprom_address, lowByte(temp_var));
-  ++eeprom_address;
-
-  temp_var = minRange;
-  EEPROM.write(eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
+  EEPROM.write(eeprom_address, lowByte(var));
   ++eeprom_address;
 
-  temp_var = maxRange;
-  EEPROM.write(eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
+  var = min_range;
+  EEPROM.write(eeprom_address, lowByte(var));  // Guardar em EEPROM
+  ++eeprom_address;
+
+  var = max_range;
+  EEPROM.write(eeprom_address, lowByte(var));  // Guardar em EEPROM
+
   ++eeprom_address;
 }
 
 // Read Menu values from EEPROM <> Ler valores da EEPROM
 void readMenuEEPROM() {
   byte eeprom_address = 30;
-  int temp_var = 0;
+  int var = 0;
 
   speed = (int)EEPROM.read(eeprom_address);
   ++eeprom_address;
 
-  temp_var = (int)EEPROM.read(eeprom_address);
+  var = (int)EEPROM.read(eeprom_address);
   ++eeprom_address;
-  temp_var = temp_var << 8;
-  temp_var += (int)EEPROM.read(eeprom_address);
+  var = var << 8;
+  var += (int)EEPROM.read(eeprom_address);
   ++eeprom_address;
-  rangeGain = (float)temp_var / 1000.0;
+  linear_gain = (float)var / 1000.0;
 
-  minRange = (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
-
-  maxRange = (int)EEPROM.read(eeprom_address);
+  min_range = (int)EEPROM.read(eeprom_address);
   ++eeprom_address;
 
-  if (speed == 255) speed = 10;
-  if (rangeGain < 0) rangeGain = 2.5;
-  if (minRange == 255) minRange = 1;
-  if (maxRange == 255) maxRange = 19;
+  max_range = (int)EEPROM.read(eeprom_address);
+
+  ++eeprom_address;
+
+  if (speed == 255) {
+    speed = 10;
+  }
+  if (linear_gain < 0) {
+    linear_gain = 2.5;
+  }
+  if (min_range == 255) {
+    min_range = 1;
+  }
+  if (max_range == 255) {
+    max_range = 19;
+  }
 }

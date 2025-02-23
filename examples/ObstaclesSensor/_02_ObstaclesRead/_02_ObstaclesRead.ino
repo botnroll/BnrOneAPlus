@@ -1,6 +1,6 @@
 /*
  This example was created by José Cruz (www.botnroll.com)
- on the 18th December 2024
+ on the 22th August 2022
 
  This code example is in the public domain.
  http://www.botnroll.com
@@ -14,31 +14,32 @@ The robot has new readings every 25ms (40 readings per second)
 Note: Valid for TSSP4056 IR sensors shipped with robots from 2023.
 */
 
-#include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
+#include <BnrOneAPlus.h>  // Bot'n Roll ONE A library
 #include <EEPROM.h>       // EEPROM reading and writing
-#include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
-BnrOneAPlus
-    one;  // declaration of object variable to control the Bot'n Roll ONE A+
+#include <SPI.h>          // SPI communication library required by BnrOne.cpp
+BnrOneAPlus one;          // object to control the Bot'n Roll ONE A Plus
 
 // constants definition
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
 
 void setup() {
-  Serial.begin(57600);    // set baud rate to 57600bps for printing values at
-                          // serial monitor.
-  one.spiConnect(SSPIN);  // start SPI communication module
-  one.stop();             // stop motors
-  one.obstacleSensorsEmitters(ON);  // activate IR emitters
+  Serial.begin(57600);       // set baud rate to 57600bps for printing values at
+                             // serial monitor.
+  one.spiConnect(SSPIN);     // start SPI communication module
+  one.stop();                // stop motors
+  one.obstacleEmitters(ON);  // activate IR emitters
 }
 
 void loop() {
-  byte rangeL = one.readLeftRangeSensor();   // read left obstacle sensor range
-  byte rangeR = one.readRightRangeSensor();  // read right obstacle sensor range
-  one.lcd1("Range Left : ", rangeL);
-  one.lcd2("Range Right: ", rangeR);
+  // read left obstacle sensor range
+  byte left_range = one.readLeftRangeSensor();
+  // read right obstacle sensor range
+  byte right_range = one.readRightRangeSensor();
+  one.lcd1("Left range: ", left_range);
+  one.lcd2("Right range: ", right_range);
   Serial.print("L: ");
-  Serial.print(rangeL);
+  Serial.print(left_range);
   Serial.print("   R: ");
-  Serial.println(rangeR);
+  Serial.println(right_range);
   delay(25);  // The robot has new readings every 25ms (40 readings per second)
 }
