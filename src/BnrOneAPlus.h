@@ -197,12 +197,20 @@ class BnrOneAPlus {
   void move(const int left_speed, const int right_speed) const;
 
   /**
+   * @brief sets the speed of the motors by specifying the rpm values
+   *
+   * @param left_rpm
+   * @param right_rpm
+   */
+  void moveRpm(const int left_rpm, const int right_rpm) const;
+
+  /**
    * @brief sets the speed of the motors by specifying the pwm values
    *
    * @param left_duty_cycle
    * @param right_duty_cycle
    */
-  void moveRAW(const int left_duty_cycle, cont int right_duty_cycle) const;
+  void moveRAW(const int left_duty_cycle, const int right_duty_cycle) const;
 
   /**
    * @brief sets the speed of a single motor
