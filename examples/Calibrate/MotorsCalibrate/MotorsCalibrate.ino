@@ -111,7 +111,7 @@ void sendValues() {
     Serial.println(encMin);
     Serial.println("  Calibrate Finished!!");
     while (1) {
-      one.lcd1("     Smotor_power: ", motor_power);
+      one.lcd1("Smotor_power: ", motor_power);
       one.lcd2("ctrlPulses: ", encMin);
       delay(2500);
       one.lcd1("Save values for ");
