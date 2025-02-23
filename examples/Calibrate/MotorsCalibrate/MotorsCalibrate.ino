@@ -84,9 +84,9 @@ void maxPulsesDetection() {
       }
     }
     one.stop();
-    left_enc_max = (int)((float)left_enc_max / 4.0);
-    right_enc_max = (int)((float)right_enc_max / 4.0);
-    a one.lcd2(0, left_enc_max, right_enc_max);
+    left_enc_max = (int)((float)left_enc_max);
+    right_enc_max = (int)((float)right_enc_max);
+    one.lcd2(0, left_enc_max, right_enc_max);
     Serial.print("  left_enc_max:");
     Serial.print(left_enc_max);
     Serial.print("  right_enc_max:");
