@@ -22,12 +22,12 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 void setup() {
   // setup routines -> runs only once when program starts
-  Serial.begin(57600);    // set baud rate to 57600bps for printing values at
-                          // serial monitor.
-  one.spiConnect(SSPIN);  // start SPI communication module
-  one.stop();             // stop motors
-  one.minBat(10.5);       // define de minimum battery voltage. Robot stops if
-                          // voltage is below the specified value!
+  Serial.begin(57600);       // set baud rate to 57600bps for printing values at
+                             // serial monitor.
+  one.spiConnect(SSPIN);     // start SPI communication module
+  one.stop();                // stop motors
+  one.setMinBatteryV(10.5);  // define de minimum battery voltage. Robot stops
+                             // if voltage is below the specified value!
 }
 
 void loop() {

@@ -202,9 +202,9 @@ void BnrOneAPlus::obstacleSensorsEmitters(const boolean state) const {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::setMinBatteryV(const float &batmin) const {
-  char data[sizeof(float)];              // 4bytes
-  memcpy(data, &batmin, sizeof batmin);  // send data
+void BnrOneAPlus::setMinBatteryV(const float min_battery_V) {
+  char data[sizeof(float)];                            // 4bytes
+  memcpy(data, &min_battery_V, sizeof min_battery_V);  // send data
   byte buffer[] = {
       KEY1, KEY2, (byte)data[0], (byte)data[1], (byte)data[2], (byte)data[3]};
   spiSendData(COMMAND_SET_BAT_MIN, buffer, sizeof(buffer));
