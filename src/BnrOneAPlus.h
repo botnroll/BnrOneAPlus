@@ -127,6 +127,13 @@ class BnrOneAPlus {
    */
   int* readLineSensor() const;
 
+  /**
+  * @brief reads the values of the encoders and resets their values
+  *
+  * @param out_left_encoder variable to store the left encoder reading
+  * @param out_right_encoder variable to store the right encoder reading
+  */
+  void readAndResetEncoders(int& out_left_encoder, int& out_right_encoder) const;
 
   /**
    * @brief reads the value of the left encoder and resets its value
@@ -222,7 +229,7 @@ class BnrOneAPlus {
    * @param out_left_encoder variable to store the left encoder reading
    * @param out_ight_encoder variable to store the right encoder reading
    */
-  void moveRpmGetEncodersGetEncoders(const int left_rpm, const int right_rpm, int& out_left_encoder, int& out_right_encoder) const;
+  void moveRpmGetEncoders(const int left_rpm, const int right_rpm, int& out_left_encoder, int& out_right_encoder) const;
 
   /**
    * @brief sets the speed of the motors by specifying the pwm values
@@ -376,6 +383,7 @@ class BnrOneAPlus {
  private:
   byte spiRequestByte(const byte command) const;
   int spiRequestWord(const byte command) const;
+  void spiRequestTwoWords(const byte command, int& out_int1, int& out_int2) const;
   float spiRequestFloat(const byte command) const;
   void spiSendDataOnly(const byte command,
                    const byte buffer[],

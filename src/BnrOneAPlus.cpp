@@ -99,6 +99,26 @@ float BnrOneAPlus::spiRequestFloat(const byte command) const {
   return f;
 }
 
+void BnrOneAPlus::spiRequestTwoWords(const byte command, int& out_int1, int& out_int2) const {
+  byte value[4] = {0, 0, 0, 0};
+  byte buffer[] = {command, KEY1, KEY2};
+  // Select the SPI Slave device to start communication.
+  digitalWrite(sspin_, LOW);
+  for (unsigned int i = 0; i < sizeof(buffer); ++i) {
+    SPI.transfer(buffer[i]);  // Send one byte
+    delayMicroseconds(DELAY_TR);
+  }
+  for (unsigned int i = 0; i < 4; ++i) {
+    value[i] = SPI.transfer(0x00);  // Reads one byte
+    delayMicroseconds(DELAY_TR);
+  }
+  digitalWrite(sspin_, HIGH);  // Close communication with slave device.
+  delayMicroseconds(DELAY_SS);
+
+  out_int1 = (value[0] << 8) + value[1];
+  out_int2 = (value[2] << 8) + value[3];
+}
+
 void BnrOneAPlus::spiSendDataOnly(const byte command,
   const byte buffer[],
   const byte num_bytes) const {
@@ -161,12 +181,8 @@ void BnrOneAPlus::moveRpmGetEncoders(const int left_rpm, const int right_rpm, in
     value[i] = (char)SPI.transfer(0x00);  // Reads one byte
     delayMicroseconds(DELAY_TR);
   }
-  left_encoder = value[0];
-  left_encoder = left_encoder << 8;
-  left_encoder += value[1];
-  right_encoder = value[2];
-  right_encoder = right_encoder << 8;
-  right_encoder += value[3];
+  left_encoder = (value[0] << 8) + value[1];
+  right_encoder = (value[2] << 8) + value[3];
 
   digitalWrite(sspin_, HIGH);  // Close communication
   delayMicroseconds(DELAY_SS);
@@ -307,6 +323,10 @@ byte BnrOneAPlus::readButton() const {
 
 float BnrOneAPlus::readBattery() const {
   return (float)((float)(spiRequestWord(COMMAND_BAT_READ)) / 50.7);
+}
+
+void BnrOneAPlus::readAndResetEncoders(int& out_left_encoder, int& out_right_encoder) const {
+    spiRequestTwoWords(COMMAND_ENCODERS_READ, out_left_encoder, out_right_encoder);
 }
 
 int BnrOneAPlus::readAndResetLeftEncoder() const {
