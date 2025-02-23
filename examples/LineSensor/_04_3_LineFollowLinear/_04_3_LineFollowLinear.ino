@@ -47,7 +47,7 @@ int extra_speed = 8;        // Curve outside wheel max speed limit <> Limite de
                             // velocidade da roda exterior na curva
 
 void setup() {
-  Serial.begin(57600);    // sets baud rate to 57600bps for printing values at
+  Serial.begin(115200);    // sets baud rate to 115200bps for printing values at
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
   // safety voltage for discharging the battery

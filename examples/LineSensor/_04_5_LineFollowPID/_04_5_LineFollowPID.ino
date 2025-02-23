@@ -241,7 +241,7 @@ void readMenuEEPROM() {
 }
 
 void setup() {
-  Serial.begin(57600);    // sets baud rate to 57600bps for printing values at
+  Serial.begin(115200);    // sets baud rate to 115200bps for printing values at
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
   one.setMinimumBatteryV(

@@ -25,7 +25,7 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 void setup() {
   Wire.begin();  // Start the I2C bus
-  Serial.begin(57600);
+  Serial.begin(115200);
   one.spiConnect(SSPIN);  // start SPI communication module
   one.stop();             // stop motors
   delay(500);

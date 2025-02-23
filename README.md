@@ -41,7 +41,7 @@ BnrOneAPlus one;           // declaration of object variable
 
 void setup() 
 {
-    Serial.begin(57600);     // set baud rate to 57600bps for printing values
+    Serial.begin(115200);     // set baud rate to 115200bps for printing values
     one.spiConnect(SSPIN);   // start SPI communication module
     one.stop();              // stop motors
 }

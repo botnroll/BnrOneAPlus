@@ -25,7 +25,7 @@ class Config {
   /**
    * @brief Prints the config values in the serial terminal
    * Note: You need to open a terminal serial connection to the Bot'n Roll One A
-   * with baudrate 57600
+   * with baudrate 115200
    */
   void Print() const;
 

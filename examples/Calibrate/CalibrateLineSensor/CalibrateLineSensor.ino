@@ -142,7 +142,7 @@ ISR(TIMER1_COMPA_vect) { time.update(); }
  * @param array
  */
 void printArray(const String& text, const int array[8]) {
-  Serial.begin(57600);
+  Serial.begin(115200);
   Serial.println(text);
   for (int i = 0; i < 8; ++i) {
     Serial.print(array[i]);
@@ -161,7 +161,7 @@ void printArray(const String& text, const int array[8]) {
  */
 template <class T>
 void printValue(const String& text, const T value) {
-  Serial.begin(57600);
+  Serial.begin(115200);
   Serial.print(text);
   Serial.println(value);
   Serial.end();
@@ -173,7 +173,7 @@ void printValue(const String& text, const T value) {
  * @param text
  */
 void printMsg(const String& text) {
-  Serial.begin(57600);
+  Serial.begin(115200);
   Serial.println(text);
   Serial.end();
 }

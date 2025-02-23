@@ -130,7 +130,7 @@ byte Config::LoadByte(byte eeprom_address, int& out_value) const {
 }
 
 void Config::PrintArray(const String& text, const int array[8]) const {
-  Serial.begin(57600);
+  Serial.begin(115200);
   Serial.println(text);
   for (int i = 0; i < 8; ++i) {
     Serial.print(array[i]);
@@ -141,7 +141,7 @@ void Config::PrintArray(const String& text, const int array[8]) const {
 }
 
 void Config::PrintValue(const String& text, const int value) const {
-  Serial.begin(57600);
+  Serial.begin(115200);
   Serial.println(text);
   Serial.println(value);
   Serial.end();

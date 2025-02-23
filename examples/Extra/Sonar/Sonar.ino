@@ -56,7 +56,7 @@ int Sonar() {
 
 void setup() {
   // setup routines
-  Serial.begin(57600);    // set baud rate to 115200bps for printing values in
+  Serial.begin(115200);    // set baud rate to 115200bps for printing values in
                           // serial monitor.
   one.spiConnect(SSPIN);  // start SPI module
   one.stop();             // stop motors
