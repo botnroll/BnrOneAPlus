@@ -143,7 +143,7 @@ void setup() {
   one.lcd1(" Press a button ");
   one.lcd2("   to start!    ");
   while (one.readButton() == 0);
-  one.lcd1("Power left_enc right_enc ");
+  one.lcd1("Power EncL EncR ");
 }
 
 void loop() {
