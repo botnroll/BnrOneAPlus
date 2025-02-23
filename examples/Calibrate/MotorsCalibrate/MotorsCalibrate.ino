@@ -15,7 +15,7 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 // constants definition
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
 
-int motor_power = 20;
+int motor_power = 40;
 int left_enc_max = 0;
 int right_enc_max = 0;
 bool error_flag = false;
@@ -28,7 +28,7 @@ void startMoveDetection() {
   unsigned long t1sec = millis() + 1000;
   while (!exit_flag) {
     if (millis() >= t1sec) {
-      t1sec += 1000;  // Every second
+      t1sec += 500;  // Every second
       one.moveRAW(motor_power, motor_power);
       left_enc = one.readAndResetLeftEncoder();
       right_enc = one.readAndResetRightEncoder();
