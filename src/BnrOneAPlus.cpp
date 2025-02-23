@@ -152,7 +152,7 @@ void BnrOneAPlus::moveRpm(const int left_rpm, const int right_rpm) const {
 void BnrOneAPlus::moveRpm(const int left_rpm, const int right_rpm, int& left_encoder, int& right_encoder) const {
   // Select the SPI Slave device to start communication.
   digitalWrite(sspin_, LOW); // Start communication
-  sendMoveRpm(COMMAND_MOVE_RPM, left_rpm, right_rpm);
+  sendMoveRpm(COMMAND_MOVE_RPM_R_ENC, left_rpm, right_rpm);
   byte value[4];
   int i = 0;
 
