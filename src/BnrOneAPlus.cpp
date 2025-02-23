@@ -189,7 +189,7 @@ void BnrOneAPlus::brake() const {
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::resetLeftEncoder() {
+void BnrOneAPlus::resetLeftEncoder() const {
   byte buffer[] = {KEY1, KEY2};
   spiSendData(COMMAND_ENCL_RESET, buffer, sizeof(buffer));
   delay(2);  // Wait while command is processed
@@ -213,7 +213,7 @@ void BnrOneAPlus::obstacleSensorsEmitters(const boolean state) const {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::setMinBatteryV(const float min_battery_V) {
+void BnrOneAPlus::setMinBatteryV(const float min_battery_V) const {
   char data[sizeof(float)];                            // 4bytes
   memcpy(data, &min_battery_V, sizeof min_battery_V);  // send data
   byte buffer[] = {
@@ -222,7 +222,7 @@ void BnrOneAPlus::setMinBatteryV(const float min_battery_V) {
   delay(25);  // Wait while command is processed
 }
 
-void BnrOneAPlus::setPid(const int &kp, const int &ki, const int &kd) const {
+void BnrOneAPlus::setPid(const int kp, const int ki, const int kd) const {
   byte buffer[] = {KEY1,
                    KEY2,
                    highByte(kp),
@@ -290,9 +290,9 @@ int BnrOneAPlus::readAndIncrementRightEncoder() const {
   return spiRequestWord(COMMAND_ENCR_INC);
 }
 
-void BnrOneAPlus::readFirmware(const byte *firm1,
-                               const byte *firm2,
-                               const byte *firm3) const {
+void BnrOneAPlus::readFirmware(byte *firm1,
+                               byte *firm2,
+                               byte *firm3) const {
   byte value[3] = {0, 0, 0};
   int k = 0;
   byte buffer[] = {KEY1, KEY2};
@@ -375,7 +375,7 @@ int BnrOneAPlus::readDBG(const byte index) const {
   return spiRequestWord(command);
 }
 
-float BnrOneAPlus::readDBGf() {
+float BnrOneAPlus::readDBGf() const {
   byte command = 0xB5;
 
   return spiRequestFloat(command);
@@ -405,7 +405,7 @@ void BnrOneAPlus::lcd1(const String &string_in) const {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(byte string_in[]) {
+void BnrOneAPlus::lcd1(const byte string_in[]) const {
   int i, a;
   byte buffer[18];
   char string1[19], string2[19];
@@ -426,7 +426,7 @@ void BnrOneAPlus::lcd1(byte string_in[]) {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(const char string_in[]) {
+void BnrOneAPlus::lcd1(const char string_in[]) const {
   int i, a;
   byte buffer[18];
   char string1[19], string2[19];
@@ -498,13 +498,14 @@ void BnrOneAPlus::lcd1(const long int number) const {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(const double number) const {
+void BnrOneAPlus::lcd1(const double number_in) const {
   int i;
   int intg;
   int dec;
   byte buffer[18];
   char string_in[19];
   bool flag_neg = 0;
+  double number = number_in;
 
   if (number < -0.0001) {
     flag_neg = 1;
@@ -603,13 +604,14 @@ void BnrOneAPlus::lcd1(const char string_in[], const long int number) const {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd1(const char string_in[], const double number) const {
+void BnrOneAPlus::lcd1(const char string_in[], const double number_in) const {
   int i, a, b;
   char string1[19];
   char string2[19];
   byte buffer[18];
   int intg, dec;
   bool flag_neg = 0;
+  double number = number_in;
 
   for (i = 0; i < 16; ++i) {
     string2[i] = string_in[i];
@@ -820,7 +822,7 @@ void BnrOneAPlus::lcd2(const byte string_in[]) const {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(const char string_in[]) {
+void BnrOneAPlus::lcd2(const char string_in[]) const {
   int i, a;
   byte buffer[18];
   char string1[19], string2[19];
@@ -892,14 +894,15 @@ void BnrOneAPlus::lcd2(const long int number) const {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(const double number) const {
+void BnrOneAPlus::lcd2(const double number_in) const {
   int i;
   int intg;
   int dec;
   byte buffer[18];
   char string_in[19];
   bool flag_neg = 0;
-
+  double number = number_in;
+  
   if (number < -0.0001) {
     flag_neg = 1;
     number *= -1.0;
@@ -996,13 +999,14 @@ void BnrOneAPlus::lcd2(const char string_in[], const long int number) const {
   delay(4);  // Wait while command is processed
 }
 
-void BnrOneAPlus::lcd2(const char string_in[], const double number) const {
+void BnrOneAPlus::lcd2(const char string_in[], const double number_in) const {
   int i, a, b;
   char string1[19];
   char string2[19];
   byte buffer[18];
   int intg, dec;
   bool flag_neg = 0;
+  double number = number_in;
 
   for (i = 0; i < 16; ++i) {
     string2[i] = string_in[i];

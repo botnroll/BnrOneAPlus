@@ -268,7 +268,7 @@ class BnrOneAPlus {
   void resetRightEncoder() const;
 
   // LCD Line 1 write routines
-  void lcd1(const String string) const;        //<-- writes a string to the LCD
+  void lcd1(const String& string) const;        //<-- writes a string to the LCD
   void lcd1(const byte string[]) const;        //<-- writes a string to the LCD
   void lcd1(const char string[]) const;        //<-- writes a string to the LCD
   void lcd1(const int number) const;           //<-- writes a number to the LCD
@@ -312,7 +312,7 @@ class BnrOneAPlus {
       const unsigned int num4) const;  //<-- writes four numbers to the LCD
 
   // LCD Line 2 write routines
-  void lcd2(const String string) const;        //<-- writes a string to the LCD
+  void lcd2(const String& string) const;       //<-- writes a string to the LCD
   void lcd2(const byte string[]) const;        //<-- writes a string to the LCD
   void lcd2(const char string[]) const;        //<-- writes a string to the LCD
   void lcd2(const int number) const;           //<-- writes a number to the LCD
