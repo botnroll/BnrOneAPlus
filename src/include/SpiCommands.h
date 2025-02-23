@@ -1,3 +1,5 @@
+#pragma once
+
 #define KEY1 0xAA  // key used in critical commands
 #define KEY2 0x55  // key used in critical commands
 // #define BRAKE_TORQUE 100
@@ -27,13 +29,14 @@
 #define COMMAND_BRAKE_SET_T 0xF5  // Stop motors setting brake torque
 #define COMMAND_SET_BAT_MIN 0xF4  // Set low battery voltage
 #define COMMAND_SET_PID 0xF3      // Set kp, ki, kd values for PID control
-#define COMMAND_MOVE_RAW \
-  0xF2  // Set motors calibration parameters (SPow, ks, ctrl_pulses)
+// Set motors calibration parameters (SPow, ks, ctrl_pulses)
+#define COMMAND_MOVE_RAW 0xF2
 #define COMMAND_SET_MOTORS 0xF1  // Save calibration data
 #define COMMAND_ENCL_RESET 0xF0  // Preset the value of encoder1
 #define COMMAND_ENCR_RESET 0xEF  // Preset the value of encoder2
 #define COMMAND_MOVE_RPM 0xEE    // Sends the speed of the motors in RPM
-#define COMMAND_MOVE_RPM_R_ENC 0xED // Sends the speed of the motors in RPM and requests the encoders readings
+// Sends the speed of the motors in RPM and requests the encoders readings
+#define COMMAND_MOVE_RPM_R_ENC 0xED
 #define COMMAND_FUTURE_USE4 0xEC
 #define COMMAND_BRAKE_MAX_T 0xEB  // Stop motors with MAX brake torque
 #define COMMAND_MOVE_1M 0xEA      // Move 1 motor
@@ -52,13 +55,15 @@
 #define COMMAND_ADC7 0xD8      // Read ADC7
 #define COMMAND_BAT_READ 0xD7  // Read ADC battery
 #define COMMAND_BUT_READ 0xD6  // Read ADC button
-#define COMMAND_OBSTACLES \
-  0xD5  // Read IR obstacle sensors -> RobertaLab compatibility
+// Read IR obstacle sensors -> RobertaLab compatibility
+#define COMMAND_OBSTACLES 0xD5
 #define COMMAND_FUTURE_USE7 0xD4
-#define COMMAND_ENCL 0xD3         // Read Encoder1 position
-#define COMMAND_ENCR 0xD2         // Read Encoder2 position
-#define COMMAND_ENCL_INC 0xD1     // Read Encoder1 Incremental value
-#define COMMAND_ENCR_INC 0xD0     // Read Encoder2 Incremental value
-#define COMMAND_LINE_READ 0xCF    // Read 16bytes line buffer at once
-#define COMMAND_RANGE_LEFT 0xCE   // Read IR obstacles distance range
-#define COMMAND_RANGE_RIGHT 0xCD  // Read IR obstacles distance range
+#define COMMAND_ENCL 0xD3          // Read Encoder1 position
+#define COMMAND_ENCR 0xD2          // Read Encoder2 position
+#define COMMAND_ENCL_INC 0xD1      // Read Encoder1 Incremental value
+#define COMMAND_ENCR_INC 0xD0      // Read Encoder2 Incremental value
+#define COMMAND_LINE_READ 0xCF     // Read 16bytes line buffer at once
+#define COMMAND_RANGE_LEFT 0xCE    // Read IR obstacles distance range
+#define COMMAND_RANGE_RIGHT 0xCD   // Read IR obstacles distance range
+#define COMMAND_ENCODERS_READ 0XCC // Read EncoderL + EncoderR in 1 request
+#define COMMAND_RANGES_READ 0XCB   // Read RangeL + RangeR in 1 request

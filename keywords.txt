@@ -35,8 +35,8 @@ calibrateLine	KEYWORD2
 sendCalibrate	KEYWORD2
 readAndResetLeftEncoder	KEYWORD2
 readAndResetRightEncoder	KEYWORD2
-readAndIncrementLeftEncoder	KEYWORD2
-readAndIncrementRightEncoder	KEYWORD2
+readIncrementalLeftEncoder	KEYWORD2
+readIncrementalRightEncoder	KEYWORD2
 servo1	KEYWORD2
 servo2	KEYWORD2
 obstacleSensorsEmitters	KEYWORD2

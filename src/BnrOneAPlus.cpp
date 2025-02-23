@@ -317,11 +317,11 @@ int BnrOneAPlus::readAndResetRightEncoder() const {
   return spiRequestWord(COMMAND_ENCR);
 }
 
-int BnrOneAPlus::readAndIncrementLeftEncoder() const {
+int BnrOneAPlus::readIncrementalLeftEncoder() const {
   return spiRequestWord(COMMAND_ENCL_INC);
 }
 
-int BnrOneAPlus::readAndIncrementRightEncoder() const {
+int BnrOneAPlus::readIncrementalRightEncoder() const {
   return spiRequestWord(COMMAND_ENCR_INC);
 }
 

@@ -1,3 +1,5 @@
+#pragma once
+
 /*Read Commands-> Computer to Bot'n Roll ONE A+*/
 #define COMMAND_ARDUINO_ANA0	0xBF //Read analog0 value
 #define COMMAND_ARDUINO_ANA1	0xBE //Read analog1 value

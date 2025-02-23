@@ -127,6 +127,7 @@ class BnrOneAPlus {
    */
   int* readLineSensor() const;
 
+
   /**
    * @brief reads the value of the left encoder and resets its value
    *
@@ -147,7 +148,7 @@ class BnrOneAPlus {
    *
    * @return int
    */
-  int readAndIncrementLeftEncoder() const;
+  int readIncrementalLeftEncoder() const;
 
   /**
    * @brief reads the value of the right encoder and keep it's current value
@@ -155,7 +156,7 @@ class BnrOneAPlus {
    *
    * @return int
    */
-  int readAndIncrementRightEncoder() const;
+  int readIncrementalRightEncoder() const;
 
   /**
    * @brief reads the value of the debug registers
