@@ -185,7 +185,7 @@ void loop() {
           break;
         case COMMAND_BAT_MIN:  //  0xF4 // Configure low battery level
           tempfloatp = (float *)trama.data;
-          one.setMinBatteryV*tempfloatp);
+          one.setMinBatteryV(*tempfloatp);
           break;
         case COMMAND_MOVE_PID:  //  0xF3 // Move motor with PID control
           break;

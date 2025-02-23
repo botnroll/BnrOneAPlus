@@ -177,8 +177,8 @@ void setup() {
   Serial.begin(57600);    // sets baud rate to 57600bps for printing values at
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
-  one.setMinBatteryVMINIMUM_BATTERY_V);  // safety voltage for discharging the battery
-  one.stop();                            // stop motors
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery safety voltage
+  one.stop();                             // stop motors
   readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
                      // controlo da EEPROM
   one.lcd1("Line Follow Quad");

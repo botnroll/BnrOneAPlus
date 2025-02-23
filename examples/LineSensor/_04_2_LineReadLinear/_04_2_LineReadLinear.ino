@@ -164,7 +164,7 @@ void setup() {
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
   one.stop();             // stop motors
-  one.setMinBatteryVMIN_BATTERY_V);  // safety voltage for discharging the battery
+  one.setMinBatteryV(MIN_BATTERY_V);  // battery safety voltage
   setupLine();  // read line calibrate values from EEPROM <> Ler valores de
                 // calibração da linha da EEPROM
 }
