@@ -44,6 +44,7 @@ void setup() {
   while (one.readButton() == 0);
   // Wait for button release <> Espera que largue o botão
   while (one.readButton() != 0);
+
   one.lcd1(" RgL SpL RgR SpR");
   tcycle = millis();  // Set start value for tcycle
 }
@@ -102,7 +103,7 @@ void readAndProcess() {
 }
 
 void menu() {
-  int var = 0;
+  int temp_var = 0;
   one.stop();
   one.lcd1("  Menu Config:  ");
   one.lcd2("PB1+ PB2- PB3ok");
@@ -153,9 +154,9 @@ void menu() {
   while (one.readButton() == 3) max_range = (byte)var;
 
   /****** Maximum speed <> velObst Maxima ******************/
-  var = speed;
+  temp_var = speed;
   while (one.readButton() != 3) {
-    one.lcd2(" velObstMax: ", var);
+    one.lcd2(" velObstMax: ", temp_var);
     if (one.readButton() == 1) {
       ++var;
       delay(150);
@@ -170,14 +171,15 @@ void menu() {
 
   //**** Linear gain kLinear <> Ganho linear kLinear ****
   var = (int)(linear_gain * 1000.0);
+
   while (one.readButton() != 3) {
-    one.lcd2(" DistGain: ", var);
+    one.lcd2(" DistGain: ", temp_var);
     if (one.readButton() == 1) {
-      var += 50;
+      temp_var += 50;
       delay(150);
     }
     if (one.readButton() == 2) {
-      var -= 50;
+      temp_var -= 50;
       delay(150);
     }
   }
@@ -216,6 +218,7 @@ void writeMenuEEPROM() {
 
   var = max_range;
   EEPROM.write(eeprom_address, lowByte(var));  // Guardar em EEPROM
+
   ++eeprom_address;
 }
 
@@ -238,6 +241,7 @@ void readMenuEEPROM() {
   ++eeprom_address;
 
   max_range = (int)EEPROM.read(eeprom_address);
+
   ++eeprom_address;
 
   if (speed == 255) {
