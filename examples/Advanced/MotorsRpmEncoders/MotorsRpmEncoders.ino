@@ -20,6 +20,10 @@
     one.moveRpm(200 + increment, 200 + increment, left_encoder, right_encoder);
     one.lcd1("Left: ", left_encoder);
     one.lcd2("Right: ", right_encoder);
+    Serial.print("Left: ");
+    Serial.print(left_encoder);
+    Serial.print(" Right: ");
+    Serial.println(right_encoder);
 }
 
  void setup() {
