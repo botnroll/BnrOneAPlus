@@ -7,7 +7,7 @@ namespace
 
 LineDetector::LineDetector()
   : _cfgLoaded(false), _previousLineValue(0), _config(Config()),
-    _scalingFactor({ 1, 1, 1, 1, 1, 1, 1, 1 })
+    _scalingFactor{ 1, 1, 1, 1, 1, 1, 1, 1 }
 {}
 
 int LineDetector::ComputeLine(int readings[8])

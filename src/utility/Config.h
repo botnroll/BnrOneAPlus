@@ -45,38 +45,38 @@ class Config {
   /**
    * @brief Set the Max Values
    *
-   * @param maxValues
+   * @param max_values
    */
-  void SetSensorMax(int maxValues[8]);
+  void SetSensorMax(const int max_values[8]);
 
   /**
    * @brief Set the Min Values
    *
-   * @param minValues
+   * @param min_values
    */
-  void SetSensorMin(int minValues[8]);
+  void SetSensorMin(const int min_values[8]);
 
   /**
    * @brief Set the Threshold
    *
    * @param threshold
    */
-  void SetThreshold(int threshold);
+  void SetThreshold(const int threshold);
 
   /**
    * @brief Set the Correction Factor
    *
-   * @param correctionFactor
+   * @param correction_factor
    */
-  void SetCorrectionFactor(int correctionFactor);
+  void SetCorrectionFactor(const int correction_factor);
 
-  inline int* GetSensorMin() const { return _sensorMin; };
+  inline const int* GetSensorMin() const { return sensor_min_; };
 
-  inline int* GetSensorMax() const { return _sensorMax; };
+  inline const int* GetSensorMax() const { return sensor_max_; };
 
-  inline int GetThreshold() const { return _threshold; };
+  inline int GetThreshold() const { return threshold_; };
 
-  inline int GetCorrectionFactor() const { return _correctionFactor; };
+  inline int GetCorrectionFactor() const { return correction_factor_; };
 
  private:
   void VerifyAndCorrectArray(int* array,
@@ -90,29 +90,29 @@ class Config {
                             const T max,
                             const T defaultValue);
 
-  byte LoadArrayValues(byte eeprom_address, int array[8]) const;
+  byte LoadArrayValues(byte eeprom_address, int out_array[8]) const;
 
-  byte LoadWord(byte eeprom_address, int& outValue) const;
+  byte LoadWord(byte eeprom_address, int& out_value) const;
 
-  byte LoadByte(byte eeprom_address, int& outValue) const;
+  byte LoadByte(byte eeprom_address, int& out_value) const;
 
-  void PrintArray(String text, int array[8]) const;
+  void PrintArray(const String& text, const int array[8]) const;
 
-  void PrintValue(String text, int value) const;
+  void PrintValue(const String& text, const int value) const;
 
-  byte SaveArrayValues(byte eeprom_address, int array[8]) const;
+  byte SaveArrayValues(byte eeprom_address, const int array[8]) const;
 
-  byte SaveWord(byte eeprom_address, int value) const;
+  byte SaveWord(byte eeprom_address, const int value) const;
 
-  byte SaveByte(byte eeprom_address, int value) const;
+  byte SaveByte(byte eeprom_address, const int value) const;
 
-  int _sensorMax[8] = {1023, 1023, 1023, 1023, 1023, 1023, 1023, 1023};
-  int _sensorMin[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-  int _threshold = 50;  // Line follower limit between white and black
-  int _correctionFactor = 6;
-  byte _initMemoryAddress = 100;
-  byte _sensorMaxMemAdd = _initMemoryAddress;
-  byte _sensorMinMemAdd = _initMemoryAddress + 16;
-  byte _thresholdMemAdd = _initMemoryAddress + 32;
-  byte _correctionFactorMemAdd = _initMemoryAddress + 34;
+  int sensor_max_[8] = {1023, 1023, 1023, 1023, 1023, 1023, 1023, 1023};
+  int sensor_min_[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+  int threshold_ = 50;  // Line follower limit between white and black
+  int correction_factor_ = 6;
+  byte init_memory_address_ = 100;
+  byte sensor_max_mem_add_ = init_memory_address_;
+  byte sensor_min_mem_add_ = init_memory_address_ + 16;
+  byte threshold_mem_add_ = init_memory_address_ + 32;
+  byte correction_factor_mem_add_ = init_memory_address_ + 34;
 };
