@@ -39,10 +39,10 @@ void setup() {
   one.obstacleSensorsEmitters(ON);  // activate IR emitters
   one.lcd1("Avoid Obstacles ");
   one.lcd2("Press a Button!!");
-  while (one.readButton() == 0)
-    ;  // Wait a button to be pressed <> Espera que pressione um botão
-  while (one.readButton() != 0)
-    ;  // Wait for button release <> Espera que largue o botão
+  while (one.readButton() ==
+         0);  // Wait a button to be pressed <> Espera que pressione um botão
+  while (one.readButton() !=
+         0);  // Wait for button release <> Espera que largue o botão
   one.lcd1(" RgL SpL RgR SpR");
   tcycle = millis();  // Set start value for tcycle
 }
@@ -101,7 +101,7 @@ void readAndProcess() {
 }
 
 void menu() {
-  int var = 0;
+  int temp_var = 0;
   one.stop();
   one.lcd1("  Menu Config:  ");
   one.lcd2("PB1+ PB2- PB3ok");
@@ -122,72 +122,72 @@ void menu() {
     one.lcd1("  Menu Config:  ");
 
   /****** Range mínimo para iniciar o desvio de obstáculos *****/
-  var = (int)minRange;
+  temp_var = (int)minRange;
   while (one.readButton() != 3) {
-    one.lcd2("  minRange: ", var);
+    one.lcd2("  minRange: ", temp_var);
     if (one.readButton() == 1) {
-      var++;
+      ++temp_var;
       delay(150);
     }
     if (one.readButton() == 2) {
-      var--;
+      --temp_var;
       delay(150);
     }
   }
   while (one.readButton() ==
          3)  // Wait PB3 to be released <> Espera que se largue o botão 3
-    minRange = (byte)var;
+    minRange = (byte)temp_var;
 
   /****** Range máximo a partir do qual faz rotação ***********/
-  var = (int)maxRange;
+  temp_var = (int)maxRange;
   while (one.readButton() != 3) {
-    one.lcd2("  maxRange: ", var);
+    one.lcd2("  maxRange: ", temp_var);
     if (one.readButton() == 1) {
-      var++;
+      ++temp_var;
       delay(150);
     }
     if (one.readButton() == 2) {
-      var--;
+      --temp_var;
       delay(150);
     }
   }
   while (one.readButton() ==
          3)  // Wait PB3 to be released <> Espera que se largue o botão 3
-    maxRange = (byte)var;
+    maxRange = (byte)temp_var;
 
   /****** Maximum speed <> velObst Maxima ******************/
-  var = speed;
+  temp_var = speed;
   while (one.readButton() != 3) {
-    one.lcd2(" velObstMax: ", var);
+    one.lcd2(" velObstMax: ", temp_var);
     if (one.readButton() == 1) {
-      var++;
+      ++temp_var;
       delay(150);
     }
     if (one.readButton() == 2) {
-      var--;
+      --temp_var;
       delay(150);
     }
   }
   while (one.readButton() ==
          3)  // Wait PB3 to be released <> Espera que se largue o botão 3
-    speed = var;
+    speed = temp_var;
 
   //**** Linear gain kLinear <> Ganho linear kLinear ****
-  var = (int)(rangeGain * 1000.0);
+  temp_var = (int)(rangeGain * 1000.0);
   while (one.readButton() != 3) {
-    one.lcd2(" DistGain: ", var);
+    one.lcd2(" DistGain: ", temp_var);
     if (one.readButton() == 1) {
-      var += 50;
+      temp_var += 50;
       delay(150);
     }
     if (one.readButton() == 2) {
-      var -= 50;
+      temp_var -= 50;
       delay(150);
     }
   }
   while (one.readButton() ==
          3)  // Wait PB3 to be released <> Espera que se largue o botão 3
-    rangeGain = (float)var / 1000.0;
+    rangeGain = (float)temp_var / 1000.0;
 
   /**** Configuration end <> Termina Configuração *****/
   writeMenuEEPROM();  // Write control values to EEPROM <> Escrever valores de
@@ -202,48 +202,48 @@ void menu() {
 
 // Write Menu values on EEPROM <> Escrever valores na EEPROM
 void writeMenuEEPROM() {
-  byte eepromADD = 30;
-  int var = 0;
+  byte eeprom_address = 30;
+  int temp_var = 0;
 
-  var = speed;
-  EEPROM.write(eepromADD, lowByte(var));  // Guardar em EEPROM
-  eepromADD++;
+  temp_var = speed;
+  EEPROM.write(eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
+  ++eeprom_address;
 
-  var = (int)(rangeGain * 1000.0);
-  EEPROM.write(eepromADD, highByte(var));  // Guardar em EEPROM
-  eepromADD++;
-  EEPROM.write(eepromADD, lowByte(var));
-  eepromADD++;
+  temp_var = (int)(rangeGain * 1000.0);
+  EEPROM.write(eeprom_address, highByte(temp_var));  // Guardar em EEPROM
+  ++eeprom_address;
+  EEPROM.write(eeprom_address, lowByte(temp_var));
+  ++eeprom_address;
 
-  var = minRange;
-  EEPROM.write(eepromADD, lowByte(var));  // Guardar em EEPROM
-  eepromADD++;
+  temp_var = minRange;
+  EEPROM.write(eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
+  ++eeprom_address;
 
-  var = maxRange;
-  EEPROM.write(eepromADD, lowByte(var));  // Guardar em EEPROM
-  eepromADD++;
+  temp_var = maxRange;
+  EEPROM.write(eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
+  ++eeprom_address;
 }
 
 // Read Menu values from EEPROM <> Ler valores da EEPROM
 void readMenuEEPROM() {
-  byte eepromADD = 30;
-  int var = 0;
+  byte eeprom_address = 30;
+  int temp_var = 0;
 
-  speed = (int)EEPROM.read(eepromADD);
-  eepromADD++;
+  speed = (int)EEPROM.read(eeprom_address);
+  ++eeprom_address;
 
-  var = (int)EEPROM.read(eepromADD);
-  eepromADD++;
-  var = var << 8;
-  var += (int)EEPROM.read(eepromADD);
-  eepromADD++;
-  rangeGain = (float)var / 1000.0;
+  temp_var = (int)EEPROM.read(eeprom_address);
+  ++eeprom_address;
+  temp_var = temp_var << 8;
+  temp_var += (int)EEPROM.read(eeprom_address);
+  ++eeprom_address;
+  rangeGain = (float)temp_var / 1000.0;
 
-  minRange = (int)EEPROM.read(eepromADD);
-  eepromADD++;
+  minRange = (int)EEPROM.read(eeprom_address);
+  ++eeprom_address;
 
-  maxRange = (int)EEPROM.read(eepromADD);
-  eepromADD++;
+  maxRange = (int)EEPROM.read(eeprom_address);
+  ++eeprom_address;
 
   if (speed == 255) speed = 10;
   if (rangeGain < 0) rangeGain = 2.5;
