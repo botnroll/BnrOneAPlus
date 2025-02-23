@@ -33,7 +33,7 @@
 #define COMMAND_ENCL_RESET 0xF0  // Preset the value of encoder1
 #define COMMAND_ENCR_RESET 0xEF  // Preset the value of encoder2
 #define COMMAND_MOVE_RPM 0xEE    // Sends the speed of the motors in RPM
-#define COMMAND_FUTURE_USE3 0xED
+#define COMMAND_MOVE_RPM_R_ENC 0xED // Sends the speed of the motors in RPM and requests the encoders readings
 #define COMMAND_FUTURE_USE4 0xEC
 #define COMMAND_BRAKE_MAX_T 0xEB  // Stop motors with MAX brake torque
 #define COMMAND_MOVE_1M 0xEA      // Move 1 motor

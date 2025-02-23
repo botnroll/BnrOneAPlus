@@ -49,7 +49,7 @@ byte BnrOneAPlus::spiRequestByte(const byte command) const {
 
 int BnrOneAPlus::spiRequestWord(const byte command) const {
   byte value[2] = {0, 0};
-  int i;
+  int i = 0;
   byte buffer[] = {KEY1, KEY2};
   byte num_bytes = 2;
   // Select the SPI Slave device to start communication.
@@ -66,10 +66,10 @@ int BnrOneAPlus::spiRequestWord(const byte command) const {
   }
   digitalWrite(sspin_, HIGH);  // Close communication with slave device.
   delayMicroseconds(DELAY_SS);
-  i = 0;
+
   i = value[0];
   i = i << 8;
-  i = i + value[1];
+  i += value[1];
 
   return i;
 }
@@ -99,18 +99,23 @@ float BnrOneAPlus::spiRequestFloat(const byte command) const {
   return f;
 }
 
-void BnrOneAPlus::spiSendData(const byte command,
-                              const byte buffer[],
-                              const byte num_bytes) const {
-  // Select the SPI Slave device to start communication.
-  digitalWrite(sspin_, LOW);
+void BnrOneAPlus::spiSendDataOnly(const byte command,
+  const byte buffer[],
+  const byte num_bytes) const {
   SPI.transfer(command);  // Send one byte
   delayMicroseconds(DELAY_TR);
   for (int k = 0; k < num_bytes; k++) {
-    SPI.transfer(buffer[k]);  // Send one byte
-    delayMicroseconds(DELAY_TR);
+      SPI.transfer(buffer[k]);  // Send one byte
+      delayMicroseconds(DELAY_TR);
   }
-  digitalWrite(sspin_, HIGH);  // Close communication with slave device.
+}
+
+void BnrOneAPlus::spiSendData(const byte command,
+                              const byte buffer[],
+                              const byte num_bytes) const {
+  digitalWrite(sspin_, LOW); // Start communication
+  spiSendDataOnly(command, buffer, num_bytes);
+  digitalWrite(sspin_, HIGH);  // Close communication
   delayMicroseconds(DELAY_SS);
 }
 
@@ -126,15 +131,45 @@ void BnrOneAPlus::move(const int left_speed, const int right_speed) const {
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::moveRpm(const int left_rpm, const int right_rpm) const {
+void BnrOneAPlus::sendMoveRpm(const byte command, const int left_rpm, const int right_rpm) const{
   byte buffer[] = {KEY1,
-                   KEY2,
-                   highByte(left_rpm),
-                   lowByte(left_rpm),
-                   highByte(right_rpm),
-                   lowByte(right_rpm)};
-  spiSendData(COMMAND_MOVE_RPM, buffer, sizeof(buffer));
-  delay(2);  // Wait while command is processed
+    KEY2,
+    highByte(left_rpm),
+    lowByte(left_rpm),
+    highByte(right_rpm),
+    lowByte(right_rpm)};
+    spiSendDataOnly(command, buffer, sizeof(buffer));
+}
+
+void BnrOneAPlus::moveRpm(const int left_rpm, const int right_rpm) const {
+  digitalWrite(sspin_, LOW); // Start communication
+  sendMoveRpm(COMMAND_MOVE_RPM, left_rpm, right_rpm);
+  digitalWrite(sspin_, HIGH);  // Close communication
+  delayMicroseconds(DELAY_SS);
+  delay(2);
+}
+
+void BnrOneAPlus::moveRpm(const int left_rpm, const int right_rpm, int& left_encoder, int& right_encoder) const {
+  // Select the SPI Slave device to start communication.
+  digitalWrite(sspin_, LOW); // Start communication
+  sendMoveRpm(COMMAND_MOVE_RPM, left_rpm, right_rpm);
+  byte value[4];
+  int i = 0;
+
+  delayMicroseconds(DELAY_TR);
+  for (i = 0; i < 4; ++i) {
+    value[i] = (char)SPI.transfer(0x00);  // Reads one byte
+    delayMicroseconds(DELAY_TR);
+  }
+  left_encoder = value[0];
+  left_encoder = left_encoder << 8;
+  left_encoder += value[1];
+  right_encoder = value[2];
+  right_encoder = right_encoder << 8;
+  right_encoder += value[3];
+
+  digitalWrite(sspin_, HIGH);  // Close communication
+  delayMicroseconds(DELAY_SS);
 }
 
 void BnrOneAPlus::moveRAW(const int left_duty_cycle,
@@ -902,7 +937,7 @@ void BnrOneAPlus::lcd2(const double number_in) const {
   char string_in[19];
   bool flag_neg = 0;
   double number = number_in;
-  
+
   if (number < -0.0001) {
     flag_neg = 1;
     number *= -1.0;

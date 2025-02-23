@@ -197,12 +197,31 @@ class BnrOneAPlus {
   void move(const int left_speed, const int right_speed) const;
 
   /**
+   * @brief Helper method to send the right move_rpm command together with left and right rpm values
+   *
+   * @param command one of the available move rpm commands
+   * @param left_rpm
+   * @param right_rpm
+   */
+  void sendMoveRpm(const byte command, const int left_rpm, const int right_rpm) const;
+
+  /**
    * @brief sets the speed of the motors by specifying the rpm values
    *
    * @param left_rpm
    * @param right_rpm
    */
   void moveRpm(const int left_rpm, const int right_rpm) const;
+
+  /**
+   * @brief sets the speed of the motors by specifying the rpm values and waits for the encoders readings
+   *
+   * @param left_rpm speed of the left motor
+   * @param right_rpm speed of the right motor
+   * @param out_left_encoder variable to store the left encoder reading
+   * @param out_ight_encoder variable to store the right encoder reading
+   */
+  void moveRpm(const int left_rpm, const int right_rpm, int& out_left_encoder, int& out_right_encoder) const;
 
   /**
    * @brief sets the speed of the motors by specifying the pwm values
@@ -357,9 +376,12 @@ class BnrOneAPlus {
   byte spiRequestByte(const byte command) const;
   int spiRequestWord(const byte command) const;
   float spiRequestFloat(const byte command) const;
-  void spiSendData(const byte command,
+  void spiSendDataOnly(const byte command,
                    const byte buffer[],
                    const byte num_bytes) const;
+  void spiSendData(const byte command,
+                    const byte buffer[],
+                    const byte num_bytes) const;
   byte sspin_;
   LineDetector line_detector_;
 };
