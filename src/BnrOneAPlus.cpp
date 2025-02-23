@@ -126,6 +126,17 @@ void BnrOneAPlus::move(const int left_speed, const int right_speed) const {
   delay(2);  // Wait while command is processed
 }
 
+void BnrOneAPlus::moveRpm(const int left_rpm, const int right_rpm) const {
+  byte buffer[] = {KEY1,
+                   KEY2,
+                   highByte(left_rpm),
+                   lowByte(left_rpm),
+                   highByte(right_rpm),
+                   lowByte(right_rpm)};
+  spiSendData(COMMAND_MOVE_RPM, buffer, sizeof(buffer));
+  delay(2);  // Wait while command is processed
+}
+
 void BnrOneAPlus::moveRAW(const int left_duty_cycle,
                           const int right_duty_cycle) const {
   byte leftPower_H = highByte(left_duty_cycle);

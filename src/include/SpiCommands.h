@@ -32,7 +32,7 @@
 #define COMMAND_SET_MOTORS 0xF1  // Save calibration data
 #define COMMAND_ENCL_RESET 0xF0  // Preset the value of encoder1
 #define COMMAND_ENCR_RESET 0xEF  // Preset the value of encoder2
-#define COMMAND_FUTURE_USE2 0xEE
+#define COMMAND_MOVE_RPM 0xEE    // Sends the speed of the motors in RPM
 #define COMMAND_FUTURE_USE3 0xED
 #define COMMAND_FUTURE_USE4 0xEC
 #define COMMAND_BRAKE_MAX_T 0xEB  // Stop motors with MAX brake torque
