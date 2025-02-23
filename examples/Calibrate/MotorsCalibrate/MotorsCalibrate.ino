@@ -10,17 +10,120 @@
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
 #include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
-BnrOneAPlus
-    one;  // declaration of object variable to control the Bot'n Roll ONE A+
+BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
 
-int mPow = 20;
-int encLMax = 0;
-int encRMax = 0;
-bool errorFlag = false;
+int motor_power = 20;
+int left_enc_max = 0;
+int right_enc_max = 0;
+bool error_flag = false;
 int ks = 750;
+
+void startMoveDetection() {
+  bool exit_flag = false;
+  int left_enc = one.readAndResetLeftEncoder();    // Clear encoder count
+  int right_enc = one.readAndResetRightEncoder();  // Clear encoder count
+  unsigned long t1sec = millis() + 1000;
+  while (!exit_flag) {
+    if (millis() >= t1sec) {
+      t1sec += 1000;  // Every second
+      one.moveRAW(motor_power, motor_power);
+      left_enc = one.readAndResetLeftEncoder();
+      right_enc = one.readAndResetRightEncoder();
+      one.lcd2(motor_power, left_enc, right_enc);
+      Serial.print("  Pow:");
+      Serial.print(motor_power);
+      Serial.print("  left_enc:");
+      Serial.print(left_enc);
+      Serial.print("  right_enc:");
+      Serial.print(right_enc);
+      Serial.println();
+      if (abs(left_enc) < 100 || abs(right_enc) < 100)
+        motor_power++;  // if motors are not moving
+      else {
+        if (left_enc < 0) {  // if encoderL is Not ok
+          one.lcd1("Motor 1 -> ERROR");
+          Serial.println("ERROR: Motor 1 encoder is counting in reverse!!");
+          error_flag = true;
+        } else if (right_enc < 0) {  // if encoderR is Not ok
+          one.lcd2("Motor 2 -> ERROR");
+          Serial.println("ERROR: Motor 2 encoder is counting in reverse!!");
+          error_flag = true;
+        }
+        exit_flag = true;
+      }
+    }
+  }
+}
+
+void maxPulsesDetection() {
+  unsigned long t_cycle;
+  unsigned long end_time;
+  if (!error_flag) {
+    one.lcd2(100, 0, 0);
+    one.moveRAW(100, 100);
+    delay(1500);
+    t_cycle = millis();
+    end_time = millis() + 5000;
+    int left_enc = one.readAndResetLeftEncoder();    // Clear encoder count
+    int right_enc = one.readAndResetRightEncoder();  // Clear encoder count
+    while (millis() < end_time) {
+      if (millis() >= t_cycle) {
+        t_cycle += 25;
+        left_enc = one.readAndResetLeftEncoder();
+        right_enc = one.readAndResetRightEncoder();
+        if (left_enc > left_enc_max) left_enc_max = left_enc;
+        if (right_enc > right_enc_max) right_enc_max = right_enc;
+        Serial.print("  left_enc:");
+        Serial.print(left_enc);
+        Serial.print("  right_enc:");
+        Serial.print(right_enc);
+        Serial.println();
+      }
+    }
+    one.stop();
+    left_enc_max = (int)((float)left_enc_max / 4.0);
+    right_enc_max = (int)((float)right_enc_max / 4.0);
+    a one.lcd2(0, left_enc_max, right_enc_max);
+    Serial.print("  left_enc_max:");
+    Serial.print(left_enc_max);
+    Serial.print("  right_enc_max:");
+    Serial.print(right_enc_max);
+    delay(2000);
+  }
+}
+
+void sendValues() {
+  int encMin = 30000;  // Find minimum encoder value
+  if (!error_flag) {
+    if (left_enc_max < encMin) encMin = left_enc_max;
+    if (right_enc_max < encMin) encMin = right_enc_max;
+    one.setMotors(motor_power, ks, encMin);
+    Serial.println();
+    Serial.println(
+        "  Save values for void setMotors(int Smotor_power, int Ks, int "
+        "ctrlPulses);");
+    Serial.print("  Smotor_power:");
+    Serial.println(motor_power);
+    Serial.print("  ctrlPulses:");
+    Serial.println(encMin);
+    Serial.println("  Calibrate Finished!!");
+    while (1) {
+      one.lcd1("     Smotor_power: ", motor_power);
+      one.lcd2("ctrlPulses: ", encMin);
+      delay(2500);
+      one.lcd1("Save values for ");
+      one.lcd2("  setMotors();  ");
+      delay(2500);
+      one.lcd1("  Calibration   ");
+      one.lcd2("   finished!    ");
+      delay(2500);
+    }
+  }
+  while (1);
+}
 
 void setup() {
   Serial.begin(115200);   // set baud rate to 57600bps for printing values at
@@ -50,108 +153,4 @@ void loop() {
   maxPulsesDetection();
   // 3-Send values to PIC18F45K22
   sendValues();
-}
-
-void startMoveDetection() {
-  bool exitFlag = false;
-  int encL = one.readAndResetLeftEncoder();   // Clear encoder count
-  int encR = one.readAndResetRightEncoder();  // Clear encoder count
-  unsigned long t1sec = millis() + 1000;
-  while (!exitFlag) {
-    if (millis() >= t1sec) {
-      t1sec += 1000;  // Every second
-      one.moveRAW(mPow, mPow);
-      encL = one.readAndResetLeftEncoder();
-      encR = one.readAndResetRightEncoder();
-      one.lcd2(mPow, encL, encR);
-      Serial.print("  Pow:");
-      Serial.print(mPow);
-      Serial.print("  EncL:");
-      Serial.print(encL);
-      Serial.print("  EncR:");
-      Serial.print(encR);
-      Serial.println();
-      if (abs(encL) < 100 || abs(encR) < 100)
-        mPow++;  // if motors are not moving
-      else {
-        if (encL < 0) {  // if encoderL is Not ok
-          one.lcd1("Motor 1 -> ERROR");
-          Serial.println("ERROR: Motor 1 encoder is counting in reverse!!");
-          errorFlag = true;
-        } else if (encR < 0) {  // if encoderR is Not ok
-          one.lcd2("Motor 2 -> ERROR");
-          Serial.println("ERROR: Motor 2 encoder is counting in reverse!!");
-          errorFlag = true;
-        }
-        exitFlag = true;
-      }
-    }
-  }
-}
-
-void maxPulsesDetection() {
-  unsigned long tCycle;
-  unsigned long endTime;
-  if (!errorFlag) {
-    one.lcd2(100, 0, 0);
-    one.moveRAW(100, 100);
-    delay(1500);
-    tCycle = millis();
-    endTime = millis() + 5000;
-    int encL = one.readAndResetLeftEncoder();   // Clear encoder count
-    int encR = one.readAndResetRightEncoder();  // Clear encoder count
-    while (millis() < endTime) {
-      if (millis() >= tCycle) {
-        tCycle += 25;
-        encL = one.readAndResetLeftEncoder();
-        encR = one.readAndResetRightEncoder();
-        if (encL > encLMax) encLMax = encL;
-        if (encR > encRMax) encRMax = encR;
-        Serial.print("  EncL:");
-        Serial.print(encL);
-        Serial.print("  EncR:");
-        Serial.print(encR);
-        Serial.println();
-      }
-    }
-    one.stop();
-    encLMax = (int)((float)encLMax / 4.0);
-    encRMax = (int)((float)encRMax / 4.0);
-    a one.lcd2(0, encLMax, encRMax);
-    Serial.print("  EncLMax:");
-    Serial.print(encLMax);
-    Serial.print("  EncRMax:");
-    Serial.print(encRMax);
-    delay(2000);
-  }
-}
-
-void sendValues() {
-  int encMin = 30000;  // Find minimum encoder value
-  if (!errorFlag) {
-    if (encLMax < encMin) encMin = encLMax;
-    if (encRMax < encMin) encMin = encRMax;
-    one.setMotors(mPow, ks, encMin);
-    Serial.println();
-    Serial.println(
-        "  Save values for void setMotors(int motor_power, int ks, int "
-        "ctrl_pulses);");
-    Serial.print("  motor_power:");
-    Serial.println(mPow);
-    Serial.print("  ctrl_pulses:");
-    Serial.println(encMin);
-    Serial.println("  Calibrate Finished!!");
-    while (1) {
-      one.lcd1("     motor_power: ", mPow);
-      one.lcd2("ctrl_pulses: ", encMin);
-      delay(2500);
-      one.lcd1("Save values for ");
-      one.lcd2("  setMotors();  ");
-      delay(2500);
-      one.lcd1("  Calibration   ");
-      one.lcd2("   finished!    ");
-      delay(2500);
-    }
-  }
-  while (1);
 }
