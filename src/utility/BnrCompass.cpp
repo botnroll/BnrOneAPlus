@@ -12,20 +12,20 @@
 ///////////////////////////////////////////////////////////////////////
 void BnrCompass::i2cConnect(byte sensorAddress)
 {
-  _sensorAddress = sensorAddress;
+  sensorAddress_ = sensorAddress;
 	Wire.begin();                           // join i2c bus (address optional for master)
 }
 
 
-float BnrCompass::read_bearing()
+float BnrCompass::readBearing()
 {
-  byte highByte, lowByte;  // highByte and lowByte store the bearing and fine stores decimal place of bearing
+  byte high_byte, low_byte;  // highByte and low_byte store the bearing and fine stores decimal place of bearing
 
-   Wire.beginTransmission(_sensorAddress);    //start communication with CMPS11
+   Wire.beginTransmission(sensorAddress_);    //start communication with CMPS11
    Wire.write(2);                      //Send the register we wish to start reading from
    Wire.endTransmission();
 
-   Wire.requestFrom(_sensorAddress, 2);       // Request 4 bytes from CMPS11
+   Wire.requestFrom(sensorAddress_, 2);       // Request 4 bytes from CMPS11
    
   unsigned long startTime = millis();
   while (Wire.available() < 2) {
@@ -34,21 +34,21 @@ float BnrCompass::read_bearing()
       return -1; // Return an error value (e.g., -1)
     }
   }
-  highByte = Wire.read();
-  lowByte = Wire.read();
+  high_byte = Wire.read();
+  low_byte = Wire.read();
    
-  return (float)((highByte<<8)+lowByte)/10;
+  return (float)((high_byte<<8)+low_byte)/10;
 }
 
-char BnrCompass::read_roll()
+char BnrCompass::readRoll()
 {
   char roll;       // Store  roll values of CMPS11, chars are used because they support signed value
 
-  Wire.beginTransmission(_sensorAddress);     //start communication with CMPS11
+  Wire.beginTransmission(sensorAddress_);     //start communication with CMPS11
   Wire.write(5);                       //Send the register we wish to start reading from
   Wire.endTransmission();
 
-  Wire.requestFrom(_sensorAddress, 1);        // Request 4 bytes from CMPS11
+  Wire.requestFrom(sensorAddress_, 1);        // Request 4 bytes from CMPS11
   unsigned long startTime = millis();
   while (Wire.available() < 1) {
     if (millis() - startTime > 100) { // Timeout after 100ms
@@ -60,15 +60,15 @@ char BnrCompass::read_roll()
   return roll;
 }
 
-char BnrCompass::read_pitch()
+char BnrCompass::readPitch()
 {
   char pitch;       // Store pitch values of CMPS11, chars are used because they support signed value
 
-   Wire.beginTransmission(_sensorAddress);     //start communication with CMPS11
+   Wire.beginTransmission(sensorAddress_);     //start communication with CMPS11
    Wire.write(4);                       //Send the register we wish to start reading from
    Wire.endTransmission();
 
-   Wire.requestFrom(_sensorAddress, 1);        // Request 4 bytes from CMPS11
+   Wire.requestFrom(sensorAddress_, 1);        // Request 4 bytes from CMPS11
    unsigned long startTime = millis();
    while (Wire.available() < 1) {
     if (millis() - startTime > 100) { // Timeout after 100ms
