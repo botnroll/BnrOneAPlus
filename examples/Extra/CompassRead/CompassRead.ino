@@ -26,7 +26,7 @@ BnrCompass compass; // declaration of object variable to control the CMPS11 comp
 
 void setup()
 {
-  Serial.begin(57600);
+  Serial.begin(115200);
   one.spiConnect(SSPIN);   // start SPI communication module
   one.stop();              // stop motors
   compass.i2cConnect(ADDRESS);
