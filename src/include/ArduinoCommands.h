@@ -24,3 +24,6 @@
 #define COMMAND_ARDUINO_SNR     0xAB //Read Sonar
 #define COMMAND_ARDUINO_GRP1    0xAA //Read gripper1
 #define COMMAND_ARDUINO_GRP2    0x9F //Read gripper2
+
+#define COMMAND_READ_ALL_SENSORS    0xFF //Read All sensors
+#define COMMAND_READ_COLOR_SENSOR    0xC0 //Read Color sensor
