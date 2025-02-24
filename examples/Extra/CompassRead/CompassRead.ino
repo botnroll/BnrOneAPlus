@@ -38,28 +38,17 @@ void loop() {
   char roll, pitch;
   char temp[20];
 
-   bearing = compass.read_bearing();
-   roll = compass.read_roll();
-   pitch = compass.read_pitch();
-   bearing = compass.read_bearing();
-   roll = compass.read_roll();
-   pitch = compass.read_pitch();
-
-  Serial.print("Bearing:");
-  Serial.print(bearing);
-  Serial.print("   roll:");
-  Serial.print((int)roll);
-  Serial.print("   pitch:");
-  Serial.println((int)pitch);
-
+  bearing = compass.read_bearing();
+  roll = compass.read_roll();
+  pitch = compass.read_pitch();
+  
   one.lcd1("Bearing: ", bearing);
   sprintf(temp, "Rol:%d Pit:%d      ", (int)roll, (int)pitch);
   one.lcd2(temp);
 
+  Serial.print("Bearing:"); Serial.print(bearing);
+  Serial.print("   roll:"); Serial.print((int)roll);
+  Serial.print("   pitch:"); Serial.println((int)pitch);
+  
   delay(50);
-   Serial.print("Bearing:"); Serial.print(bearing);
-   Serial.print("   roll:"); Serial.print((int)roll);
-   Serial.print("   pitch:"); Serial.println((int)pitch);
-    
-   delay(50);
 }
