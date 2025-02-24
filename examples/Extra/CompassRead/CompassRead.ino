@@ -18,6 +18,7 @@
 
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 BnrCompass compass; // declaration of object variable to control the CMPS11 compass
+BnrCompass compass; // declaration of object variable to control the CMPS11 compass
 
 // constants definition
 #define SSPIN 2       // Slave Select (SS) pin for SPI communication
@@ -37,6 +38,9 @@ void loop() {
   char roll, pitch;
   char temp[20];
 
+   bearing = compass.read_bearing();
+   roll = compass.read_roll();
+   pitch = compass.read_pitch();
    bearing = compass.read_bearing();
    roll = compass.read_roll();
    pitch = compass.read_pitch();
