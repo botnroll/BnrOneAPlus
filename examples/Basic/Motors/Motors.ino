@@ -11,7 +11,6 @@
  */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A
 
@@ -23,6 +22,10 @@ void setup() {
                           // serial monitor.
   one.spiConnect(SSPIN);  // start SPI communication module
   one.stop();             // stop motors
+  one.lcd1(" Motors Testing ");
+  one.lcd2(" Press a button ");
+  // Wait a button to be pushed <> Espera que pressione um botão
+  while (one.readButton() == 0);
 }
 
 void loop() {

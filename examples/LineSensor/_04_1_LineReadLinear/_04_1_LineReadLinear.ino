@@ -1,6 +1,6 @@
 /**
  * This example was created by José Cruz (www.botnroll.com) on October 2016
- * Updated on January 2019 by José Cruz
+ *  Updated on February 2025 by José Cruz
  *
  * This code example is in the public domain.
  * http://www.botnroll.com
@@ -27,10 +27,10 @@
  *
  */
 
-#include <BnrOneA.h>  // Bot'n Roll ONE A library
+#include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
 #include <EEPROM.h>   // EEPROM reading and writing
 #include <SPI.h>      // SPI communication library required by BnrOne.cpp
-BnrOneA one;  // declaration of object variable to control the Bot'n Roll ONE A
+BnrOneAPlus one;  // declaration of object variable to control the Bot'n Roll ONE A
 
 // constants definitions
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication

@@ -1,6 +1,5 @@
 #include "BnrOneAPlus.h"
 
-#include "EEPROM.h"
 #include "SPI.h"
 #include "include/ArduinoCommands.h"
 #include "include/SpiCommands.h"
@@ -24,6 +23,7 @@ void BnrOneAPlus::spiConnect(const byte sspin) {
   // SPI in hold state by pulling SS high.
   digitalWrite(sspin_, HIGH);
   delayMicroseconds(DELAY_SS);
+  delay(1); //Necessary for stability on a arduino reset
 }
 
 byte BnrOneAPlus::spiRequestByte(const byte command) const {

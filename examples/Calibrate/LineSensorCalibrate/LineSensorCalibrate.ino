@@ -1,6 +1,7 @@
 /**
  * This example was created by José Cruz on October 2016
- * Updated on January 2023 by José Cruz
+ * Updated on January 2025 by Nino Pereira
+ * 
  * This code example is in the public domain.
  * http://www.botnroll.com
  *

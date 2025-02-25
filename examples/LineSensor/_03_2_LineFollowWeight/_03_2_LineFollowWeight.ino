@@ -1,6 +1,7 @@
 /**
  * This example was created by José Cruz on December 2024
- *
+ *  Updated on February 2025 by José Cruz
+ * 
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -16,7 +17,6 @@
  */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
@@ -36,8 +36,14 @@ void setup() {
   one.spiConnect(SSPIN);  // starts the SPI communication module
   one.stop();             // stop motors
   // safety voltage for discharging the battery
+  one.stop();             // stop motors
   one.setMinBatteryV(MIN_BATTERY_V);
-  delay(1000);
+  one.lcd1(" Bot'n Roll ONE");
+  one.lcd2("Press a button!");
+  // Wait for a button to be pressed to move motors
+  // Espera pressionar um botão para mover motores
+  while (one.readButton() == 0);
+  one.lcd2("Line Following!");
 }
 
 void loop() {

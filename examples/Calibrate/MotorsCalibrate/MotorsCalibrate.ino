@@ -1,4 +1,6 @@
 /*
+ * This example was created by José Cruz on January 2025
+ *  
  * This example aquires motor and encoder information to be sent to PIC18F45K22
  * for PID control of the movement. The robot wheels must rotate freely and
  * should not touch the floor. Motors must have encoders. This process is done
@@ -8,7 +10,6 @@
  */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 

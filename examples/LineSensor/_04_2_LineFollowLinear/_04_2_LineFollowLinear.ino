@@ -1,6 +1,6 @@
 /**
  *  This example was created by José Cruz on October 2016
- *  Updated on January 2019 by José Cruz
+ *  Updated on February 2025 by José Cruz
  *
  *  This code example is in the public domain.
  *  http://www.botnroll.com
@@ -29,15 +29,15 @@
  * controlo.
  */
 
-#include <BnrOneA.h>  // Bot'n Roll ONE A library
+#include <BnrOneAPlus.h>  // Bot'n Roll ONE A library
 #include <EEPROM.h>   // EEPROM reading and writing
 #include <SPI.h>      // SPI communication library required by BnrOne.cpp
-BnrOneA one;  // declaration of object variable to control the Bot'n Roll ONE A
+BnrOneAPlus  one;  // declaration of object variable to control the Bot'n Roll ONE A
 
 // constants definitions
 #define SSPIN 2                 // Slave Select (SS) pin for SPI communication
-#define M1 1                    // Motor1
-#define M2 2                    // Motor2
+#define ML 1                    // Motor1
+#define MR 2                    // Motor2
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 // variables definitions
@@ -53,34 +53,37 @@ void setup() {
   // safety voltage for discharging the battery
   one.setMinBatteryV(MINIMUM_BATTERY_V);
   one.stop();        // stop motors
+  if(one.readButton() == 0) //Skip read EEPROM is necessary
   readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
-                     // controlo da EEPROM
+                   // controlo da EEPROM
   one.lcd1("Line Follow Lin.");
   one.lcd2(" Press a button ");
   // Wait a button to be pushed <> Espera que pressione um botão
   while (one.readButton() == 0);
   // Wait for button release <> Espera que largue o botão
   while (one.readButton() != 0);
+  delay(125); //Debounce delay
+  one.lcd2("www.botnroll.com");
 }
 
 void loop() {
   int line = one.readLine();
   // Linear function for Motor1 <> Função linear para o Motor1
-  int velM1 = (int)((double)speed + ((double)line * linear_gain));
+  int velML = (int)((double)speed + ((double)line * linear_gain));
   // Linear function for Motor2 <> Função linear para o Motor2
-  int velM2 = (int)((double)speed - ((double)line * linear_gain));
+  int velMR = (int)((double)speed - ((double)line * linear_gain));
 
   // Limit motors maximum and minimum speed <> Limitar mínimos e máximos da
   // velocidade dos motores
   // Minimum speed -1 causes motor to brake <> Velocidade mínima -1 faz o motor
   // travar
-  if (velM1 < -1) velM1 = -1;
-  if (velM2 < -1) velM2 = -1;
+  if (velML < -1) velML = -1;
+  if (velMR < -1) velMR = -1;
   // Maximum speed limit <> Limite da velocidade máxima
-  if (velM1 > speed + extra_speed) velM1 = speed + extra_speed;
-  if (velM2 > speed + extra_speed) velM2 = speed + extra_speed;
+  if (velML > speed + extra_speed) velML = speed + extra_speed;
+  if (velMR > speed + extra_speed) velMR = speed + extra_speed;
 
-  one.move(velM1, velM2);
+  one.move(velML, velMR);
 
   // Configuration menu <> Menu de configuração
   // PB3 to enter menu <> PB3 para entrar no menu
@@ -93,12 +96,11 @@ void menu() {
   float temp = 0.0;
   one.stop();
   one.lcd1("  Menu Config:");
-  one.lcd2("PB1+ PB2- PB3ok");
-  delay(250);
+  one.lcd2("PB1+ PB2-  PB3ok");
   // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3) {
-    delay(150);
-  }
+  while (one.readButton() == 3); 
+  while (one.readButton() == 0); 
+  while (one.readButton() == 3); 
 
   //***** Maximum speed <> Velocidade Maxima ******
   temp_var = speed;
@@ -124,7 +126,7 @@ void menu() {
   //****
   temp_var = extra_speed;
   while (button != 3) {
-    one.lcd2("  Curve Boost:", temp_var);
+    one.lcd2(" Curve Boost:", temp_var);
     button = one.readButton();
     if (button == 1) {
       ++temp_var;
@@ -188,6 +190,14 @@ void writeMenuEEPROM() {
   ++eeprom_address;
 }
 
+ //Test if value is withn limits <> Testa se o valor está dentro dos limites
+ template <typename T>
+ boolean isWithinLimits(const T valor,const T min, const T max){
+  if(valor > max) return false;
+  if(valor < min) return false;
+  return true;
+}
+
 // Read Menu values from EEPROM <> Ler valores da EEPROM
 void readMenuEEPROM() {
   byte eeprom_address = 10;
@@ -204,7 +214,9 @@ void readMenuEEPROM() {
   temp_var += (int)EEPROM.read(eeprom_address);
   ++eeprom_address;
   linear_gain = (double)temp_var / 1000.0;
-  if (speed == 255) speed = 60;
-  if (extra_speed == 255) extra_speed = 3;
-  if (linear_gain < 0) linear_gain = 1.3;
+
+  if (!isWithinLimits<byte>(speed,0,100)) speed = 50;
+  if (!isWithinLimits<byte>(extra_speed,0,100)) extra_speed = 4;
+  if (!isWithinLimits<float>(linear_gain,0.0,10.0)) linear_gain = 1.3;
+
 }

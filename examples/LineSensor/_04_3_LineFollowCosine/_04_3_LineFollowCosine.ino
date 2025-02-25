@@ -1,6 +1,5 @@
 /**
- * This example was created by José Cruz on October 2016
- * Updated on January 2019 by José Cruz
+ * This example was created by José Cruz on February 2025
  *
  * This code example is in the public domain.
  * http://www.botnroll.com
@@ -18,7 +17,7 @@
  *
  * <>
  *
- * IMPORTANTE!!!!
+ * IMPORTANTE!!!!+
  * Antes de usar este exemplo é necessário calibrar o sensor de linha. Usar
  * exemplo CalibrateLineSensor antes deste!!!
  *
@@ -59,33 +58,14 @@
  int minSpeedLim = -1;   //Inside wheel minimum speed on a curve
                          //Velocidade minima da roda interior numa curva
  
- void setup() {
-   Serial.begin(115200);    // sets baud rate to 115200bps for printing values at
-                           // serial monitor.
-   one.spiConnect(SSPIN);  // starts the SPI communication module
-   one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery safety voltage
-   one.stop();                             // stop motors
-   one.lcd1("Line Follow COS ");
-   one.lcd2(" Press a button ");
-   if(one.readButton() == 0)
-     readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
-                      // controlo da EEPROM
-   // Wait a button to be pressed <> Espera que pressione um botão
-   while (one.readButton() == 0);
-   // Wait for button release <> Espera que largue o botão
-   while (one.readButton() != 0);
-   delay(125); //Debounce delay
-   one.lcd2("www.botnroll.com");
- 
- }
- 
+                         
    /****** Line Following with Cosine Function ************
    ******* Seguimento de linha com função coseno **********
    ********************************************************/
   void lineFollowCosine()
   {
    //Read the line value from the line sensor <> Ler o valor da linha do sensor de linha
-   int line=one.readLine();
+   int line = one.readLine();
  
    //Apply line gain to the line value <> Aplicar o ganho da linha ao valor da linha
    float angleDegree=(float)line*lineGain;
@@ -109,7 +89,6 @@
      //Outside wheel maintains or increases speed according to wheelBoostFactor
      //Roda exterior mantém ou aumenta a velocidade de acordo com o factor wheelBoostFactor
      speedMR=speed+(int)(((float)(speed-speedML))/wheelBoostFactor);
-     //speedMR=speedtemp+(speedtemp-speedML);//Line boost
  
      //Limit the outside wheel boost <> Limitar o aumento de velocidade da roda exterior
      if(speedMR>speed+wheelBoost) speedMR=speed+wheelBoost;
@@ -121,33 +100,18 @@
    //If line is on the right side of the sensor <> Se a linha está do lado direito do sensor
    else if(line>0){
      speedMR=(int)(cos(angRad)*speed);
-     //speedML=speedtemp+(speedtemp-speedMR);
      speedML=speed+(int)(((float)(speed-speedMR))/wheelBoostFactor);
      if(speedML>speed+wheelBoost) speedML=speed+wheelBoost;
      if(speedMR < minSpeedLim) speedMR = minSpeedLim;
    }
   }
- 
- 
- void loop() {
-   // Call follow line function <> Chama a função de seguir linha
-   lineFollowCosine();
- 
-   //Move motors <> Mover motores
-   one.move(speedML,speedMR); 
- 
-   // Configuration menu <> Menu de configuração
-   if (one.readButton() == 3) menu();  // PB3 to enter menu <> PB3 para entrar no menu
- }
- 
- 
+
  void menu() {
    int temp_var = 0;
    float temp = 0.0;
    one.stop();
    one.lcd1("  Menu Config:");
    one.lcd2("PB1+ PB2-  PB3ok");
-   delay(125);
    // Wait PB3 to be released <> Espera que se largue o botão 3
    while (one.readButton() == 3); 
    while (one.readButton() == 0); 
@@ -278,6 +242,14 @@
    ++eeprom_address;
  }
  
+ //Test if value is withn limits <> Testa se o valor está dentro dos limites
+ template <typename T>
+ boolean isWithinLimits(const T valor,const T min, const T max){
+  if(valor > max) return false;
+  if(valor < min) return false;
+  return true;
+}
+
  // Read values from EEPROM <> Ler valores da EEPROM
  void readMenuEEPROM() {
    byte eeprom_address = 20;
@@ -313,9 +285,40 @@
    ++eeprom_address;
    wheelBoostFactor = (float)temp_var / 1000.0;
  
-   if (speed == 0xFF) speed = 50;
-   if (wheelBoost == 0xFF) wheelBoost = 4;
-   if (lineGain < 0) lineGain = 2.0;
-   if (minSpeedLim == 0xFFFF) minSpeedLim = -1;
-   if (wheelBoostFactor < 0) wheelBoostFactor = 4.0;
+   if (!isWithinLimits<byte>(speed,0,100)) speed = 50;
+   if (!isWithinLimits<byte>(wheelBoost,0,100)) wheelBoost = 4;
+   if (!isWithinLimits<float>(lineGain,0.0,10.0)) lineGain = 2.0;
+   if (!isWithinLimits<int>(minSpeedLim,-100,100)) minSpeedLim = -2;
+   if (!isWithinLimits<float>(wheelBoostFactor,0.0,20.0)) wheelBoostFactor = 4.0;
+  }
+
+  void loop() {
+    // Call follow line function <> Chama a função de seguir linha
+    lineFollowCosine();
+  
+    //Move motors <> Mover motores
+    one.move(speedML,speedMR); 
+  
+    // Configuration menu <> Menu de configuração
+    if (one.readButton() == 3) menu();  // PB3 to enter menu <> PB3 para entrar no menu
+  }
+  
+  void setup() {
+   Serial.begin(115200);    // sets baud rate to 115200bps for printing values at
+                           // serial monitor.
+   one.spiConnect(SSPIN);  // starts the SPI communication module
+   one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery safety voltage
+   one.stop();                             // stop motors
+   one.lcd1("Line Follow COS ");
+   one.lcd2(" Press a button ");
+   if(one.readButton() == 0) //Skip read EEPROM is necessary
+     readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
+                      // controlo da EEPROM
+   // Wait a button to be pressed <> Espera que pressione um botão
+   while (one.readButton() == 0);
+   // Wait for button release <> Espera que largue o botão
+   while (one.readButton() != 0);
+   delay(125); //Debounce delay
+   one.lcd2("www.botnroll.com");
+ 
  }

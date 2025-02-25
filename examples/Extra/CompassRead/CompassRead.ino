@@ -1,7 +1,8 @@
 /**
  * @brief This example was created by José Cruz (www.botnroll.com)
  * on 18 December 2024
- *
+ * Updated on February 2025 by José Cruz
+ * 
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -13,7 +14,6 @@
  *                    by James Henderson, 2012                   *
  *****************************************************************/
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
 #include <Wire.h>
 

@@ -2,6 +2,8 @@
  * This example was created by the Laboratory of Automation and Robotics for
  * the RoboParty Fun Challenge (https://lar.dei.uminho.pt/) on 18 December 2024
  *
+ * Updated on February 2025 by José Cruz
+ * 
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -11,24 +13,25 @@
  */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
 #define SSPIN 2            // Slave Select (SS) pin for SPI communication
+#define OFF 0
+#define ON  1
 #define CHALLENGE_TIME 90  // challenge time in seconds
 
 int counter = 0;
 
 bool automaticStart() {
-  bool current_state = one.readIRSensors();  // read actual IR sensors state
+  bool current_state = one.readObstacleSensors();  // read actual IR sensors state
   // If state is LOW
   if (!current_state) {
     unsigned long int tempo_A = millis();  // read time
     // while state is LOW
     while (!current_state) {
-      current_state = one.readIRSensors();  // read actual IR sensors state
+      current_state = one.readObstacleSensors();  // read actual IR sensors state
       // if time is low for more than 50ms
       if ((millis() - tempo_A) > 50) {
         return true;  // start Race

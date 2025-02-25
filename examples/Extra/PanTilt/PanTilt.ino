@@ -1,7 +1,9 @@
 /**
  * This example was created by José Cruz (www.botnroll.com)
  * on 18 December 2024
- *
+ * 
+ * Updated on February 2025 by José Cruz
+ * 
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -14,16 +16,15 @@
  */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
-#include <servo.h>
+#include <Servo.h>
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
 
-servo gripper1;
-servo gripper2;
+Servo gripper1;
+Servo gripper2;
 
 void setup() {
   Serial.begin(115200);    // set baud rate to 115200bps for printing values at

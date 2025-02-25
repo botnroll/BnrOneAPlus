@@ -1,7 +1,8 @@
 /**
  * This example was created by José Cruz (www.botnroll.com)
  * on 18 December 2024
- *
+ *Updated on February 2025 by José Cruz
+ 
  * How the program works:
  * This example calibrates the CMPS11 compass connected to Bot'n Roll ONE A I2C
  * BUS. Also works for CMPS10 compass. Follow the instructions on the LCD and
@@ -13,7 +14,6 @@
  */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
 #include <Wire.h>
 
@@ -133,10 +133,6 @@ void compassRead() {
 }
 
 void loop() {
-  float bearing;
-  char roll;
-  char pitch;
-  char temp[20];
 
   one.lcd1("   Press PB1   ");
   one.lcd2(" to calibrate  ");

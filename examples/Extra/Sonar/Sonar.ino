@@ -10,12 +10,13 @@
  * This example was created by José Cruz (www.botnroll.com)
  * on 18 December 2024
  *
+ * Updated on February 2025 by José Cruz
+ * 
  * This code example is in the public domain.
  * http://www.botnroll.com
  */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>          // required by BnrOneAPlus.cpp
 
 // constants definitions

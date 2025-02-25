@@ -1,6 +1,6 @@
 /**
  *  This example was created by José Cruz on October 2016
- *  Updated on January 2019 by José Cruz
+ *  Updated on February 2025 by José Cruz
  *
  *  This code example is in the public domain.
  *  http://www.botnroll.com
@@ -30,10 +30,10 @@
  *
  */
 
-#include <BnrOneA.h>  // Bot'n Roll ONE A library
+#include <BnrOneAPlus.h>  // Bot'n Roll ONE A library
 #include <EEPROM.h>   // EEPROM reading and writing
 #include <SPI.h>      // SPI communication library required by BnrOne.cpp
-BnrOneA one;  // declaration of object variable to control the Bot'n Roll ONE A
+BnrOneAPlus one;  // declaration of object variable to control the Bot'n Roll ONE A
 
 // constants definitions
 #define SSPIN 2                 // Slave Select (SS) pin for SPI communication
@@ -43,10 +43,10 @@ BnrOneA one;  // declaration of object variable to control the Bot'n Roll ONE A
 #define LIMITS 100.0            // line value limit
 
 // PID control gains <> Ganhos do controlo PID
-double kp = 1.3;
-double ki = 0.0013;
-double kd = 0.35;
-int vel = 60;         // Max Speed <> Velocidade Máxima dos motores
+float kp = 1.3;
+float ki = 0.2;
+float kd = 0.3;
+int vel = 50;         // Max Speed <> Velocidade Máxima dos motores
 int extra_speed = 3;  // Curve outside wheel max speed limit <> Limite de
                       // velocidade da roda exterior na curva
 
@@ -56,12 +56,11 @@ void menu() {
   double temp = 0.0;
   one.stop();
   one.lcd1("  Menu Config:");
-  one.lcd2("PB1+ PB2- PB3ok");
-  delay(150);
+  one.lcd2("PB1+ PB2-  PB3ok");
   // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3) {
-    delay(150);
-  }
+  while (one.readButton() == 3); 
+  while (one.readButton() == 0); 
+  while (one.readButton() == 3); 
 
   //***** Maximum speed <> Velocidade Maxima ******
   temp_var = vel;
@@ -203,6 +202,14 @@ void writeMenuEEPROM() {
   eeprom_address++;
 }
 
+ //Test if value is withn limits <> Testa se o valor está dentro dos limites
+ template <typename T>
+ boolean isWithinLimits(const T valor,const T min, const T max){
+  if(valor > max) return false;
+  if(valor < min) return false;
+  return true;
+}
+
 // Read values from EEPROM <> Ler valores da EEPROM
 void readMenuEEPROM() {
   byte eeprom_address = 10;
@@ -210,8 +217,10 @@ void readMenuEEPROM() {
 
   vel = (int)EEPROM.read(eeprom_address);
   eeprom_address++;
+
   extra_speed = (int)EEPROM.read(eeprom_address);
   eeprom_address++;
+  
   temp_var = 0;
   temp_var = (int)EEPROM.read(eeprom_address);
   eeprom_address++;
@@ -219,6 +228,7 @@ void readMenuEEPROM() {
   temp_var += (int)EEPROM.read(eeprom_address);
   eeprom_address++;
   kp = (double)temp_var / 1000.0;
+  
   temp_var = 0;
   temp_var = (int)EEPROM.read(eeprom_address);
   eeprom_address++;
@@ -226,6 +236,7 @@ void readMenuEEPROM() {
   temp_var += (int)EEPROM.read(eeprom_address);
   eeprom_address++;
   ki = (double)temp_var / 10000.0;
+  
   temp_var = 0;
   temp_var = (int)EEPROM.read(eeprom_address);
   eeprom_address++;
@@ -233,22 +244,24 @@ void readMenuEEPROM() {
   temp_var += (int)EEPROM.read(eeprom_address);
   eeprom_address++;
   kd = (double)temp_var / 1000.0;
-  if (vel == 255) vel = 60;
-  if (extra_speed == 255) extra_speed = 3;
-  if (kp < 0) kp = 1.3;
-  if (ki < 0) ki = 0.0013;
-  if (kd < 0) kd = 0.35;
+
+  if (!isWithinLimits<byte>(vel,0,100)) vel = 50;
+  if (!isWithinLimits<byte>(extra_speed,0,100)) extra_speed = 3;
+  if (!isWithinLimits<float>(kp,0.0,10.0)) kp = 1.3;
+  if (!isWithinLimits<float>(ki,0.0,20.0)) ki = 0.2;
+  if (!isWithinLimits<float>(kd,0.0,10.0)) kd = 0.3;;
 }
 
 void setup() {
   Serial.begin(115200);    // sets baud rate to 115200bps for printing values at
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
-  one.setMinimumBatteryV(
-      MINIMUM_BATTERY_V);  // safety voltage for discharging the battery
+  one.setMinBatteryV(MINIMUM_BATTERY_V); // battery safety voltage 
+                                         // for discharging the battery
   one.stop();              // stop motors
-  readMenuEEPROM();        // read control values from EEPROM <> Ler valores de
-                           // controlo da EEPROM
+  if(one.readButton() == 0) //Skip read EEPROM is necessary
+    readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
+                    // controlo da EEPROM
   one.lcd1("Line Follow PID");
   one.lcd2(" Press a button ");
   // Wait a button to be pressed <> Espera que pressione um botão
@@ -276,25 +289,29 @@ void loop() {
                           // do valor da linha -100 a +100
 
   p_error = line_ref - line;  // Proportional error <> Erro proporcional
-  // Differential error <> Erro diferencial
-  d_error = p_error - previous_p_error;
-  output = (kp * (double)p_error) + (ki * i_error) + (kd * (double)d_error);
+
+  // Increment integral error if output is below limits <> 
+  // Incrementa erro integral se a saída está dentro dos limites
+  if (output > LIMITS) {
+    output = LIMITS;  // Limit the output value <> Limitar o valor de saída
+  } else if (output < (-LIMITS)) {
+    output = (-LIMITS);
+  } else {
+    // Incrementa erro integral
+    i_error += (double)p_error;
+  }
   // Clean integral error if line value is zero or if line signal has changed
   // Limpar o erro integral se o valor da linha é zero ou se o sinal da linha
   // mudou
   if ((p_error * previous_p_error) <= 0) {
     i_error = 0.0;
   }
-  if (output > LIMITS) {
-    output = LIMITS;  // Limit the output value <> Limitar o valor de saída
-  } else if (output < (-LIMITS)) {
-    output = (-LIMITS);
-  } else {
-    // Increment integral error if output is below limits <> Incrementa o erro
-    // integral se a saída está dentro dos limites
-    i_error += (double)p_error;
-  }
+
+  // Differential error <> Erro diferencial
+  d_error = p_error - previous_p_error;
   previous_p_error = p_error;
+
+  output = (kp * (double)p_error) + (ki * i_error) + (kd * (double)d_error);
 
   // Limit motors maximum and minimum speed <> Limitar mínimos e máximos da
   // velocidade dos motores
