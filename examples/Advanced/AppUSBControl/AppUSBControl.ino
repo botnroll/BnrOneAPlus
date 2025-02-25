@@ -38,9 +38,8 @@ byte g_buttons;
 byte g_rgbL[3] = {0, 0, 0};
 byte g_rgbR[3] = {0, 0, 0};
 
-
-Servo g_gripper1;
-Servo g_gripper2;
+Servo g_servo1;
+Servo g_servo2;
 
 struct Packet {
   byte AA;
@@ -48,7 +47,6 @@ struct Packet {
   byte command;
   signed char data[16];
 } packet;
-
 
 void readSerialPacket() {
   int i;
@@ -80,8 +78,8 @@ void setup() {
 
   compass.i2cConnect(COMPASS_ADDRESS);  // Enable I2C communication
 
-  g_gripper1.attach(5);
-  g_gripper2.attach(6);
+  g_servo1.attach(5);
+  g_servo2.attach(6);
 
   one.lcd1("Bot'n Roll ONE A");
 
@@ -145,7 +143,6 @@ void loop() {
           g_str[16] = 0;
           one.lcd1(g_str);
           break;
-
 
         // ----------- COMMAND_LCD_L2 ----------------
         case COMMAND_LCD_L2:
@@ -227,15 +224,15 @@ void loop() {
            * A+ */
         // ----------- COMMAND_SERVO1 ----------------
         case COMMAND_ARDUINO_GRP1:
-          g_gripper1.write((unsigned char)packet.data[0]);
+          g_servo1.write((unsigned char)packet.data[0]);
           break;
 
         // ----------- COMMAND_SERVO2 ----------------
         case COMMAND_ARDUINO_GRP2:
-          g_gripper2.write((unsigned char)packet.data[0]);
+          g_servo2.write((unsigned char)packet.data[0]);
           break;
 
-        // ----------- COMMAND_ARDUINO_BUZZER ----------------
+          // ----------- COMMAND_ARDUINO_BUZZER ----------------
 
         case COMMAND_ARDUINO_BUZ:
           tone(9, int((unsigned char)packet.data[0] * 8), 25);
