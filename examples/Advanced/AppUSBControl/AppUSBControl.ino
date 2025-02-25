@@ -183,8 +183,7 @@ void loop() {
           g_b5 = one.readAdc(5);
           g_b6 = one.readAdc(6);
           g_b7 = one.readAdc(7);
-          sprintf(
-              g_str, "AD%d,%d,%d,%d,%d,%d,%d,%d", g_b0, g_b1, g_b2, g_b3, g_b4, g_b5, g_b6, g_b7);
+          sprintf(g_str, "AD%d,%d,%d,%d,%d,%d,%d,%d", g_b0, g_b1, g_b2, g_b3, g_b4, g_b5, g_b6, g_b7);
           Serial.write(g_str);
           one.lcd2(g_str + 2);
           break;
@@ -251,19 +250,14 @@ void loop() {
           g_roll = compass.read_roll();
           g_pitch = compass.read_pitch();
 
-          sprintf(g_str,
-                  "CP%d.%d,%d,%d",
-                  (int)g_bearing,
-                  (int)((g_bearing - (int)g_bearing) * 100),
-                  g_roll,
-                  g_pitch);
+          sprintf(g_str, "CP%d.%d,%d,%d", (int)g_bearing, (int)((g_bearing - (int)g_bearing) * 100), g_roll, g_pitch);
           Serial.write(g_str);
           break;
 
         // ----------- COMMAND_READ_COLOR_SENSOR ----------------
         case COMMAND_READ_COLOR_SENSOR:
-          colorsensor.readRgbL(&g_rgbL[0], &g_rgbL[1], &g_rgbL[2]);  // Read Left RGB sensor
-          colorsensor.readRgbR(&g_rgbR[0], &g_rgbR[1], &g_rgbR[2]);  // Read Right RGB sensor     //
+          colorsensor.readRGBL(&g_rgbL[0], &g_rgbL[1], &g_rgbL[2]);  // Read Left RGB sensor
+          colorsensor.readRGBR(&g_rgbR[0], &g_rgbR[1], &g_rgbR[2]);  // Read Right RGB sensor     //
                                                                      // 0xF1 //Save calibration data
           sprintf(g_str,
                   "CS%d,%d,%d;%d,%d,%d",
