@@ -3,7 +3,7 @@ Language: Cpp
 BasedOnStyle: Google
 IndentWidth: 2
 UseTab: Never
-ColumnLimit: 80
+ColumnLimit: 100
 
 # Spacing
 SpaceBeforeAssignmentOperators: true
@@ -15,7 +15,7 @@ SpaceAfterTemplateKeyword: true
 SpaceBeforeParens: ControlStatements
 
 # Function spacing
-SeparateDefinitionBlocks: Always
+# SeparateDefinitionBlocks: Always
 MaxEmptyLinesToKeep: 1
 KeepEmptyLinesAtTheStartOfBlocks: false
 
