@@ -9,7 +9,6 @@
  */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>          // SPI communication library required by BnrOneAPlus.cpp
 
 BnrOneAPlus one;     // declaration of object variable to control the Bot'n Roll ONE A+
