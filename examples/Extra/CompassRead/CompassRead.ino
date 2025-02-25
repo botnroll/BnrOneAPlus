@@ -8,37 +8,42 @@
  *
  */
 
-#include <BnrOneAPlus.h>   // Bot'n Roll ONE A+ library
-#include <EEPROM.h>    // EEPROM reading and writing
-#include <SPI.h>       // SPI communication library required by BnrOneAPlus.cpp
+#include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
+#include <EEPROM.h>       // EEPROM reading and writing
+#include <SPI.h>          // SPI communication library required by BnrOneAPlus.cpp
 
-BnrOneAPlus one;    // declaration of object variable to control the Bot'n Roll ONE A+
-BnrCompass compass; // declaration of object variable to control the CMPS11 compass
+BnrOneAPlus one;     // declaration of object variable to control the Bot'n Roll ONE A+
+BnrCompass compass;  // declaration of object variable to control the CMPS11 compass
 
 // constants definition
-#define SSPIN 2       // Slave Select (SS) pin for SPI communication
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
 #define ADDRESS 0x60  // CMPS11 I2C address
 
-void setup()
-{
+void setup() {
   Serial.begin(57600);
-  one.spiConnect(SSPIN);   // start SPI communication module
-  one.stop();              // stop motors
+  one.spiConnect(SSPIN);  // start SPI communication module
+  one.stop();             // stop motors
   compass.i2cConnect(ADDRESS);
 }
 
-void loop()
-{
-   float bearing;
-   char roll, pitch;
+void loop() {
+  float bearing;
+  char roll, pitch;
+  char str[16];
 
-   bearing = compass.read_bearing();
-   roll = compass.read_roll();
-   pitch = compass.read_pitch();
+  bearing = compass.readBearing();
+  roll = compass.readRoll();
+  pitch = compass.readPitch();
 
-   Serial.print("Bearing:"); Serial.print(bearing);
-   Serial.print("   roll:"); Serial.print((int)roll);
-   Serial.print("   pitch:"); Serial.println((int)pitch);
-    
-   delay(50);
+  Serial.print("Bearing:");
+  Serial.print(bearing);
+  Serial.print("   roll:");
+  Serial.print((int)roll);
+  Serial.print("   pitch:");
+  Serial.println((int)pitch);
+
+  one.lcd1("Bea   Pit   Rol");
+  one.lcd2((int)bearing, (int)pitch, (int)roll);
+
+  delay(50);
 }

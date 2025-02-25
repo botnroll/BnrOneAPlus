@@ -9,44 +9,41 @@
 
 #include "Arduino.h"
 
+class BnrCompass {
+ public:
+  /********************************
+   * @brief  setup routines        *
+   *********************************/
 
-class BnrCompass
-{
-    public:
-        /********************************
-         * @brief  setup routines        *
-         *********************************/
-        
-        /**
-         * @brief Initializes the I2C communication given an Address
-         * 
-         * @param sensorAddress 
-         * @return void
-         */
-        void i2cConnect(byte sensorAddress);    //Enable I2C communication
-        
-        /**
-         * @brief Reads the current bearing of the Compass
-         * 
-         * @return float
-         */
-        float read_bearing();
-        
-        /**
-         * @brief Reads the current roll value of the Compass
-         * 
-         * @return char
-         */
-        char read_roll();
-        
-        /**
-         * @brief Reads the current pitch value of the Compass
-         * 
-         * @return char
-         */
-        char read_pitch();
+  /**
+   * @brief Initializes the I2C communication given an Address
+   *
+   * @param sensorAddress
+   * @return void
+   */
+  void i2cConnect(byte sensorAddress);  // Enable I2C communication
 
-    private:
-        byte _sensorAddress;
+  /**
+   * @brief Reads the current bearing of the Compass
+   *
+   * @return float
+   */
+  float readBearing();
+
+  /**
+   * @brief Reads the current roll value of the Compass
+   *
+   * @return char
+   */
+  char readRoll();
+
+  /**
+   * @brief Reads the current pitch value of the Compass
+   *
+   * @return char
+   */
+  char readPitch();
+
+ private:
+  byte sensorAddress_;
 };
-
