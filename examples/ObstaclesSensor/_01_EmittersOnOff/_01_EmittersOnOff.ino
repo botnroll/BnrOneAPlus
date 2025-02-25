@@ -25,21 +25,21 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A Plus
 // constants definition
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
 #define OFF 0
-#define ON  1
+#define ON 1
 
 void setup() {
-  Serial.begin(115200);    // set baud rate to 115200bps for printing values at
+  Serial.begin(115200);   // set baud rate to 115200bps for printing values at
                           // serial monitor.
   one.spiConnect(SSPIN);  // start SPI communication module
   one.stop();             // stop motors
 }
 
 void loop() {
-  one.obstacleSensorsEmitters(ON);           // activate IR emitter LEDs
+  one.obstacleSensorsEmitters(ON);    // activate IR emitter LEDs
   Serial.println("IR Emitters ON ");  // print data on serial monitor.
   one.lcd2(" IR Emitters ON ");       // print text on LCD line 2
   delay(1000);                        // wait 1 second
-  one.obstacleSensorsEmitters(OFF);          // deactivate IR emitter LEDs
+  one.obstacleSensorsEmitters(OFF);   // deactivate IR emitter LEDs
   Serial.println("IR Emitters OFF");  // print data on serial monitor.
   one.lcd2(" IR Emitters OFF ");      // print text on LCD line 2
   delay(1000);                        // wait 1 second

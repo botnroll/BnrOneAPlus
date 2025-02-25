@@ -1,6 +1,6 @@
 /*
  * This example was created by José Cruz on January 2025
- *  
+ *
  * This example aquires motor and encoder information to be sent to PIC18F45K22
  * for PID control of the movement. The robot wheels must rotate freely and
  * should not touch the floor. Motors must have encoders. This process is done
@@ -15,12 +15,12 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 int motor_power = 40;
 int left_enc_max = 0;
 int right_enc_max = 0;
 bool error_flag = false;
-int ks = 750;
 
 void startMoveDetection() {
   bool exit_flag = false;
@@ -101,10 +101,10 @@ void sendValues() {
   if (!error_flag) {
     if (left_enc_max < encMin) encMin = left_enc_max;
     if (right_enc_max < encMin) encMin = right_enc_max;
-    one.setMotors(motor_power, ks, encMin);
+    one.setMotors(motor_power, encMin);
     Serial.println();
     Serial.println(
-        "  Save values for void setMotors(int Smotor_power, int Ks, int "
+        "  Save values for void setMotors(int Smotor_power, int "
         "ctrlPulses);");
     Serial.print("  Smotor_power:");
     Serial.println(motor_power);
@@ -123,7 +123,8 @@ void sendValues() {
       delay(2500);
     }
   }
-  while (1);
+  while (1)
+    ;
 }
 
 void setup() {
@@ -131,10 +132,13 @@ void setup() {
                           // serial monitor.
   one.spiConnect(SSPIN);  // start SPI communication module
   one.stop();             // stop motors
-  one.setMinBatteryV(9.5);
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
+
   one.lcd1(" Press a button ");
   one.lcd2("   to start!    ");
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   one.lcd1("Motors Calibrate");
   one.lcd2(" !!Attention!!  ");
   delay(2000);
@@ -143,7 +147,8 @@ void setup() {
   delay(2000);
   one.lcd1(" Press a button ");
   one.lcd2("   to start!    ");
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   one.lcd1("Power EncL EncR ");
 }
 

@@ -3,7 +3,7 @@
  * RoboParty Fun Challenge (https://lar.dei.uminho.pt/) on 18 December 2024
  *
  * Updated on February 2025 by José Cruz
- * 
+ *
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -17,22 +17,24 @@
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
-#define SSPIN 2            // Slave Select (SS) pin for SPI communication
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
 #define OFF 0
-#define ON  1
+#define ON 1
 #define CHALLENGE_TIME 90  // challenge time
 
 int counter = 0;
 
 bool automaticStart() {
-  bool current_state = one.readObstacleSensors();  // read actual IR sensors state
+  bool current_state =
+      one.readObstacleSensors();  // read actual IR sensors state
 
   if (!current_state)  // If state is LOW
   {
     unsigned long int tempo_A = millis();  // read time
     // while state is LOW
     while (!current_state) {
-      current_state = one.readObstacleSensors();  // read actual IR sensors state
+      current_state =
+          one.readObstacleSensors();  // read actual IR sensors state
       // if time is low for more than 50ms
       if ((millis() - tempo_A) > 50) {
         return true;  // start Race

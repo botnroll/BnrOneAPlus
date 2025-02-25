@@ -21,7 +21,8 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 // constants definition
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
 #define OFF 0
-#define ON  1
+#define ON 1
+#define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 int left_speed = 0;
 int right_speed = 0;
@@ -35,20 +36,22 @@ byte max_range = 19;  // Maximum range value for obstacle
 byte min_range = 1;   // Minimum range value for obstacle
 
 void setup() {
-  one.spiConnect(SSPIN);            // start SPI communication module
-  one.stop();                       // stop motors
-  if(one.readButton() == 0) //Skip read EEPROM is necessary
-  readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
-                   // controlo da EEPROM
-  one.setMinBatteryV(9.5);          // Set the protection battery voltage.
-  one.setPid(1800, 300, 50);       // Set PID parameters for movement
+  one.spiConnect(SSPIN);      // start SPI communication module
+  one.stop();                 // stop motors
+  if (one.readButton() == 0)  // Skip read EEPROM is necessary
+    readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
+  // controlo da EEPROM
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);        // set PID parameters for robot movement
   one.obstacleSensorsEmitters(ON);  // activate IR emitters
   one.lcd1("Avoid Obstacles ");
   one.lcd2("Press a Button!!");
   // Wait a button to be pressed <> Espera que pressione um botão
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   // Wait for button release <> Espera que largue o botão
-  while (one.readButton() != 0);
+  while (one.readButton() != 0)
+    ;
 
   one.lcd1(" RgL SpL RgR SpR");
   tcycle = millis();  // Set start value for tcycle
@@ -113,9 +116,12 @@ void menu() {
   one.lcd1("  Menu Config:  ");
   one.lcd2("PB1+ PB2-  PB3ok");
   // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3); 
-  while (one.readButton() == 0); 
-  while (one.readButton() == 3); 
+  while (one.readButton() == 3)
+    ;
+  while (one.readButton() == 0)
+    ;
+  while (one.readButton() == 3)
+    ;
 
   //*****  Adjust sensor distance <> Ajustar a distância dos sensores  ******
   while (one.readButton() != 3) {
@@ -227,11 +233,11 @@ void writeMenuEEPROM() {
   ++eeprom_address;
 }
 
- //Test if value is withn limits <> Testa se o valor está dentro dos limites
- template <typename T>
- boolean isWithinLimits(const T valor,const T min, const T max){
-  if(valor > max) return false;
-  if(valor < min) return false;
+// Test if value is withn limits <> Testa se o valor está dentro dos limites
+template <typename T>
+boolean isWithinLimits(const T valor, const T min, const T max) {
+  if (valor > max) return false;
+  if (valor < min) return false;
   return true;
 }
 
@@ -266,9 +272,8 @@ void readMenuEEPROM() {
     max_range = 19;
   }
 
-  if (!isWithinLimits<int>(speed,0,100)) speed = 10;
-  if (!isWithinLimits<float>(linear_gain,0.0,10.0)) linear_gain = 2.5;
-  if (!isWithinLimits<byte>(min_range,0,100)) min_range = 1;
-  if (!isWithinLimits<byte>(max_range,0,100)) max_range = 19;
-
+  if (!isWithinLimits<int>(speed, 0, 100)) speed = 10;
+  if (!isWithinLimits<float>(linear_gain, 0.0, 10.0)) linear_gain = 2.5;
+  if (!isWithinLimits<byte>(min_range, 0, 100)) min_range = 1;
+  if (!isWithinLimits<byte>(max_range, 0, 100)) max_range = 19;
 }

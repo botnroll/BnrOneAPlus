@@ -44,16 +44,12 @@ class BnrOneAPlus {
   /**
    * @brief Set the Motors configuration params:
    *    - moving power
-   *    - ks gain
    *    - number of pulses per iteration at max speed
    *
    * @param moving_power
-   * @param ks
    * @param max_speed_pulses
    */
-  void setMotors(const int moving_power,
-                 const int ks,
-                 const int max_speed_pulses) const;
+  void setMotors(const int moving_power, const int max_speed_pulses) const;
 
   /**
    * @brief Turn on/off the obstacle sensors IR emitters
@@ -128,12 +124,13 @@ class BnrOneAPlus {
   int* readLineSensor() const;
 
   /**
-  * @brief reads the values of the encoders and resets their values
-  *
-  * @param out_left_encoder variable to store the left encoder reading
-  * @param out_right_encoder variable to store the right encoder reading
-  */
-  void readAndResetEncoders(int& out_left_encoder, int& out_right_encoder) const;
+   * @brief reads the values of the encoders and resets their values
+   *
+   * @param out_left_encoder variable to store the left encoder reading
+   * @param out_right_encoder variable to store the right encoder reading
+   */
+  void readAndResetEncoders(int& out_left_encoder,
+                            int& out_right_encoder) const;
 
   /**
    * @brief reads the value of the left encoder and resets its value
@@ -205,13 +202,16 @@ class BnrOneAPlus {
   void move(const int left_speed, const int right_speed) const;
 
   /**
-   * @brief Helper method to send the right move_rpm command together with left and right rpm values
+   * @brief Helper method to send the right move_rpm command together with left
+   * and right rpm values
    *
    * @param command one of the available move rpm commands
    * @param left_rpm
    * @param right_rpm
    */
-  void sendMoveRpm(const byte command, const int left_rpm, const int right_rpm) const;
+  void sendMoveRpm(const byte command,
+                   const int left_rpm,
+                   const int right_rpm) const;
 
   /**
    * @brief sets the speed of the motors by specifying the rpm values
@@ -222,14 +222,18 @@ class BnrOneAPlus {
   void moveRpm(const int left_rpm, const int right_rpm) const;
 
   /**
-   * @brief sets the speed of the motors by specifying the rpm values and waits for the encoders readings
+   * @brief sets the speed of the motors by specifying the rpm values and waits
+   * for the encoders readings
    *
    * @param left_rpm speed of the left motor
    * @param right_rpm speed of the right motor
    * @param out_left_encoder variable to store the left encoder reading
    * @param out_ight_encoder variable to store the right encoder reading
    */
-  void moveRpmGetEncoders(const int left_rpm, const int right_rpm, int& out_left_encoder, int& out_right_encoder) const;
+  void moveRpmGetEncoders(const int left_rpm,
+                          const int right_rpm,
+                          int& out_left_encoder,
+                          int& out_right_encoder) const;
 
   /**
    * @brief sets the speed of the motors by specifying the pwm values
@@ -295,7 +299,7 @@ class BnrOneAPlus {
   void resetRightEncoder() const;
 
   // LCD Line 1 write routines
-  void lcd1(const String& string) const;        //<-- writes a string to the LCD
+  void lcd1(const String& string) const;       //<-- writes a string to the LCD
   void lcd1(const byte string[]) const;        //<-- writes a string to the LCD
   void lcd1(const char string[]) const;        //<-- writes a string to the LCD
   void lcd1(const int number) const;           //<-- writes a number to the LCD
@@ -383,14 +387,16 @@ class BnrOneAPlus {
  private:
   byte spiRequestByte(const byte command) const;
   int spiRequestWord(const byte command) const;
-  void spiRequestTwoWords(const byte command, int& out_int1, int& out_int2) const;
+  void spiRequestTwoWords(const byte command,
+                          int& out_int1,
+                          int& out_int2) const;
   float spiRequestFloat(const byte command) const;
   void spiSendDataOnly(const byte command,
+                       const byte buffer[],
+                       const byte num_bytes) const;
+  void spiSendData(const byte command,
                    const byte buffer[],
                    const byte num_bytes) const;
-  void spiSendData(const byte command,
-                    const byte buffer[],
-                    const byte num_bytes) const;
   byte sspin_;
   LineDetector line_detector_;
 };

@@ -3,7 +3,7 @@
  * the RoboParty Fun Challenge (https://lar.dei.uminho.pt/) on 18 December 2024
  *
  * Updated on February 2025 by José Cruz
- * 
+ *
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -17,21 +17,24 @@
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
-#define SSPIN 2            // Slave Select (SS) pin for SPI communication
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
 #define OFF 0
-#define ON  1
+#define ON 1
 #define CHALLENGE_TIME 90  // challenge time in seconds
+#define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 int counter = 0;
 
 bool automaticStart() {
-  bool current_state = one.readObstacleSensors();  // read actual IR sensors state
+  bool current_state =
+      one.readObstacleSensors();  // read actual IR sensors state
   // If state is LOW
   if (!current_state) {
     unsigned long int tempo_A = millis();  // read time
     // while state is LOW
     while (!current_state) {
-      current_state = one.readObstacleSensors();  // read actual IR sensors state
+      current_state =
+          one.readObstacleSensors();  // read actual IR sensors state
       // if time is low for more than 50ms
       if ((millis() - tempo_A) > 50) {
         return true;  // start Race
@@ -74,10 +77,12 @@ ISR(TIMER1_COMPA_vect) {  // timer1 interrupt 1Hz
 }
 
 void setup() {
-  one.spiConnect(SSPIN);  // start SPI communication module
-  one.stop();             // stop motors
-  initializeTimer();      // configures the interrupt timer for the end of the
-                          // challenge
+  one.spiConnect(SSPIN);                  // start SPI communication module
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
+  one.stop();                 // stop motors
+  initializeTimer();  // configures the interrupt timer for the end of the
+                      // challenge
   one.lcd1("FUN CHALLENGE");         // print on LCD line 1
   one.lcd2("READY TO START..");      // print on LCD line 2
   one.obstacleSensorsEmitters(OFF);  // deactivate obstacles IR emitters

@@ -1,7 +1,7 @@
 /**
  * This example was created by José Cruz on October 2016
  * Updated on January 2025 by Nino Pereira
- * 
+ *
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -91,464 +91,465 @@
  * a calibração é automaticamente guardada no ficheiro de configuração.
  */
 
- #include <BnrOneAPlus.h>  // Bot'n Roll ONE A library
- #include <EEPROM.h>       // EEPROM reading and writing
- #include <SPI.h>          // SPI communication library required by BnrOne.cpp
- 
- // constants definitions
- #define SSPIN 2  // Slave Select (SS) pin for SPI communication
- #define M1 1     // Motor1
- #define M2 2     // Motor2
- #define VMAX 1000
- 
- using uint = unsigned int;
- 
- BnrOneAPlus one;            //  object to control the Bot'n Roll ONE A
- Config config;              // variable used to load and save config values
- LineDetector lineDetector;  // variable used to detect line
- 
- int line = 0;
- 
- class Time {
-  public:
-   void start() {
-     // Set Timer1 in CTC mode with prescaler of 256
-     TCCR1A = 0;  // No need to set anything for Timer1 in CTC mode
-     TCCR1B = (1 << WGM12) |
-              (1 << CS12);  // WGM12 for CTC mode, CS12 for 256 prescaler
-     // Set compare value for 1-second interval
-     OCR1A = 62500;  // (16e6 / (256 * 1)) - 1 = 62500
-     // Enable Timer1 interrupt
-     TIMSK1 |= (1 << OCIE1A);
-     // Enable global interrupts
-     sei();
-   }
- 
-   void update() { _time += 1; }
- 
-   uint now() { return _time; }
- 
-  private:
-   volatile uint _time = 0;
- };
- 
- Time time;
- 
- ISR(TIMER1_COMPA_vect) { time.update(); }
- 
- /**
-  * @brief Prints array of integers in the terminal
-  *
-  * @param text
-  * @param array
-  */
- void printArray(const String& text, const int array[8]) {
-   Serial.begin(115200);
-   Serial.println(text);
-   for (int i = 0; i < 8; ++i) {
-     Serial.print(array[i]);
-     Serial.print("    ");
-   }
-   Serial.println();
-   Serial.end();
- }
- 
- /**
-  * @brief Prints a text and value on the terminal (serial console)
-  *
-  * @tparam T
-  * @param text
-  * @param value
-  */
- template <class T>
- void printValue(const String& text, const T value) {
-   Serial.begin(115200);
-   Serial.print(text);
-   Serial.println(value);
-   Serial.end();
- }
- 
- /**
-  * @brief Prints text to the terminal (serial console)
-  *
-  * @param text
-  */
- void printMsg(const String& text) {
-   Serial.begin(115200);
-   Serial.println(text);
-   Serial.end();
- }
- 
- /**
-  * @brief Waits for a button to be pressed
-  */
- int waitButtonPress() {
-   int button_pressed = 0;
-   while (button_pressed == 0) {
-     button_pressed = one.readButton();
-     delay(50);
-   }
- 
-   return button_pressed;
- }
- 
- /**
-  * @brief Waits for the button to be released
-  */
- void waitButtonRelease() {
-   while (one.readButton() != 0) {
-     delay(50);
-   }
- }
- 
- /**
-  * @brief Initial instructions so that the user places the robot safely
-  * on a flat surface ready to rotate on spot
-  */
- void prepareCalibration() {
-   printMsg("Place robot on the floor ready to rotate on the spot");
-   printMsg("Press a button when ready");
-   one.lcd1(" Press a button ");
-   one.lcd2("  to calibrate  ");
-   waitButtonPress();
-   one.lcd1(" Release button ");
-   one.lcd2("   to start     ");
-   printMsg("Release the button to start calibration");
-   delay(1000);
-   waitButtonRelease();
-   printMsg("Calibration Started!");
-   one.lcd1("  Calibration   ");
-   one.lcd2("   started!     ");
- }
- 
- /**
-  * @brief Saves configuration to default file
-  */
- void saveConfig() {
-   config.Save();
-   config.Print();
- }
- 
- /**
-  * @brief Finds the min and max value for each sensor
-  *
-  * @param sensorValueMin
-  * @param sensorValueMax
-  */
- void CalibrateMinMax(int sensorValueMin[8], int sensorValueMax[8]) {
-   printMsg("Computing min and max for sensor readings...");
-   one.move(15, -15);
-   const auto startTime = time.now();
-   while (time.now() < (startTime + 6)) {
-     const auto reading = one.readLineSensor();
-     printArray("Readings: ", reading);
-     for (int i = 0; i < 8; ++i) {
-       if (reading[i] > sensorValueMax[i]) {
-         sensorValueMax[i] = reading[i];
-       }
-       if (reading[i] < sensorValueMin[i]) {
-         sensorValueMin[i] = reading[i];
-       }
-     }
-     printArray("Max: ", sensorValueMax);
-     printArray("Min: ", sensorValueMin);
-     delay(50);
-   }
-   one.stop();
-   printMsg("Done");
- }
- 
- /**
-  * @brief Updates lcd info and waits for user to press and release a button
-  */
- void updateLcdInfo(const String& text,
-                    const int value_1,
-                    const int value_2,
-                    const int value_3,
-                    const int value_4) {
-   one.lcd1(text);
-   one.lcd2(value_1, value_2, value_3, value_4);
-   // printMsg("Press and release button to continue");
-   waitButtonPress();
-   waitButtonRelease();
- }
- 
- /**
-  * @brief Displays calibration data on the lcd
-  */
- void displayCalibration(const int sensorValueMin[8],
-                         const int sensorValueMax[8]) {
-   one.lcd1("                ");
-   one.lcd2(" Press a button ");
-   waitButtonPress();
-   waitButtonRelease();
- 
-   updateLcdInfo("Max1  2   3   4 ",
-                 sensorValueMax[0],
-                 sensorValueMax[1],
-                 sensorValueMax[2],
-                 sensorValueMax[3]);
- 
-   updateLcdInfo("Max5  6   7   8 ",
-                 sensorValueMax[4],
-                 sensorValueMax[5],
-                 sensorValueMax[6],
-                 sensorValueMax[7]);
- 
-   updateLcdInfo("Min1  2   3   4 ",
-                 sensorValueMin[0],
-                 sensorValueMin[1],
-                 sensorValueMin[2],
-                 sensorValueMin[3]);
- 
-   updateLcdInfo("Min5  6   7   8 ",
-                 sensorValueMin[4],
-                 sensorValueMin[5],
-                 sensorValueMin[6],
-                 sensorValueMin[7]);
- }
- 
- /**
-  * @brief During this stage user should test the robot on white surface and make
-  * note of the highest reading. That value will be necessary to adjust the
-  * threshold if necessary in the next stage.
-  */
- void takeNoteOfThreshold() {
-   one.lcd1(" Test THRESHOLD ");
-   one.lcd2(" on white color ");
-   printMsg("Test threshold on white color. Make note of the highest value.");
-   printMsg("Press and release a button to continue");
-   waitButtonPress();
-   waitButtonRelease();
-   printMsg("When ready, please press a button to go to next stage.");
-   lineDetector.LoadConfig();
-   while (one.readButton() == 0) {
-     const int* reading = one.readLineSensor();
-     printArray("reading: ", reading);
-     const int* normalised = lineDetector.NormaliseReadings(reading);
-     printArray("normalised: ", normalised);
-     one.lcd1(normalised[0], normalised[1], normalised[2], normalised[3]);
-     one.lcd2(normalised[4], normalised[5], normalised[6], normalised[7]);
-     delay(100);
-   }
- }
- 
- /**
-  * @brief This step is optional. The threshold is calculated automatically
-  * but if you want to make your own adjustment this allows you to do it.
-  */
- void adjustThreshold() {
-   printMsg("Use PB1 and PB2 to increase or decrease the threshold.");
-   printMsg("Use PB3 when ready to save result.");
-   int threshold = config.GetThreshold();
-   one.lcd1("  PB1++  PB2-- ");
-   one.lcd2("threshold:", threshold);
-   waitButtonRelease();
-   int button = 0;
-   while (button != 3) {
-     button = one.readButton();
-     if (button == 1) {
-       threshold += 10;
-       one.lcd2("threshold:", threshold);
-       delay(100);
-     }
-     if (button == 2) {
-       threshold -= 10;
-       one.lcd2("threshold:", threshold);
-       delay(100);
-     }
-   }
-   config.SetThreshold(threshold);
-   printValue("threshold = ", threshold);
-   waitButtonRelease();
- }
- 
- /**
-  * @brief Calibration of the correction factor.
-  *  The correction factor is the percentage by which we extend the
-  *  range of the readings followed by cropping them out.
-  *  This operation decreases the sensitivity region of the sensor
-  *  but it gets rid of undesirable drops in readings near the extremeties.
-  *  User should find the right correction factor to use in order to:
-  *   - get rid of dropping values near the extremities
-  *   - not to narrow the sensitivity too much
-  *  The user should test each value by placing the robot on top of a black line
-  *  and manually drag the robot left and right to test both extremities.
-  *  Tipical values for the correction factor are between 0 and 10.
-  *  start from zero and gradually increase it until you find the ideal
-  *  conditions.
-  *  The values at extremities should always remain at maximum values (-100 and
-  * 100) Once you get that you should stop increasing the correction factor.
-  */
- void calibrateCorrectionFactor() {
-   printMsg("Place robot on a black line");
-   one.lcd1(" Find line edge ");
-   one.lcd2("Any key to start");
-   waitButtonRelease();
-   waitButtonPress();
-   waitButtonRelease();
-   config.SetCorrectionFactor(0);
-   int factor = 0;
-   one.lcd1("  PB1++  PB2-- ");
-   one.lcd2("  PB3 Finish   ");
- 
-   waitButtonPress();
-   waitButtonRelease();
- 
-   bool exit = false;
-   while (!exit) {
-     int button = one.readButton();
- 
-     switch (button) {
-       case 1:
-         if (factor < 20) {
-           ++factor;
-           config.SetCorrectionFactor(factor);
-           lineDetector.SetConfig(config);
-         }
-         waitButtonRelease();
-         break;
-       case 2:
-         if (factor > 0) {
-           --factor;
-           config.SetCorrectionFactor(factor);
-           lineDetector.SetConfig(config);
-         }
-         waitButtonRelease();
-         break;
-       case 3:
-         exit = true;
-         waitButtonRelease();
-         break;
-     }
-     int reading = one.readLineSensor();
-     int lineValue = lineDetector.ComputeLine(reading);
-     one.lcd1("   Line: ", lineValue);
-     one.lcd2(" Factor: ", factor);
-   }
- }
- 
- /**
-  * @brief Displays info in terminal and robot lcd
-  */
- void calibrationDone() {
-   printMsg("Calibration Done!");
-   one.lcd1("Calibration Done");
-   one.lcd2("                ");
-   delay(2000);
- }
- 
- /**
-  * @brief Display menu for user interaction
-  */
- void displayMenu() {
-   printMsg("If you wish to repeat press PB1 or PB2 on the robot.");
-   printMsg("If you wish to continue press PB3.");
-   one.lcd1("Repeat: PB1,PB2");
-   one.lcd2("Continue: PB3   ");
-   waitButtonPress();
- }
- 
- /**
-  * @brief Performs the calibration in 1 (simple) or 3 (full) main steps:
-  * 1. CalibrateMinMax to find the minimum and maximum values for each sensor
-  * 2. adjustThreshold to manually set the value of the threshold to distinguish
-  * black and white
-  * 3. adjust_correction_factor to manually set the value of the correction
-  * factor to eliminate problematic readings at extremities of the line sensor
-  */
- void calibrateLine(bool fullCalibration = false) {
-   prepareCalibration();
-   static int sensorValueMin[8] = {
-       1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024};
-   static int sensorValueMax[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-   while (one.readButton() != 3) {
-     CalibrateMinMax(sensorValueMin, sensorValueMax);
-     displayCalibration(sensorValueMin, sensorValueMax);
-     displayMenu();
-   }
- 
-   config.SetSensorMin(sensorValueMin);
-   config.SaveSensorMin();
-   config.SetSensorMax(sensorValueMax);
-   config.SaveSensorMax();
- 
-   if (fullCalibration) {
-     // full calibration: threshold and correction factor
-     waitButtonRelease();
-     while (one.readButton() != 3) {
-       takeNoteOfThreshold();
-       adjustThreshold();
-       displayMenu();
-     }
-     config.SaveThreshold();
-     // calibration of correction factor
-     waitButtonRelease();
-     while (one.readButton() != 3) {
-       calibrateCorrectionFactor();
-       displayMenu();
-     }
-     config.SaveCorrectionFactor();
-   }
-   saveConfig();
-   calibrationDone();
- }
- 
- /**
-  * @brief Reads and prints saved config values on the terminal
-  */
- void viewCalibration() {
-   config.Load();
-   config.Print();
- }
- 
- /**
-  * @brief Asks user to choose between simple or full calibration
-  */
- int getUserOption() {
-   one.lcd1("B1:Simple");
-   one.lcd2("B2:Full  B3:Skip");
-   waitButtonRelease();
-   const int option = waitButtonPress();
-   if (option == 2) {
-     one.lcd1("                ");
-     one.lcd2("B2:Full         ");
-     delay(1000);
-   } else if (option == 1) {
-     one.lcd2("                ");
-     delay(1000);
-   }
- 
-   return option;
- }
- 
- void setup() {
-   one.spiConnect(SSPIN);    // starts the SPI communication module
-   one.stop();               // stop motors
-   one.setMinBatteryV(9.5);  // safety voltage for discharging the battery
-   time.start();
-   config.Load();
-   config.Print();
-   delay(1000);
-   const auto option = getUserOption();
-   if (option != 3) {
-     bool doFullCalibration = false;
-     if (option == 2) {
-       doFullCalibration = true;
-     }
-     calibrateLine(doFullCalibration);  // calibrate line sensor <> Calibração do
-                                        // sensor de linha
-   }
-   viewCalibration();  // read line calibrate values from EEPROM <> Ler valores
-                       // de calibração da linha da EEPROM
- }
- 
- void loop() {
-   line = one.readLine();  // Read line <> Ler a linha
-   printValue(" Line: ", line);
-   // printMsg values on the LCD <> Apresenta valores no LCD
-   one.lcd1("     Line:");
-   one.lcd2("      ", line);
-   delay(50);
- }
- 
+#include <BnrOneAPlus.h>  // Bot'n Roll ONE A library
+#include <EEPROM.h>       // EEPROM reading and writing
+#include <SPI.h>          // SPI communication library required by BnrOne.cpp
+
+// constants definitions
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define M1 1     // Motor1
+#define M2 2     // Motor2
+#define VMAX 1000
+#define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
+
+using uint = unsigned int;
+
+BnrOneAPlus one;            //  object to control the Bot'n Roll ONE A
+Config config;              // variable used to load and save config values
+LineDetector lineDetector;  // variable used to detect line
+
+int line = 0;
+
+class Time {
+ public:
+  void start() {
+    // Set Timer1 in CTC mode with prescaler of 256
+    TCCR1A = 0;  // No need to set anything for Timer1 in CTC mode
+    TCCR1B = (1 << WGM12) |
+             (1 << CS12);  // WGM12 for CTC mode, CS12 for 256 prescaler
+    // Set compare value for 1-second interval
+    OCR1A = 62500;  // (16e6 / (256 * 1)) - 1 = 62500
+    // Enable Timer1 interrupt
+    TIMSK1 |= (1 << OCIE1A);
+    // Enable global interrupts
+    sei();
+  }
+
+  void update() { _time += 1; }
+
+  uint now() { return _time; }
+
+ private:
+  volatile uint _time = 0;
+};
+
+Time time;
+
+ISR(TIMER1_COMPA_vect) { time.update(); }
+
+/**
+ * @brief Prints array of integers in the terminal
+ *
+ * @param text
+ * @param array
+ */
+void printArray(const String& text, const int array[8]) {
+  Serial.begin(115200);
+  Serial.println(text);
+  for (int i = 0; i < 8; ++i) {
+    Serial.print(array[i]);
+    Serial.print("    ");
+  }
+  Serial.println();
+  Serial.end();
+}
+
+/**
+ * @brief Prints a text and value on the terminal (serial console)
+ *
+ * @tparam T
+ * @param text
+ * @param value
+ */
+template <class T>
+void printValue(const String& text, const T value) {
+  Serial.begin(115200);
+  Serial.print(text);
+  Serial.println(value);
+  Serial.end();
+}
+
+/**
+ * @brief Prints text to the terminal (serial console)
+ *
+ * @param text
+ */
+void printMsg(const String& text) {
+  Serial.begin(115200);
+  Serial.println(text);
+  Serial.end();
+}
+
+/**
+ * @brief Waits for a button to be pressed
+ */
+int waitButtonPress() {
+  int button_pressed = 0;
+  while (button_pressed == 0) {
+    button_pressed = one.readButton();
+    delay(50);
+  }
+
+  return button_pressed;
+}
+
+/**
+ * @brief Waits for the button to be released
+ */
+void waitButtonRelease() {
+  while (one.readButton() != 0) {
+    delay(50);
+  }
+}
+
+/**
+ * @brief Initial instructions so that the user places the robot safely
+ * on a flat surface ready to rotate on spot
+ */
+void prepareCalibration() {
+  printMsg("Place robot on the floor ready to rotate on the spot");
+  printMsg("Press a button when ready");
+  one.lcd1(" Press a button ");
+  one.lcd2("  to calibrate  ");
+  waitButtonPress();
+  one.lcd1(" Release button ");
+  one.lcd2("   to start     ");
+  printMsg("Release the button to start calibration");
+  delay(1000);
+  waitButtonRelease();
+  printMsg("Calibration Started!");
+  one.lcd1("  Calibration   ");
+  one.lcd2("   started!     ");
+}
+
+/**
+ * @brief Saves configuration to default file
+ */
+void saveConfig() {
+  config.Save();
+  config.Print();
+}
+
+/**
+ * @brief Finds the min and max value for each sensor
+ *
+ * @param sensorValueMin
+ * @param sensorValueMax
+ */
+void CalibrateMinMax(int sensorValueMin[8], int sensorValueMax[8]) {
+  printMsg("Computing min and max for sensor readings...");
+  one.move(15, -15);
+  const auto startTime = time.now();
+  while (time.now() < (startTime + 6)) {
+    const auto reading = one.readLineSensor();
+    printArray("Readings: ", reading);
+    for (int i = 0; i < 8; ++i) {
+      if (reading[i] > sensorValueMax[i]) {
+        sensorValueMax[i] = reading[i];
+      }
+      if (reading[i] < sensorValueMin[i]) {
+        sensorValueMin[i] = reading[i];
+      }
+    }
+    printArray("Max: ", sensorValueMax);
+    printArray("Min: ", sensorValueMin);
+    delay(50);
+  }
+  one.stop();
+  printMsg("Done");
+}
+
+/**
+ * @brief Updates lcd info and waits for user to press and release a button
+ */
+void updateLcdInfo(const String& text,
+                   const int value_1,
+                   const int value_2,
+                   const int value_3,
+                   const int value_4) {
+  one.lcd1(text);
+  one.lcd2(value_1, value_2, value_3, value_4);
+  // printMsg("Press and release button to continue");
+  waitButtonPress();
+  waitButtonRelease();
+}
+
+/**
+ * @brief Displays calibration data on the lcd
+ */
+void displayCalibration(const int sensorValueMin[8],
+                        const int sensorValueMax[8]) {
+  one.lcd1("                ");
+  one.lcd2(" Press a button ");
+  waitButtonPress();
+  waitButtonRelease();
+
+  updateLcdInfo("Max1  2   3   4 ",
+                sensorValueMax[0],
+                sensorValueMax[1],
+                sensorValueMax[2],
+                sensorValueMax[3]);
+
+  updateLcdInfo("Max5  6   7   8 ",
+                sensorValueMax[4],
+                sensorValueMax[5],
+                sensorValueMax[6],
+                sensorValueMax[7]);
+
+  updateLcdInfo("Min1  2   3   4 ",
+                sensorValueMin[0],
+                sensorValueMin[1],
+                sensorValueMin[2],
+                sensorValueMin[3]);
+
+  updateLcdInfo("Min5  6   7   8 ",
+                sensorValueMin[4],
+                sensorValueMin[5],
+                sensorValueMin[6],
+                sensorValueMin[7]);
+}
+
+/**
+ * @brief During this stage user should test the robot on white surface and make
+ * note of the highest reading. That value will be necessary to adjust the
+ * threshold if necessary in the next stage.
+ */
+void takeNoteOfThreshold() {
+  one.lcd1(" Test THRESHOLD ");
+  one.lcd2(" on white color ");
+  printMsg("Test threshold on white color. Make note of the highest value.");
+  printMsg("Press and release a button to continue");
+  waitButtonPress();
+  waitButtonRelease();
+  printMsg("When ready, please press a button to go to next stage.");
+  lineDetector.LoadConfig();
+  while (one.readButton() == 0) {
+    const int* reading = one.readLineSensor();
+    printArray("reading: ", reading);
+    const int* normalised = lineDetector.NormaliseReadings(reading);
+    printArray("normalised: ", normalised);
+    one.lcd1(normalised[0], normalised[1], normalised[2], normalised[3]);
+    one.lcd2(normalised[4], normalised[5], normalised[6], normalised[7]);
+    delay(100);
+  }
+}
+
+/**
+ * @brief This step is optional. The threshold is calculated automatically
+ * but if you want to make your own adjustment this allows you to do it.
+ */
+void adjustThreshold() {
+  printMsg("Use PB1 and PB2 to increase or decrease the threshold.");
+  printMsg("Use PB3 when ready to save result.");
+  int threshold = config.GetThreshold();
+  one.lcd1("  PB1++  PB2-- ");
+  one.lcd2("threshold:", threshold);
+  waitButtonRelease();
+  int button = 0;
+  while (button != 3) {
+    button = one.readButton();
+    if (button == 1) {
+      threshold += 10;
+      one.lcd2("threshold:", threshold);
+      delay(100);
+    }
+    if (button == 2) {
+      threshold -= 10;
+      one.lcd2("threshold:", threshold);
+      delay(100);
+    }
+  }
+  config.SetThreshold(threshold);
+  printValue("threshold = ", threshold);
+  waitButtonRelease();
+}
+
+/**
+ * @brief Calibration of the correction factor.
+ *  The correction factor is the percentage by which we extend the
+ *  range of the readings followed by cropping them out.
+ *  This operation decreases the sensitivity region of the sensor
+ *  but it gets rid of undesirable drops in readings near the extremeties.
+ *  User should find the right correction factor to use in order to:
+ *   - get rid of dropping values near the extremities
+ *   - not to narrow the sensitivity too much
+ *  The user should test each value by placing the robot on top of a black line
+ *  and manually drag the robot left and right to test both extremities.
+ *  Tipical values for the correction factor are between 0 and 10.
+ *  start from zero and gradually increase it until you find the ideal
+ *  conditions.
+ *  The values at extremities should always remain at maximum values (-100 and
+ * 100) Once you get that you should stop increasing the correction factor.
+ */
+void calibrateCorrectionFactor() {
+  printMsg("Place robot on a black line");
+  one.lcd1(" Find line edge ");
+  one.lcd2("Any key to start");
+  waitButtonRelease();
+  waitButtonPress();
+  waitButtonRelease();
+  config.SetCorrectionFactor(0);
+  int factor = 0;
+  one.lcd1("  PB1++  PB2-- ");
+  one.lcd2("  PB3 Finish   ");
+
+  waitButtonPress();
+  waitButtonRelease();
+
+  bool exit = false;
+  while (!exit) {
+    int button = one.readButton();
+
+    switch (button) {
+      case 1:
+        if (factor < 20) {
+          ++factor;
+          config.SetCorrectionFactor(factor);
+          lineDetector.SetConfig(config);
+        }
+        waitButtonRelease();
+        break;
+      case 2:
+        if (factor > 0) {
+          --factor;
+          config.SetCorrectionFactor(factor);
+          lineDetector.SetConfig(config);
+        }
+        waitButtonRelease();
+        break;
+      case 3:
+        exit = true;
+        waitButtonRelease();
+        break;
+    }
+    int reading = one.readLineSensor();
+    int lineValue = lineDetector.ComputeLine(reading);
+    one.lcd1("   Line: ", lineValue);
+    one.lcd2(" Factor: ", factor);
+  }
+}
+
+/**
+ * @brief Displays info in terminal and robot lcd
+ */
+void calibrationDone() {
+  printMsg("Calibration Done!");
+  one.lcd1("Calibration Done");
+  one.lcd2("                ");
+  delay(2000);
+}
+
+/**
+ * @brief Display menu for user interaction
+ */
+void displayMenu() {
+  printMsg("If you wish to repeat press PB1 or PB2 on the robot.");
+  printMsg("If you wish to continue press PB3.");
+  one.lcd1("Repeat: PB1,PB2");
+  one.lcd2("Continue: PB3   ");
+  waitButtonPress();
+}
+
+/**
+ * @brief Performs the calibration in 1 (simple) or 3 (full) main steps:
+ * 1. CalibrateMinMax to find the minimum and maximum values for each sensor
+ * 2. adjustThreshold to manually set the value of the threshold to distinguish
+ * black and white
+ * 3. adjust_correction_factor to manually set the value of the correction
+ * factor to eliminate problematic readings at extremities of the line sensor
+ */
+void calibrateLine(bool fullCalibration = false) {
+  prepareCalibration();
+  static int sensorValueMin[8] = {
+      1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024};
+  static int sensorValueMax[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+  while (one.readButton() != 3) {
+    CalibrateMinMax(sensorValueMin, sensorValueMax);
+    displayCalibration(sensorValueMin, sensorValueMax);
+    displayMenu();
+  }
+
+  config.SetSensorMin(sensorValueMin);
+  config.SaveSensorMin();
+  config.SetSensorMax(sensorValueMax);
+  config.SaveSensorMax();
+
+  if (fullCalibration) {
+    // full calibration: threshold and correction factor
+    waitButtonRelease();
+    while (one.readButton() != 3) {
+      takeNoteOfThreshold();
+      adjustThreshold();
+      displayMenu();
+    }
+    config.SaveThreshold();
+    // calibration of correction factor
+    waitButtonRelease();
+    while (one.readButton() != 3) {
+      calibrateCorrectionFactor();
+      displayMenu();
+    }
+    config.SaveCorrectionFactor();
+  }
+  saveConfig();
+  calibrationDone();
+}
+
+/**
+ * @brief Reads and prints saved config values on the terminal
+ */
+void viewCalibration() {
+  config.Load();
+  config.Print();
+}
+
+/**
+ * @brief Asks user to choose between simple or full calibration
+ */
+int getUserOption() {
+  one.lcd1("B1:Simple");
+  one.lcd2("B2:Full  B3:Skip");
+  waitButtonRelease();
+  const int option = waitButtonPress();
+  if (option == 2) {
+    one.lcd1("                ");
+    one.lcd2("B2:Full         ");
+    delay(1000);
+  } else if (option == 1) {
+    one.lcd2("                ");
+    delay(1000);
+  }
+
+  return option;
+}
+
+void setup() {
+  one.spiConnect(SSPIN);                  // starts the SPI communication module
+  one.stop();                             // stop motors
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
+  time.start();
+  config.Load();
+  config.Print();
+  delay(1000);
+  const auto option = getUserOption();
+  if (option != 3) {
+    bool doFullCalibration = false;
+    if (option == 2) {
+      doFullCalibration = true;
+    }
+    calibrateLine(doFullCalibration);  // calibrate line sensor <> Calibração do
+                                       // sensor de linha
+  }
+  viewCalibration();  // read line calibrate values from EEPROM <> Ler valores
+                      // de calibração da linha da EEPROM
+}
+
+void loop() {
+  line = one.readLine();  // Read line <> Ler a linha
+  printValue(" Line: ", line);
+  // printMsg values on the LCD <> Apresenta valores no LCD
+  one.lcd1("     Line:");
+  one.lcd2("      ", line);
+  delay(50);
+}

@@ -287,18 +287,15 @@ void BnrOneAPlus::setPid(const int kp, const int ki, const int kd) const {
 }
 
 void BnrOneAPlus::setMotors(const int motor_power,
-                            const int ks,
                             const int ctrl_pulses) const {
   const byte buffer[] = {KEY1,
                          KEY2,
                          highByte(motor_power),
                          lowByte(motor_power),
-                         highByte(ks),
-                         lowByte(ks),
                          highByte(ctrl_pulses),
                          lowByte(ctrl_pulses)};
   spiSendData(COMMAND_SET_MOTORS, buffer, sizeof(buffer));
-  delay(35);  // Delay for EEPROM writing
+  delay(25);  // Delay for EEPROM writing
 }
 
 byte BnrOneAPlus::readButton() const {

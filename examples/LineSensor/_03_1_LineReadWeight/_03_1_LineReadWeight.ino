@@ -1,7 +1,7 @@
 /**
  * This example was created by José Cruz (www.botnroll.com) on December 2024
  *  Updated on February 2025 by José Cruz
- * 
+ *
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -29,8 +29,8 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definitions
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
-#define M1 1     // Motor1
-#define M2 2     // Motor2
+#define M1 1  // Motor1
+#define M2 2  // Motor2
 
 #define BW_THRESHOLD 300  // Line follower limit between white and black
 
@@ -83,7 +83,7 @@ int readLine() {
 }
 
 void setup() {
-  Serial.begin(115200);    // sets baud rate to 115200bps for printing values at
+  Serial.begin(115200);   // sets baud rate to 115200bps for printing values at
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
   one.stop();             // stop motors

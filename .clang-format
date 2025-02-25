@@ -15,7 +15,7 @@ SpaceAfterTemplateKeyword: true
 SpaceBeforeParens: ControlStatements
 
 # Function spacing
-SeparateDefinitionBlocks: Always
+# SeparateDefinitionBlocks: Always
 MaxEmptyLinesToKeep: 1
 KeepEmptyLinesAtTheStartOfBlocks: false
 

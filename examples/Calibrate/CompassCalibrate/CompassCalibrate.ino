@@ -2,7 +2,7 @@
  * This example was created by José Cruz (www.botnroll.com)
  * on 18 December 2024
  *Updated on February 2025 by José Cruz
- 
+
  * How the program works:
  * This example calibrates the CMPS11 compass connected to Bot'n Roll ONE A I2C
  * BUS. Also works for CMPS10 compass. Follow the instructions on the LCD and
@@ -20,14 +20,18 @@
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
-#define SSPIN 2            // Slave Select (SS) pin for SPI communication
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
 #define CMPS_ADDRESS 0x60  // Define CMPS_ADDRESS of CMPS11
+#define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 void setup() {
   Wire.begin();  // Start the I2C bus
   Serial.begin(115200);
-  one.spiConnect(SSPIN);  // start SPI communication module
-  one.stop();             // stop motors
+  one.spiConnect(SSPIN);                  // start SPI communication module
+  one.stop();                             // stop motors
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
+
   delay(500);
 }
 
@@ -40,7 +44,8 @@ float readBearing() {
   Wire.endTransmission();
 
   Wire.requestFrom(CMPS_ADDRESS, 2);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 2);       // Wait for bytes to become available
+  while (Wire.available() < 2)
+    ;  // Wait for bytes to become available
   high_byte = Wire.read();
   low_byte = Wire.read();
 
@@ -56,7 +61,8 @@ char readRoll() {
   Wire.endTransmission();
 
   Wire.requestFrom(CMPS_ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1);       // Wait for bytes to become available
+  while (Wire.available() < 1)
+    ;  // Wait for bytes to become available
   roll = Wire.read();
   return roll;
 }
@@ -70,7 +76,8 @@ char readPitch() {
   Wire.endTransmission();
 
   Wire.requestFrom(CMPS_ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1);       // Wait for bytes to become available
+  while (Wire.available() < 1)
+    ;  // Wait for bytes to become available
   pitch = Wire.read();
 
   return pitch;
@@ -133,7 +140,6 @@ void compassRead() {
 }
 
 void loop() {
-
   one.lcd1("   Press PB1   ");
   one.lcd2(" to calibrate  ");
   while (one.readButton() != 1) delay(50);

@@ -11,7 +11,7 @@
  * on 18 December 2024
  *
  * Updated on February 2025 by José Cruz
- * 
+ *
  * This code example is in the public domain.
  * http://www.botnroll.com
  */
@@ -28,7 +28,7 @@
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 #define maximum_range 200  // Maximum range (200cm)
-#define minimum_range 0    // Minimum range
+#define minimum_range 0  // Minimum range
 
 int Sonar() {
   unsigned long duration;  // Duration used to calculate distance
@@ -57,7 +57,7 @@ int Sonar() {
 
 void setup() {
   // setup routines
-  Serial.begin(115200);    // set baud rate to 115200bps for printing values in
+  Serial.begin(115200);   // set baud rate to 115200bps for printing values in
                           // serial monitor.
   one.spiConnect(SSPIN);  // start SPI module
   one.stop();             // stop motors

@@ -1,6 +1,5 @@
 /*
- This example was created by José Cruz (www.botnroll.com)
- on 18 December 2024
+ This example was created by Antonio Ribeiro on February 2025
 
  This code example is in the public domain.
  http://www.botnroll.com
@@ -17,6 +16,9 @@
 #include <Servo.h>  // Gripper
 #include <Wire.h>   // Compass
 
+#include "include/ArduinoCommands.h"
+#include "include/SpiCommands.h"
+
 BnrOneAPlus
     one;  // declaration of object variable to control the Bot'n Roll ONE A+
 Servo gripper1;
@@ -24,13 +26,14 @@ Servo gripper2;
 
 // constants definition
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 #define ADDRESS 0x60  // Defines address of CMPS11
 
-#define echoPin 6         // Echo Pin
-#define trigPin 7         // Trigger Pin
+#define echoPin 6  // Echo Pin
+#define trigPin 7  // Trigger Pin
 #define maximumRange 200  // Maximum range needed (200cm)
-#define minimumRange 0    // Minimum range needed
+#define minimumRange 0  // Minimum range needed
 
 #define CONTROL 5  // Delay Time
 
@@ -50,7 +53,8 @@ float read_bearing() {
   Wire.endTransmission();
 
   Wire.requestFrom(ADDRESS, 2);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 2);  // Wait for bytes to become available
+  while (Wire.available() < 2)
+    ;  // Wait for bytes to become available
   highByte = Wire.read();
   lowByte = Wire.read();
 
@@ -66,7 +70,8 @@ char read_roll() {
   Wire.endTransmission();
 
   Wire.requestFrom(ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1);  // Wait for bytes to become available
+  while (Wire.available() < 1)
+    ;  // Wait for bytes to become available
   roll = Wire.read();
   return roll;
 }
@@ -80,7 +85,8 @@ char read_pitch() {
   Wire.endTransmission();
 
   Wire.requestFrom(ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1);  // Wait for bytes to become available
+  while (Wire.available() < 1)
+    ;  // Wait for bytes to become available
   pitch = Wire.read();
 
   return pitch;
@@ -106,10 +112,12 @@ void le_trama() {
 }
 
 void setup() {
-  Serial.begin(115200);    // sets baud rate to 115200bps for printing values at
+  Serial.begin(115200);   // sets baud rate to 115200bps for printing values at
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
   one.stop();             // stops motors
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
 
   Wire.begin();  // Start I2C BUS
 

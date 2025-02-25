@@ -1,9 +1,9 @@
 /**
  * This example was created by José Cruz (www.botnroll.com)
  * on 18 December 2024
- * 
+ *
  * Updated on February 2025 by José Cruz
- * 
+ *
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -27,7 +27,7 @@ Servo gripper1;
 Servo gripper2;
 
 void setup() {
-  Serial.begin(115200);    // set baud rate to 115200bps for printing values at
+  Serial.begin(115200);   // set baud rate to 115200bps for printing values at
                           // serial monitor.
   one.spiConnect(SSPIN);  // start SPI communication module
   one.stop();             // stop motors

@@ -2,7 +2,7 @@
  * @brief This example was created by José Cruz (www.botnroll.com)
  * on 18 December 2024
  * Updated on February 2025 by José Cruz
- * 
+ *
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -20,7 +20,7 @@
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
-#define SSPIN 2       // Slave Select (SS) pin for SPI communication
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
 #define ADDRESS 0x60  // CMPS11 I2C address
 
 void setup() {
@@ -39,7 +39,8 @@ float read_bearing() {
   Wire.endTransmission();
 
   Wire.requestFrom(ADDRESS, 2);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 2);  // Wait for bytes to become available
+  while (Wire.available() < 2)
+    ;  // Wait for bytes to become available
   highByte = Wire.read();
   lowByte = Wire.read();
 
@@ -55,7 +56,8 @@ char read_roll() {
   Wire.endTransmission();
 
   Wire.requestFrom(ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1);  // Wait for bytes to become available
+  while (Wire.available() < 1)
+    ;  // Wait for bytes to become available
   roll = Wire.read();
 
   return roll;
@@ -70,7 +72,8 @@ char read_pitch() {
   Wire.endTransmission();
 
   Wire.requestFrom(ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1);  // Wait for bytes to become available
+  while (Wire.available() < 1)
+    ;  // Wait for bytes to become available
   pitch = Wire.read();
 
   return pitch;

@@ -1,7 +1,7 @@
 /**
  * This example was created by José Cruz on December 2024
  *  Updated on February 2025 by José Cruz
- * 
+ *
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -22,32 +22,32 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 // Constants definitions
 // Definir constantes
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
-#define M1 1     // Motor1
-#define M2 2     // Motor2
+#define M1 1  // Motor1
+#define M2 2  // Motor2
+#define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 // Transition value between white and black
 // Valor de transição entre branco e preto
 #define BW_THRESHOLD 300
-
-// Battery protection (lower voltage)
-// Protecção da bateria (tensão mínima)
-float min_battery_V = 10.5;
 
 // Speed for the robot movement
 // Velocidade do robô
 int speed = 40;
 
 void setup() {
-  Serial.begin(115200);    // sets baud rate to 115200bps for printing values at
+  Serial.begin(115200);   // sets baud rate to 115200bps for printing values at
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
   one.stop();             // stop motors
-  one.setMinBatteryV(min_battery_V);
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
+
   one.lcd1(" Bot'n Roll ONE");
   one.lcd2("Press a button!");
   // Wait for a button to be pressed to move motors
   // Espera pressionar um botão para mover motores
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   one.lcd2("Line Following!");
 }
 

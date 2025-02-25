@@ -30,14 +30,15 @@
  */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A library
-#include <EEPROM.h>   // EEPROM reading and writing
-#include <SPI.h>      // SPI communication library required by BnrOne.cpp
-BnrOneAPlus  one;  // declaration of object variable to control the Bot'n Roll ONE A
+#include <EEPROM.h>       // EEPROM reading and writing
+#include <SPI.h>          // SPI communication library required by BnrOne.cpp
+BnrOneAPlus
+    one;  // declaration of object variable to control the Bot'n Roll ONE A
 
 // constants definitions
-#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
-#define ML 1                    // Motor1
-#define MR 2                    // Motor2
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define ML 1  // Motor1
+#define MR 2  // Motor2
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 // variables definitions
@@ -47,22 +48,25 @@ int extra_speed = 8;        // Curve outside wheel max speed limit <> Limite de
                             // velocidade da roda exterior na curva
 
 void setup() {
-  Serial.begin(115200);    // sets baud rate to 115200bps for printing values at
+  Serial.begin(115200);   // sets baud rate to 115200bps for printing values at
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
   // safety voltage for discharging the battery
-  one.setMinBatteryV(MINIMUM_BATTERY_V);
-  one.stop();        // stop motors
-  if(one.readButton() == 0) //Skip read EEPROM is necessary
-  readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
-                   // controlo da EEPROM
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
+  one.stop();                 // stop motors
+  if (one.readButton() == 0)  // Skip read EEPROM is necessary
+    readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
+                       // controlo da EEPROM
   one.lcd1("Line Follow Lin.");
   one.lcd2(" Press a button ");
   // Wait a button to be pushed <> Espera que pressione um botão
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   // Wait for button release <> Espera que largue o botão
-  while (one.readButton() != 0);
-  delay(125); //Debounce delay
+  while (one.readButton() != 0)
+    ;
+  delay(125);  // Debounce delay
   one.lcd2("www.botnroll.com");
 }
 
@@ -98,9 +102,12 @@ void menu() {
   one.lcd1("  Menu Config:");
   one.lcd2("PB1+ PB2-  PB3ok");
   // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3); 
-  while (one.readButton() == 0); 
-  while (one.readButton() == 3); 
+  while (one.readButton() == 3)
+    ;
+  while (one.readButton() == 0)
+    ;
+  while (one.readButton() == 3)
+    ;
 
   //***** Maximum speed <> Velocidade Maxima ******
   temp_var = speed;
@@ -190,11 +197,11 @@ void writeMenuEEPROM() {
   ++eeprom_address;
 }
 
- //Test if value is withn limits <> Testa se o valor está dentro dos limites
- template <typename T>
- boolean isWithinLimits(const T valor,const T min, const T max){
-  if(valor > max) return false;
-  if(valor < min) return false;
+// Test if value is withn limits <> Testa se o valor está dentro dos limites
+template <typename T>
+boolean isWithinLimits(const T valor, const T min, const T max) {
+  if (valor > max) return false;
+  if (valor < min) return false;
   return true;
 }
 
@@ -215,8 +222,7 @@ void readMenuEEPROM() {
   ++eeprom_address;
   linear_gain = (double)temp_var / 1000.0;
 
-  if (!isWithinLimits<byte>(speed,0,100)) speed = 50;
-  if (!isWithinLimits<byte>(extra_speed,0,100)) extra_speed = 4;
-  if (!isWithinLimits<float>(linear_gain,0.0,10.0)) linear_gain = 1.3;
-
+  if (!isWithinLimits<byte>(speed, 0, 100)) speed = 50;
+  if (!isWithinLimits<byte>(extra_speed, 0, 100)) extra_speed = 4;
+  if (!isWithinLimits<float>(linear_gain, 0.0, 10.0)) linear_gain = 1.3;
 }

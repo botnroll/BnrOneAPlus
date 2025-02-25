@@ -1,7 +1,7 @@
 /**
  * This example was created by José Cruz on December 2024
  *  Updated on February 2025 by José Cruz
- * 
+ *
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -22,12 +22,12 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definitions
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
-#define M1 1     // Motor1
-#define M2 2     // Motor2
+#define M1 1  // Motor1
+#define M2 2  // Motor2
 
-#define BW_THRESHOLD 300    // Line follower limit between white and black
-#define MIN_BATTERY_V 10.5  // Safety voltage for discharging the battery
-#define SPEED 40            // Default speed
+#define BW_THRESHOLD 300  // Line follower limit between white and black
+#define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
+#define SPEED 40  // Default speed
 
 int readLine() {
   int lineValue = 0;
@@ -77,17 +77,19 @@ int readLine() {
 }
 
 void setup() {
-  Serial.begin(115200);    // sets baud rate to 115200bps for printing values at
+  Serial.begin(115200);   // sets baud rate to 115200bps for printing values at
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
   one.stop();             // stop motors
   // safety voltage for discharging the battery
-  one.setMinBatteryV(MIN_BATTERY_V);
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
   one.lcd1(" Bot'n Roll ONE");
   one.lcd2("Press a button!");
   // Wait for a button to be pressed to move motors
   // Espera pressionar um botão para mover motores
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   one.lcd2("Line Following!");
 }
 
