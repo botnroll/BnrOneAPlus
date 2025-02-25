@@ -11,9 +11,9 @@
  *
  * Line reading provides a linear value between -100 to 100
  * Line follow:
- * Motors speed varies according to a linear function.
+ * Motors g_speed varies according to a linear function.
  * Linear Gain must be adjusted.
- * You can adjust the speed limit of the wheel that is outside the curve.
+ * You can adjust the g_speed limit of the wheel that is outside the curve.
  * Press push button 3 (PB3) to enter control configuration menu.
  *
  * <>
@@ -36,16 +36,25 @@ BnrOneAPlus
     one;  // declaration of object variable to control the Bot'n Roll ONE A
 
 // constants definitions
-#define SSPIN 2  // Slave Select (SS) pin for SPI communication
-#define ML 1  // Motor1
-#define MR 2  // Motor2
+#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
+#define ML 1                    // Motor1
+#define MR 2                    // Motor2
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 // variables definitions
-int speed = 60;
-double linear_gain = 1.10;  // Linear gain <> Ganho linear
-int extra_speed = 8;        // Curve outside wheel max speed limit <> Limite de
-                            // velocidade da roda exterior na curva
+int g_speed = 60;
+double g_linear_gain = 1.10;  // Linear gain <> Ganho linear
+int g_extra_speed = 8;  // Curve outside wheel max g_speed limit <> Limite de
+
+// velocidade da roda exterior na curva
+
+void waitButtonClick() {
+  while (one.readButton() == 0);
+  delay(125);  // Debounce delay
+  // Wait for button release <> Espera que largue o botão
+  while (one.readButton() != 0);
+  delay(125);  // Debounce delay
+}
 
 void setup() {
   Serial.begin(115200);   // sets baud rate to 115200bps for printing values at
@@ -60,34 +69,25 @@ void setup() {
                        // controlo da EEPROM
   one.lcd1("Line Follow Lin.");
   one.lcd2(" Press a button ");
-  // Wait a button to be pushed <> Espera que pressione um botão
-  while (one.readButton() == 0)
-    ;
-  // Wait for button release <> Espera que largue o botão
-  while (one.readButton() != 0)
-    ;
-  delay(125);  // Debounce delay
+  waitButtonClick();
   one.lcd2("www.botnroll.com");
 }
 
 void loop() {
-  int line = one.readLine();
+  const int line = one.readLine();
   // Linear function for Motor1 <> Função linear para o Motor1
-  int velML = (int)((double)speed + ((double)line * linear_gain));
+  int left_speed = (int)((double)g_speed + ((double)line * g_linear_gain));
   // Linear function for Motor2 <> Função linear para o Motor2
-  int velMR = (int)((double)speed - ((double)line * linear_gain));
+  int right_speed = (int)((double)g_speed - ((double)line * g_linear_gain));
 
-  // Limit motors maximum and minimum speed <> Limitar mínimos e máximos da
+  // Limit motors maximum and minimum g_speed <> Limitar mínimos e máximos da
   // velocidade dos motores
-  // Minimum speed -1 causes motor to brake <> Velocidade mínima -1 faz o motor
-  // travar
-  if (velML < -1) velML = -1;
-  if (velMR < -1) velMR = -1;
-  // Maximum speed limit <> Limite da velocidade máxima
-  if (velML > speed + extra_speed) velML = speed + extra_speed;
-  if (velMR > speed + extra_speed) velMR = speed + extra_speed;
+  // Minimum g_speed -1 causes motor to brake <> Velocidade mínima -1 faz o
+  // motor travar
+  left_speed = constrain(left_speed, -1, g_speed + g_extra_speed);
+  right_speed = constrain(right_speed, -1, g_speed + g_extra_speed);
 
-  one.move(velML, velMR);
+  one.move(left_speed, right_speed);
 
   // Configuration menu <> Menu de configuração
   // PB3 to enter menu <> PB3 para entrar no menu
@@ -102,15 +102,12 @@ void menu() {
   one.lcd1("  Menu Config:");
   one.lcd2("PB1+ PB2-  PB3ok");
   // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3)
-    ;
-  while (one.readButton() == 0)
-    ;
-  while (one.readButton() == 3)
-    ;
+  while (one.readButton() == 3);
+  while (one.readButton() == 0);
+  while (one.readButton() == 3);
 
-  //***** Maximum speed <> Velocidade Maxima ******
-  temp_var = speed;
+  //***** Maximum g_speed <> Velocidade Maxima ******
+  temp_var = g_speed;
   while (button != 3) {
     one.lcd2("   VelMax:", temp_var);
     button = one.readButton();
@@ -127,11 +124,11 @@ void menu() {
   while (button == 3) {
     button = one.readButton();
   }
-  speed = temp_var;
+  g_speed = temp_var;
 
-  //**** Outside wheel speed boost <> Incremento de velocidade da roda de fora
+  //**** Outside wheel g_speed boost <> Incremento de velocidade da roda de fora
   //****
-  temp_var = extra_speed;
+  temp_var = g_extra_speed;
   while (button != 3) {
     one.lcd2(" Curve Boost:", temp_var);
     button = one.readButton();
@@ -148,10 +145,10 @@ void menu() {
   while (button == 3) {
     button = one.readButton();
   }
-  extra_speed = temp_var;
+  g_extra_speed = temp_var;
 
   //**** Linear gain KLine <> Ganho linear KLine ****
-  temp = linear_gain * 1000.0;
+  temp = g_linear_gain * 1000.0;
   temp_var = (int)temp;
   while (button != 3) {
     one.lcd2(" Line Gain:", temp_var);
@@ -169,7 +166,7 @@ void menu() {
   while (button == 3) {
     button = one.readButton();
   }
-  linear_gain = (float)temp_var / 1000.0;
+  g_linear_gain = (float)temp_var / 1000.0;
 
   //**** Configuration end <> Termina Configuração *****
   writeMenuEEPROM();  // Write control values to EEPROM <> Escrever valores de
@@ -179,22 +176,47 @@ void menu() {
   delay(250);
 }
 
+byte writeByteToEEPROM(const byte eeprom_address, const int temp_var) {
+  EEPROM.write(eeprom_address, low_byte(temp_var));  // Guardar em EEPROM
+  ++eeprom_address;
+
+  return eeprom_address;
+}
+
+byte writeIntToEEPROM(const byte eeprom_address, const int temp_var) {
+  EEPROM.write(eeprom_address, high_byte(temp_var));  // Guardar em EEPROM
+  ++eeprom_address;
+  EEPROM.write(eeprom_address, low_byte(temp_var));  // Guardar em EEPROM
+  ++eeprom_address;
+
+  return eeprom_address;
+}
+
+byte readByteFromEEPROM(const byte eeprom_address, int& temp_var) {
+  temp_var = (int)EEPROM.read(eeprom_address);  // Guardar em EEPROM
+  ++eeprom_address;
+
+  return eeprom_address;
+}
+
+byte readIntFromEEPROM(const byte eeprom_address, int& temp_var) {
+  temp_var = (int)EEPROM.read(eeprom_address);
+  ++eeprom_address;
+  temp_var = temp_var << 8;
+  temp_var += (int)EEPROM.read(eeprom_address);
+  ++eeprom_address;
+
+  return eeprom_address;
+}
+
 // Write Menu values on EEPROM <> Escrever valores na EEPROM
 void writeMenuEEPROM() {
   byte eeprom_address = 10;
-  int temp_var = 0;
 
-  temp_var = speed;
-  EEPROM.write(eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
-  temp_var = extra_speed;
-  EEPROM.write(eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
-  temp_var = (int)(linear_gain * 1000.0);
-  EEPROM.write(eeprom_address, highByte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
-  EEPROM.write(eeprom_address, lowByte(temp_var));
-  ++eeprom_address;
+  eeprom_address = writeByteToEEPROM(eeprom_address, g_speed);
+  eeprom_address = writeByteToEEPROM(eeprom_address, g_extra_speed);
+  int temp_var = (int)(g_linear_gain * 1000.0);
+  eeprom_address = writeIntToEEPROM(eeprom_address, temp_var);
 }
 
 // Test if value is withn limits <> Testa se o valor está dentro dos limites
@@ -208,21 +230,15 @@ boolean isWithinLimits(const T valor, const T min, const T max) {
 // Read Menu values from EEPROM <> Ler valores da EEPROM
 void readMenuEEPROM() {
   byte eeprom_address = 10;
+
+  eeprom_address = readByteFromEEPROM(eeprom_address, g_speed);
+  eeprom_address = readByteFromEEPROM(eeprom_address, g_extra_speed);
+
   int temp_var = 0;
+  eeprom_address = readIntFromEEPROM(eeprom_address, temp_var);
+  g_linear_gain = (double)temp_var / 1000.0;
 
-  speed = (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
-  extra_speed = (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
-  temp_var = 0;
-  temp_var = (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
-  temp_var = temp_var << 8;
-  temp_var += (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
-  linear_gain = (double)temp_var / 1000.0;
-
-  if (!isWithinLimits<byte>(speed, 0, 100)) speed = 50;
-  if (!isWithinLimits<byte>(extra_speed, 0, 100)) extra_speed = 4;
-  if (!isWithinLimits<float>(linear_gain, 0.0, 10.0)) linear_gain = 1.3;
+  if (!isWithinLimits<byte>(g_speed, 0, 100)) g_speed = 50;
+  if (!isWithinLimits<byte>(g_extra_speed, 0, 100)) g_extra_speed = 4;
+  if (!isWithinLimits<float>(g_linear_gain, 0.0, 10.0)) g_linear_gain = 1.3;
 }

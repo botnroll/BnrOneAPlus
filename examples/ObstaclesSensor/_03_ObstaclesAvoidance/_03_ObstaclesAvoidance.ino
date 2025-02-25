@@ -47,11 +47,9 @@ void setup() {
   one.lcd1("Avoid Obstacles ");
   one.lcd2("Press a Button!!");
   // Wait a button to be pressed <> Espera que pressione um botão
-  while (one.readButton() == 0)
-    ;
+  while (one.readButton() == 0);
   // Wait for button release <> Espera que largue o botão
-  while (one.readButton() != 0)
-    ;
+  while (one.readButton() != 0);
 
   one.lcd1(" RgL SpL RgR SpR");
   tcycle = millis();  // Set start value for tcycle
@@ -116,12 +114,9 @@ void menu() {
   one.lcd1("  Menu Config:  ");
   one.lcd2("PB1+ PB2-  PB3ok");
   // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3)
-    ;
-  while (one.readButton() == 0)
-    ;
-  while (one.readButton() == 3)
-    ;
+  while (one.readButton() == 3);
+  while (one.readButton() == 0);
+  while (one.readButton() == 3);
 
   //*****  Adjust sensor distance <> Ajustar a distância dos sensores  ******
   while (one.readButton() != 3) {
@@ -214,21 +209,21 @@ void writeMenuEEPROM() {
   int var = 0;
 
   var = speed;
-  EEPROM.write(eeprom_address, lowByte(var));  // Guardar em EEPROM
+  EEPROM.write(eeprom_address, low_byte(var));  // Guardar em EEPROM
   ++eeprom_address;
 
   var = (int)(linear_gain * 1000.0);
-  EEPROM.write(eeprom_address, highByte(var));  // Guardar em EEPROM
+  EEPROM.write(eeprom_address, high_byte(var));  // Guardar em EEPROM
   ++eeprom_address;
-  EEPROM.write(eeprom_address, lowByte(var));
+  EEPROM.write(eeprom_address, low_byte(var));
   ++eeprom_address;
 
   var = min_range;
-  EEPROM.write(eeprom_address, lowByte(var));  // Guardar em EEPROM
+  EEPROM.write(eeprom_address, low_byte(var));  // Guardar em EEPROM
   ++eeprom_address;
 
   var = max_range;
-  EEPROM.write(eeprom_address, lowByte(var));  // Guardar em EEPROM
+  EEPROM.write(eeprom_address, low_byte(var));  // Guardar em EEPROM
 
   ++eeprom_address;
 }

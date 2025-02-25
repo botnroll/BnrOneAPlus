@@ -20,7 +20,7 @@
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
-#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define SSPIN 2       // Slave Select (SS) pin for SPI communication
 #define ADDRESS 0x60  // CMPS11 I2C address
 
 void setup() {
@@ -30,24 +30,23 @@ void setup() {
   one.stop();             // stop motors
 }
 
-float read_bearing() {
-  byte highByte, lowByte;  // highByte and lowByte store the bearing and fine
-                           // stores decimal place of bearing
+float readBearing() {
+  byte high_byte, low_byte;  // high_byte and low_byte store the bearing and
+                             // fine stores decimal place of bearing
 
   Wire.beginTransmission(ADDRESS);  // start communication with CMPS11
   Wire.write(2);  // Send the register we wish to start reading from
   Wire.endTransmission();
 
   Wire.requestFrom(ADDRESS, 2);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 2)
-    ;  // Wait for bytes to become available
-  highByte = Wire.read();
-  lowByte = Wire.read();
+  while (Wire.available() < 2);  // Wait for bytes to become available
+  high_byte = Wire.read();
+  low_byte = Wire.read();
 
-  return (float)((highByte << 8) + lowByte) / 10;
+  return (float)((high_byte << 8) + low_byte) / 10;
 }
 
-char read_roll() {
+char readRoll() {
   char roll;  // Store  roll values of CMPS11, chars are used because they
               // support signed value
 
@@ -56,14 +55,13 @@ char read_roll() {
   Wire.endTransmission();
 
   Wire.requestFrom(ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1)
-    ;  // Wait for bytes to become available
+  while (Wire.available() < 1);  // Wait for bytes to become available
   roll = Wire.read();
 
   return roll;
 }
 
-char read_pitch() {
+char readPitch() {
   char pitch;  // Store pitch values of CMPS11, chars are used because they
                // support signed value
 
@@ -72,8 +70,7 @@ char read_pitch() {
   Wire.endTransmission();
 
   Wire.requestFrom(ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1)
-    ;  // Wait for bytes to become available
+  while (Wire.available() < 1);  // Wait for bytes to become available
   pitch = Wire.read();
 
   return pitch;
@@ -84,9 +81,9 @@ void loop() {
   char roll, pitch;
   char temp[20];
 
-  bearing = read_bearing();
-  roll = read_roll();
-  pitch = read_pitch();
+  bearing = readBearing();
+  roll = readRoll();
+  pitch = readPitch();
 
   Serial.print("Bearing:");
   Serial.print(bearing);

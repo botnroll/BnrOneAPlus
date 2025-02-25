@@ -15,7 +15,7 @@
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A
 
 // constants definition
-#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 void setup() {
@@ -28,48 +28,57 @@ void setup() {
   one.lcd1(" Motors Testing ");
   one.lcd2(" Press a button ");
   // Wait a button to be pushed <> Espera que pressione um botão
-  while (one.readButton() == 0)
-    ;
+  while (one.readButton() == 0);
+}
+
+void moveForwards(const int speed, const int time) {
+  one.lcd2("    Forward ");  // print data on LCD line 2
+  one.move(speed, speed);    // Forward
+  delay(time);               // wait 1 second
+}
+
+void moveBackwards(const int speed, const int time) {
+  one.lcd2("   Backwards ");
+  one.move(-speed, -speed);  // Backwards
+  delay(time);
+}
+
+void rotateLeft(const int speed, const int time) {
+  one.lcd2("  Rotate Left ");
+  one.move(-speed, speed);  // Rotate Left
+  delay(time);
+}
+
+void rotateRight(const int speed, const int time) {
+  one.lcd2("  Rotate Right ");
+  one.move(speed, -speed);  // Rotate Right
+  delay(time);
+}
+
+void stop(const int time) {
+  one.lcd2("     Stop   ");
+  one.stop();  // Stop Motors
+  delay(time);
+}
+
+void brake(const int torque, const int time) {
+  one.lcd2("     Brake    ");
+  one.brake();  // Stop motors with torque
+  delay(time);
 }
 
 void loop() {
-  one.lcd2("    Forward ");  // print data on LCD line 2
-  one.move(50, 50);          // Forward
-  delay(1000);               // wait 1 second
-  one.lcd2("     Stop   ");
-  one.stop();  // Stop Motors
-  delay(500);
-  one.lcd2("   Backwards ");
-  one.move(-50, -50);  // Backwards
-  delay(1000);
-  one.lcd2("     Stop   ");
-  one.move(0, 0);  // Stop Motors
-  delay(500);
-  one.lcd2("  Rotate Right ");
-  one.move(50, -50);  // Rotate Right
-  delay(500);
-  one.lcd2("     Stop   ");
-  one.stop();  // Stop
-  delay(500);
-  one.lcd2("  Rotate Left ");
-  one.move(-50, 50);  // Rotate Left
-  delay(500);
-  one.lcd2("     Stop   ");
-  one.stop();  // Stop Motors
-  delay(500);
-  one.lcd2("    Forward ");
-  one.move(100, 100);  // Forward
-  delay(1000);
-  one.lcd2("     Brake    ");
-  one.brake(100, 100);  // Stop motors with torque
-  delay(800);
-  one.lcd2("   Backwards ");
-  one.move(-100, -100);  // Backwards
-  delay(1000);
-  one.lcd2("     Brake    ");
-  one.brake(100, 100);  // Stop motors with torque
-  delay(800);
-  one.lcd2("     Stop   ");
-  one.stop();  // Stop Motors
-  delay(1500);
+  moveForwards(50, 1000);
+  stop(500);
+  moveBackwards(50, 1000);
+  stop(500);
+  rotateRight(50, 500);
+  stop(500);
+  rotateLeft(50, 500);
+  stop(500);
+  moveForwards(100, 1000);
+  stop(500);
+  moveBackwards(100, 1000);
+  brake(100, 800);
+  stop(1500);
 }

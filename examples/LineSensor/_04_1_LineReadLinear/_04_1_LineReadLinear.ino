@@ -35,10 +35,10 @@ BnrOneAPlus
 
 // constants definitions
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
-#define M1 1  // Motor1
-#define M2 2  // Motor2
+#define M1 1     // Motor1
+#define M2 2     // Motor2
 
-#define MAX_VALUE 1000  // maximum value for a sensor reading
+#define MAX_VALUE 1000      // maximum value for a sensor reading
 #define MIN_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 int max_value[8] = {1023, 1023, 1023, 1023, 1023, 1023, 1023, 1023};
@@ -46,35 +46,57 @@ int min_value[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 double correction_factor[8];
 int bw_threshold = 50;  // Line follower limit between white and black
 
+byte writeByteToEEPROM(const byte eeprom_address, const int temp_var) {
+  EEPROM.write(eeprom_address, low_byte(temp_var));  // Guardar em EEPROM
+  ++eeprom_address;
+
+  return eeprom_address;
+}
+
+byte writeIntToEEPROM(const byte eeprom_address, const int temp_var) {
+  EEPROM.write(eeprom_address, high_byte(temp_var));  // Guardar em EEPROM
+  ++eeprom_address;
+  EEPROM.write(eeprom_address, low_byte(temp_var));  // Guardar em EEPROM
+  ++eeprom_address;
+
+  return eeprom_address;
+}
+
+byte readByteFromEEPROM(const byte eeprom_address, int& temp_var) {
+  temp_var = (int)EEPROM.read(eeprom_address);  // Guardar em EEPROM
+  ++eeprom_address;
+
+  return eeprom_address;
+}
+
+byte readIntFromEEPROM(const byte eeprom_address, int& temp_var) {
+  temp_var = (int)EEPROM.read(eeprom_address);
+  ++eeprom_address;
+  temp_var = temp_var << 8;
+  temp_var += (int)EEPROM.read(eeprom_address);
+  ++eeprom_address;
+
+  return eeprom_address;
+}
+
 void setupLine() {
   // Read EEPROM values <> Ler valores da EEPROM
   byte eeprom_address = 100;
   Serial.println("Setup:");
   Serial.print("Max: ");
   for (int i = 0; i < 8; i++) {
-    max_value[i] = (int)EEPROM.read(eeprom_address);
-    max_value[i] = max_value[i] << 8;
-    ++eeprom_address;
-    max_value[i] += (int)EEPROM.read(eeprom_address);
-    ++eeprom_address;
+    eeprom_address = readIntFromEEPROM(eeprom_address, max_value[i]);
     Serial.print(max_value[i]);
     Serial.print("  ");
   }
   Serial.println();
   Serial.print("Min: ");
   for (int i = 0; i < 8; i++) {
-    min_value[i] = (int)EEPROM.read(eeprom_address);
-    min_value[i] = min_value[i] << 8;
-    ++eeprom_address;
-    min_value[i] += (int)EEPROM.read(eeprom_address);
-    ++eeprom_address;
+    eeprom_address = readIntFromEEPROM(eeprom_address, min_value[i]);
     Serial.print(min_value[i]);
     Serial.print("  ");
   }
-  bw_threshold = (int)EEPROM.read(eeprom_address);
-  bw_threshold = bw_threshold << 8;
-  ++eeprom_address;
-  bw_threshold += (int)EEPROM.read(eeprom_address);
+  eeprom_address = readIntFromEEPROM(eeprom_address, bw_threshold);
   Serial.println();
   Serial.print("bw_threshold: ");
   Serial.print(bw_threshold);

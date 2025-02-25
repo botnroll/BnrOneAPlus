@@ -23,7 +23,7 @@ void BnrOneAPlus::spiConnect(const byte sspin) {
   // SPI in hold state by pulling SS high.
   digitalWrite(sspin_, HIGH);
   delayMicroseconds(DELAY_SS);
-  delay(1); //Necessary for stability on a arduino reset
+  delay(1);  // Necessary for stability on a arduino reset
 }
 
 byte BnrOneAPlus::spiRequestByte(const byte command) const {
@@ -99,7 +99,9 @@ float BnrOneAPlus::spiRequestFloat(const byte command) const {
   return f;
 }
 
-void BnrOneAPlus::spiRequestTwoWords(const byte command, int& out_int1, int& out_int2) const {
+void BnrOneAPlus::spiRequestTwoWords(const byte command,
+                                     int& out_int1,
+                                     int& out_int2) const {
   byte value[4] = {0, 0, 0, 0};
   byte buffer[] = {command, KEY1, KEY2};
   // Select the SPI Slave device to start communication.
@@ -120,30 +122,30 @@ void BnrOneAPlus::spiRequestTwoWords(const byte command, int& out_int1, int& out
 }
 
 void BnrOneAPlus::spiSendDataOnly(const byte command,
-  const byte buffer[],
-  const byte num_bytes) const {
+                                  const byte buffer[],
+                                  const byte num_bytes) const {
   SPI.transfer(command);  // Send one byte
   delayMicroseconds(DELAY_TR);
   for (int k = 0; k < num_bytes; k++) {
-      SPI.transfer(buffer[k]);  // Send one byte
-      delayMicroseconds(DELAY_TR);
+    SPI.transfer(buffer[k]);  // Send one byte
+    delayMicroseconds(DELAY_TR);
   }
 }
 
 void BnrOneAPlus::spiSendData(const byte command,
                               const byte buffer[],
                               const byte num_bytes) const {
-  digitalWrite(sspin_, LOW); // Start communication
+  digitalWrite(sspin_, LOW);  // Start communication
   spiSendDataOnly(command, buffer, num_bytes);
   digitalWrite(sspin_, HIGH);  // Close communication
   delayMicroseconds(DELAY_SS);
 }
 
 void BnrOneAPlus::move(const int left_speed, const int right_speed) const {
-  byte leftSpeed_H = highByte(left_speed);
-  byte leftSpeed_L = lowByte(left_speed);
-  byte rightSpeed_H = highByte(right_speed);
-  byte rightSpeed_L = lowByte(right_speed);
+  byte leftSpeed_H = high_byte(left_speed);
+  byte leftSpeed_L = low_byte(left_speed);
+  byte rightSpeed_H = high_byte(right_speed);
+  byte rightSpeed_L = low_byte(right_speed);
 
   byte buffer[] = {
       KEY1, KEY2, leftSpeed_H, leftSpeed_L, rightSpeed_H, rightSpeed_L};
@@ -151,27 +153,32 @@ void BnrOneAPlus::move(const int left_speed, const int right_speed) const {
   delay(2);  // Wait while command is processed
 }
 
-void BnrOneAPlus::sendMoveRpm(const byte command, const int left_rpm, const int right_rpm) const{
+void BnrOneAPlus::sendMoveRpm(const byte command,
+                              const int left_rpm,
+                              const int right_rpm) const {
   byte buffer[] = {KEY1,
-    KEY2,
-    highByte(left_rpm),
-    lowByte(left_rpm),
-    highByte(right_rpm),
-    lowByte(right_rpm)};
-    spiSendDataOnly(command, buffer, sizeof(buffer));
+                   KEY2,
+                   high_byte(left_rpm),
+                   low_byte(left_rpm),
+                   high_byte(right_rpm),
+                   low_byte(right_rpm)};
+  spiSendDataOnly(command, buffer, sizeof(buffer));
 }
 
 void BnrOneAPlus::moveRpm(const int left_rpm, const int right_rpm) const {
-  digitalWrite(sspin_, LOW); // Start communication
+  digitalWrite(sspin_, LOW);  // Start communication
   sendMoveRpm(COMMAND_MOVE_RPM, left_rpm, right_rpm);
   digitalWrite(sspin_, HIGH);  // Close communication
   delayMicroseconds(DELAY_SS);
   delay(2);
 }
 
-void BnrOneAPlus::moveRpmGetEncoders(const int left_rpm, const int right_rpm, int& left_encoder, int& right_encoder) const {
+void BnrOneAPlus::moveRpmGetEncoders(const int left_rpm,
+                                     const int right_rpm,
+                                     int& left_encoder,
+                                     int& right_encoder) const {
   // Select the SPI Slave device to start communication.
-  digitalWrite(sspin_, LOW); // Start communication
+  digitalWrite(sspin_, LOW);  // Start communication
   sendMoveRpm(COMMAND_MOVE_RPM_R_ENC, left_rpm, right_rpm);
   byte value[4];
   int i = 0;
@@ -190,10 +197,10 @@ void BnrOneAPlus::moveRpmGetEncoders(const int left_rpm, const int right_rpm, in
 
 void BnrOneAPlus::moveRAW(const int left_duty_cycle,
                           const int right_duty_cycle) const {
-  byte leftPower_H = highByte(left_duty_cycle);
-  byte leftPower_L = lowByte(left_duty_cycle);
-  byte rightPower_H = highByte(right_duty_cycle);
-  byte rightPower_L = lowByte(right_duty_cycle);
+  byte leftPower_H = high_byte(left_duty_cycle);
+  byte leftPower_L = low_byte(left_duty_cycle);
+  byte rightPower_H = high_byte(right_duty_cycle);
+  byte rightPower_L = low_byte(right_duty_cycle);
 
   byte buffer[] = {
       KEY1, KEY2, leftPower_H, leftPower_L, rightPower_H, rightPower_L};
@@ -202,8 +209,8 @@ void BnrOneAPlus::moveRAW(const int left_duty_cycle,
 }
 
 void BnrOneAPlus::move1m(const byte motor_id, const int speed) const {
-  byte speed_H = highByte(speed);
-  byte speed_L = lowByte(speed);
+  byte speed_H = high_byte(speed);
+  byte speed_L = low_byte(speed);
 
   byte buffer[] = {KEY1, KEY2, motor_id, speed_H, speed_L};
   spiSendData(COMMAND_MOVE_1M, buffer, sizeof(buffer));
@@ -276,12 +283,12 @@ void BnrOneAPlus::setMinBatteryV(const float min_battery_V) const {
 void BnrOneAPlus::setPid(const int kp, const int ki, const int kd) const {
   byte buffer[] = {KEY1,
                    KEY2,
-                   highByte(kp),
-                   lowByte(kp),
-                   highByte(ki),
-                   lowByte(ki),
-                   highByte(kd),
-                   lowByte(kd)};
+                   high_byte(kp),
+                   low_byte(kp),
+                   high_byte(ki),
+                   low_byte(ki),
+                   high_byte(kd),
+                   low_byte(kd)};
   spiSendData(COMMAND_SET_PID, buffer, sizeof(buffer));
   delay(35);  // Delay for EEPROM writing
 }
@@ -290,10 +297,10 @@ void BnrOneAPlus::setMotors(const int motor_power,
                             const int ctrl_pulses) const {
   const byte buffer[] = {KEY1,
                          KEY2,
-                         highByte(motor_power),
-                         lowByte(motor_power),
-                         highByte(ctrl_pulses),
-                         lowByte(ctrl_pulses)};
+                         high_byte(motor_power),
+                         low_byte(motor_power),
+                         high_byte(ctrl_pulses),
+                         low_byte(ctrl_pulses)};
   spiSendData(COMMAND_SET_MOTORS, buffer, sizeof(buffer));
   delay(25);  // Delay for EEPROM writing
 }
@@ -322,8 +329,10 @@ float BnrOneAPlus::readBattery() const {
   return (float)((float)(spiRequestWord(COMMAND_BAT_READ)) / 50.7);
 }
 
-void BnrOneAPlus::readAndResetEncoders(int& out_left_encoder, int& out_right_encoder) const {
-    spiRequestTwoWords(COMMAND_ENCODERS_READ, out_left_encoder, out_right_encoder);
+void BnrOneAPlus::readAndResetEncoders(int& out_left_encoder,
+                                       int& out_right_encoder) const {
+  spiRequestTwoWords(
+      COMMAND_ENCODERS_READ, out_left_encoder, out_right_encoder);
 }
 
 int BnrOneAPlus::readAndResetLeftEncoder() const {
@@ -342,9 +351,7 @@ int BnrOneAPlus::readIncrementalRightEncoder() const {
   return spiRequestWord(COMMAND_ENCR_INC);
 }
 
-void BnrOneAPlus::readFirmware(byte *firm1,
-                               byte *firm2,
-                               byte *firm3) const {
+void BnrOneAPlus::readFirmware(byte* firm1, byte* firm2, byte* firm3) const {
   byte value[3] = {0, 0, 0};
   int k = 0;
   byte buffer[] = {KEY1, KEY2};
@@ -436,7 +443,7 @@ float BnrOneAPlus::readDBGf() const {
 /**************************************************************/
 /**** LCD LINE 1 Handlers *************************************/
 /**************************************************************/
-void BnrOneAPlus::lcd1(const String &string_in) const {
+void BnrOneAPlus::lcd1(const String& string_in) const {
   int i, a;
   byte buffer[18];
   char string1[19], string2[19];
@@ -832,7 +839,7 @@ void BnrOneAPlus::lcd1(const int num1,
 /**************************************************************/
 /**** LCD LINE 2 Handlers *************************************/
 /**************************************************************/
-void BnrOneAPlus::lcd2(const String &string_in) const {
+void BnrOneAPlus::lcd2(const String& string_in) const {
   int i, a;
   byte buffer[18];
   char string1[19], string2[19];
@@ -1224,7 +1231,7 @@ void BnrOneAPlus::lcd2(const int num1,
   delay(4);  // Wait while command is processed
 }
 
-int *BnrOneAPlus::readLineSensor() const {
+int* BnrOneAPlus::readLineSensor() const {
   static int reading[8];
   byte value[16];
   int i;

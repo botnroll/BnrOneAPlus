@@ -14,8 +14,15 @@
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A
 
 // constants definition
-#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
+
+void printDebugInfo(const int left_encoder, const int right_encoder) {
+  Serial.print("Left: ");
+  Serial.print(left_encoder);
+  Serial.print(" Right: ");
+  Serial.println(right_encoder);
+}
 
 void testMoveRpmRequestEncoders(int increment) {
   int left_encoder = 0;
@@ -24,10 +31,7 @@ void testMoveRpmRequestEncoders(int increment) {
       200 + increment, 200 + increment, left_encoder, right_encoder);
   one.lcd1("Left: ", left_encoder);
   one.lcd2("Right: ", right_encoder);
-  Serial.print("Left: ");
-  Serial.print(left_encoder);
-  Serial.print(" Right: ");
-  Serial.println(right_encoder);
+  printDebugInfo(left_encoder, right_encoder);
 }
 
 void setup() {
@@ -41,8 +45,7 @@ void setup() {
   one.lcd1(" RPM + Encoders ");
   one.lcd2(" Press a button ");
   // Wait a button to be pushed <> Espera que pressione um botão
-  while (one.readButton() == 0)
-    ;
+  while (one.readButton() == 0);
 
   for (int i = 0; i < 50; ++i) {
     testMoveRpmRequestEncoders(i);
