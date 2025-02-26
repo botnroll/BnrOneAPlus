@@ -1,6 +1,7 @@
 /**
  * @brief This example was created by José Cruz (www.botnroll.com)
  * on 18 December 2024
+ * Updated on February 2025 by José Cruz
  *
  * This code example is in the public domain.
  * http://www.botnroll.com
@@ -13,7 +14,6 @@
  *                    by James Henderson, 2012                   *
  *****************************************************************/
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
 #include <Wire.h>
 
@@ -30,9 +30,9 @@ void setup() {
   one.stop();             // stop motors
 }
 
-float read_bearing() {
-  byte highByte, lowByte;  // highByte and lowByte store the bearing and fine
-                           // stores decimal place of bearing
+float readBearing() {
+  byte high_byte, low_byte;  // high_byte and low_byte store the bearing and
+                             // fine stores decimal place of bearing
 
   Wire.beginTransmission(ADDRESS);  // start communication with CMPS11
   Wire.write(2);  // Send the register we wish to start reading from
@@ -40,13 +40,13 @@ float read_bearing() {
 
   Wire.requestFrom(ADDRESS, 2);  // Request 4 bytes from CMPS11
   while (Wire.available() < 2);  // Wait for bytes to become available
-  highByte = Wire.read();
-  lowByte = Wire.read();
+  high_byte = Wire.read();
+  low_byte = Wire.read();
 
-  return (float)((highByte << 8) + lowByte) / 10;
+  return (float)((high_byte << 8) + low_byte) / 10;
 }
 
-char read_roll() {
+char readRoll() {
   char roll;  // Store  roll values of CMPS11, chars are used because they
               // support signed value
 
@@ -61,7 +61,7 @@ char read_roll() {
   return roll;
 }
 
-char read_pitch() {
+char readPitch() {
   char pitch;  // Store pitch values of CMPS11, chars are used because they
                // support signed value
 
@@ -81,9 +81,9 @@ void loop() {
   char roll, pitch;
   char temp[20];
 
-  bearing = read_bearing();
-  roll = read_roll();
-  pitch = read_pitch();
+  bearing = readBearing();
+  roll = readRoll();
+  pitch = readPitch();
 
   Serial.print("Bearing:");
   Serial.print(bearing);

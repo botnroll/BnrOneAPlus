@@ -20,9 +20,13 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define OFF 0
+#define ON 1
+#define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
+
 int left_speed = 0;
 int right_speed = 0;
-int speed = 10;        // Max speed
+int speed = 15;        // Max speed
 unsigned long tcycle;  // Control cycle time in loop
 // Range Linear gain <> Ganho linear do obstáculo (2500)
 float linear_gain = 2.5;
@@ -32,11 +36,13 @@ byte max_range = 19;  // Maximum range value for obstacle
 byte min_range = 1;   // Minimum range value for obstacle
 
 void setup() {
-  one.spiConnect(SSPIN);            // start SPI communication module
-  one.stop();                       // stop motors
-  readMenuEEPROM();                 // Read configuration values from EEPROM
-  one.setMinBatteryV(9.5);          // Set the protection battery voltage.
-  one.setPid(1200, 400, 200);       // Set PID parameters for movement
+  one.spiConnect(SSPIN);      // start SPI communication module
+  one.stop();                 // stop motors
+  if (one.readButton() == 0)  // Skip read EEPROM is necessary
+    readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
+  // controlo da EEPROM
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);        // set PID parameters for robot movement
   one.obstacleSensorsEmitters(ON);  // activate IR emitters
   one.lcd1("Avoid Obstacles ");
   one.lcd2("Press a Button!!");
@@ -103,15 +109,15 @@ void readAndProcess() {
 }
 
 void menu() {
-  int temp_var = 0;
+  int var = 0;
   one.stop();
   one.lcd1("  Menu Config:  ");
-  one.lcd2("PB1+ PB2- PB3ok");
-  delay(500);
+  one.lcd2("PB1+ PB2-  PB3ok");
   // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3) {
-    delay(150);
-  }
+  while (one.readButton() == 3);
+  while (one.readButton() == 0);
+  while (one.readButton() == 3);
+
   //*****  Adjust sensor distance <> Ajustar a distância dos sensores  ******
   while (one.readButton() != 3) {
     readAndProcess();
@@ -154,9 +160,9 @@ void menu() {
   while (one.readButton() == 3) max_range = (byte)var;
 
   /****** Maximum speed <> velObst Maxima ******************/
-  temp_var = speed;
+  var = speed;
   while (one.readButton() != 3) {
-    one.lcd2(" velObstMax: ", temp_var);
+    one.lcd2(" velObstMax: ", var);
     if (one.readButton() == 1) {
       ++var;
       delay(150);
@@ -173,13 +179,13 @@ void menu() {
   var = (int)(linear_gain * 1000.0);
 
   while (one.readButton() != 3) {
-    one.lcd2(" DistGain: ", temp_var);
+    one.lcd2(" DistGain: ", var);
     if (one.readButton() == 1) {
-      temp_var += 50;
+      var += 50;
       delay(150);
     }
     if (one.readButton() == 2) {
-      temp_var -= 50;
+      var -= 50;
       delay(150);
     }
   }
@@ -203,23 +209,31 @@ void writeMenuEEPROM() {
   int var = 0;
 
   var = speed;
-  EEPROM.write(eeprom_address, lowByte(var));  // Guardar em EEPROM
+  EEPROM.write(eeprom_address, low_byte(var));  // Guardar em EEPROM
   ++eeprom_address;
 
   var = (int)(linear_gain * 1000.0);
-  EEPROM.write(eeprom_address, highByte(var));  // Guardar em EEPROM
+  EEPROM.write(eeprom_address, high_byte(var));  // Guardar em EEPROM
   ++eeprom_address;
-  EEPROM.write(eeprom_address, lowByte(var));
+  EEPROM.write(eeprom_address, low_byte(var));
   ++eeprom_address;
 
   var = min_range;
-  EEPROM.write(eeprom_address, lowByte(var));  // Guardar em EEPROM
+  EEPROM.write(eeprom_address, low_byte(var));  // Guardar em EEPROM
   ++eeprom_address;
 
   var = max_range;
-  EEPROM.write(eeprom_address, lowByte(var));  // Guardar em EEPROM
+  EEPROM.write(eeprom_address, low_byte(var));  // Guardar em EEPROM
 
   ++eeprom_address;
+}
+
+// Test if value is withn limits <> Testa se o valor está dentro dos limites
+template <typename T>
+boolean isWithinLimits(const T valor, const T min, const T max) {
+  if (valor > max) return false;
+  if (valor < min) return false;
+  return true;
 }
 
 // Read Menu values from EEPROM <> Ler valores da EEPROM
@@ -229,19 +243,15 @@ void readMenuEEPROM() {
 
   speed = (int)EEPROM.read(eeprom_address);
   ++eeprom_address;
-
   var = (int)EEPROM.read(eeprom_address);
   ++eeprom_address;
   var = var << 8;
   var += (int)EEPROM.read(eeprom_address);
   ++eeprom_address;
   linear_gain = (float)var / 1000.0;
-
   min_range = (int)EEPROM.read(eeprom_address);
   ++eeprom_address;
-
   max_range = (int)EEPROM.read(eeprom_address);
-
   ++eeprom_address;
 
   if (speed == 255) {
@@ -256,4 +266,9 @@ void readMenuEEPROM() {
   if (max_range == 255) {
     max_range = 19;
   }
+
+  if (!isWithinLimits<int>(speed, 0, 100)) speed = 10;
+  if (!isWithinLimits<float>(linear_gain, 0.0, 10.0)) linear_gain = 2.5;
+  if (!isWithinLimits<byte>(min_range, 0, 100)) min_range = 1;
+  if (!isWithinLimits<byte>(max_range, 0, 100)) max_range = 19;
 }

@@ -1,4 +1,6 @@
 /*
+ * This example was created by José Cruz on January 2025
+ *
  * This example aquires motor and encoder information to be sent to PIC18F45K22
  * for PID control of the movement. The robot wheels must rotate freely and
  * should not touch the floor. Motors must have encoders. This process is done
@@ -8,18 +10,42 @@
  */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
+
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
-#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
+#define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
-int motor_power = 40;
-int left_enc_max = 0;
-int right_enc_max = 0;
-bool error_flag = false;
-int ks = 750;
+int g_motor_power = 40;
+int g_left_enc_max = 0;
+int g_right_enc_max = 0;
+bool g_error_flag = false;
+
+void printDebugEncoderMax() {
+  Serial.print("  g_left_enc_max:");
+  Serial.print(g_left_enc_max);
+  Serial.print("  g_right_enc_max:");
+  Serial.print(g_right_enc_max);
+}
+
+void printDebugEncodersMaxPowerAndError() {
+  Serial.print("  g_motor_power:");
+  Serial.print(g_motor_power);
+  printDebugEncoderMax();
+  Serial.print("  g_error_flag:");
+  Serial.print(g_error_flag);
+  Serial.println();
+}
+
+void printDebugInfo(const int left_enc, const int right_enc) {
+  Serial.print("  left_enc:");
+  Serial.print(left_enc);
+  Serial.print("  right_enc:");
+  Serial.print(right_enc);
+  Serial.println();
+}
 
 void startMoveDetection() {
   bool exit_flag = false;
@@ -29,28 +55,24 @@ void startMoveDetection() {
   while (!exit_flag) {
     if (millis() >= t1sec) {
       t1sec += 500;  // Every second
-      one.moveRAW(motor_power, motor_power);
+      one.moveRAW(g_motor_power, g_motor_power);
       left_enc = one.readAndResetLeftEncoder();
       right_enc = one.readAndResetRightEncoder();
-      one.lcd2(motor_power, left_enc, right_enc);
-      Serial.print("  Pow:");
-      Serial.print(motor_power);
-      Serial.print("  left_enc:");
-      Serial.print(left_enc);
-      Serial.print("  right_enc:");
-      Serial.print(right_enc);
-      Serial.println();
+      one.lcd2(g_motor_power, left_enc, right_enc);
+      printDebugEncodersMaxPowerAndError();
       if (abs(left_enc) < 100 || abs(right_enc) < 100)
-        motor_power++;  // if motors are not moving
+        g_motor_power++;  // if motors are not moving
       else {
         if (left_enc < 0) {  // if encoderL is Not ok
+          one.stop();
           one.lcd1("Motor 1 -> ERROR");
           Serial.println("ERROR: Motor 1 encoder is counting in reverse!!");
-          error_flag = true;
+          g_error_flag = true;
         } else if (right_enc < 0) {  // if encoderR is Not ok
+          one.stop();
           one.lcd2("Motor 2 -> ERROR");
           Serial.println("ERROR: Motor 2 encoder is counting in reverse!!");
-          error_flag = true;
+          g_error_flag = true;
         }
         exit_flag = true;
       }
@@ -61,7 +83,7 @@ void startMoveDetection() {
 void maxPulsesDetection() {
   unsigned long t_cycle;
   unsigned long end_time;
-  if (!error_flag) {
+  if (!g_error_flag) {
     one.lcd2(100, 0, 0);
     one.moveRAW(100, 100);
     delay(1500);
@@ -74,45 +96,38 @@ void maxPulsesDetection() {
         t_cycle += 25;
         left_enc = one.readAndResetLeftEncoder();
         right_enc = one.readAndResetRightEncoder();
-        if (left_enc > left_enc_max) left_enc_max = left_enc;
-        if (right_enc > right_enc_max) right_enc_max = right_enc;
-        Serial.print("  left_enc:");
-        Serial.print(left_enc);
-        Serial.print("  right_enc:");
-        Serial.print(right_enc);
-        Serial.println();
+        if (left_enc > g_left_enc_max) g_left_enc_max = left_enc;
+        if (right_enc > g_right_enc_max) g_right_enc_max = right_enc;
+        printDebugInfo(left_enc, right_enc);
       }
     }
     one.stop();
-    left_enc_max = (int)((float)left_enc_max);
-    right_enc_max = (int)((float)right_enc_max);
-    one.lcd2(0, left_enc_max, right_enc_max);
-    Serial.print("  left_enc_max:");
-    Serial.print(left_enc_max);
-    Serial.print("  right_enc_max:");
-    Serial.print(right_enc_max);
+    g_left_enc_max = (int)((float)g_left_enc_max);
+    g_right_enc_max = (int)((float)g_right_enc_max);
+    one.lcd2(0, g_left_enc_max, g_right_enc_max);
+    printDebugEncoderMax();
     delay(2000);
   }
 }
 
 void sendValues() {
-  int encMin = 30000;  // Find minimum encoder value
-  if (!error_flag) {
-    if (left_enc_max < encMin) encMin = left_enc_max;
-    if (right_enc_max < encMin) encMin = right_enc_max;
-    one.setMotors(motor_power, ks, encMin);
+  int enc_min = 30000;  // Find minimum encoder value
+  if (!g_error_flag) {
+    if (g_left_enc_max < enc_min) enc_min = g_left_enc_max;
+    if (g_right_enc_max < enc_min) enc_min = g_right_enc_max;
+    one.setMotors(g_motor_power, enc_min);
     Serial.println();
     Serial.println(
-        "  Save values for void setMotors(int Smotor_power, int Ks, int "
+        "  Save values for void setMotors(int Smotor_power, int "
         "ctrlPulses);");
     Serial.print("  Smotor_power:");
-    Serial.println(motor_power);
+    Serial.println(g_motor_power);
     Serial.print("  ctrlPulses:");
-    Serial.println(encMin);
+    Serial.println(enc_min);
     Serial.println("  Calibrate Finished!!");
     while (1) {
-      one.lcd1("Smotor_power: ", motor_power);
-      one.lcd2("ctrlPulses: ", encMin);
+      one.lcd1("Smotor_power: ", g_motor_power);
+      one.lcd2("ctrlPulses: ", enc_min);
       delay(2500);
       one.lcd1("Save values for ");
       one.lcd2("  setMotors();  ");
@@ -130,7 +145,9 @@ void setup() {
                           // serial monitor.
   one.spiConnect(SSPIN);  // start SPI communication module
   one.stop();             // stop motors
-  one.setMinBatteryV(9.5);
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
+
   one.lcd1(" Press a button ");
   one.lcd2("   to start!    ");
   while (one.readButton() == 0);

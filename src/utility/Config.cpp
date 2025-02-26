@@ -100,7 +100,9 @@ void Config::SetSensorMin(const int minValues[8]) {
 
 void Config::SetThreshold(const int value) { threshold_ = value; }
 
-void Config::SetCorrectionFactor(const int value) { correction_factor_ = value; }
+void Config::SetCorrectionFactor(const int value) {
+  correction_factor_ = value;
+}
 
 byte Config::LoadArrayValues(byte eeprom_address, int out_array[8]) const {
   for (int i = 0; i < 8; ++i) {
@@ -149,24 +151,24 @@ void Config::PrintValue(const String& text, const int value) const {
 
 byte Config::SaveArrayValues(byte eeprom_address, const int array[8]) const {
   for (int i = 0; i < 8; ++i) {
-    EEPROM.write(eeprom_address, highByte(array[i]));
+    EEPROM.write(eeprom_address, high_byte(array[i]));
     eeprom_address += 1;
-    EEPROM.write(eeprom_address, lowByte(array[i]));
+    EEPROM.write(eeprom_address, low_byte(array[i]));
     eeprom_address += 1;
   }
   return eeprom_address;
 }
 
 byte Config::SaveWord(byte eeprom_address, const int value) const {
-  EEPROM.write(eeprom_address, highByte(value));
+  EEPROM.write(eeprom_address, high_byte(value));
   eeprom_address += 1;
-  EEPROM.write(eeprom_address, lowByte(value));
+  EEPROM.write(eeprom_address, low_byte(value));
   eeprom_address += 1;
   return eeprom_address;
 }
 
 byte Config::SaveByte(byte eeprom_address, const int value) const {
-  EEPROM.write(eeprom_address, lowByte(value));
+  EEPROM.write(eeprom_address, low_byte(value));
   eeprom_address += 1;
   return eeprom_address;
 }

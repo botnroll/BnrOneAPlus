@@ -1,6 +1,7 @@
 /*
  This example was created by José Cruz (www.botnroll.com)
  on the 22th August 2022
+ Updated on February 2025 by José Cruz
 
  This code example is in the public domain.
  http://www.botnroll.com
@@ -15,19 +16,20 @@ Note: Valid for TSSP4056 IR sensors shipped with robots from 2023.
 */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>          // SPI communication library required by BnrOne.cpp
 BnrOneAPlus one;          // object to control the Bot'n Roll ONE A Plus
 
 // constants definition
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define OFF 0
+#define ON 1
 
 void setup() {
-  Serial.begin(115200);       // set baud rate to 115200bps for printing values at
-                             // serial monitor.
-  one.spiConnect(SSPIN);     // start SPI communication module
-  one.stop();                // stop motors
-  one.obstacleEmitters(ON);  // activate IR emitters
+  Serial.begin(115200);   // set baud rate to 115200bps for printing values at
+                          // serial monitor.
+  one.spiConnect(SSPIN);  // start SPI communication module
+  one.stop();             // stop motors
+  one.obstacleSensorsEmitters(ON);  // activate IR emitters
 }
 
 void loop() {

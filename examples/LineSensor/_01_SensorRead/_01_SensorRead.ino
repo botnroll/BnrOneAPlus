@@ -1,13 +1,13 @@
 /**
  * This example was created by José Cruz (www.botnroll.com) on December 2024
+ *  Updated on February 2025 by José Cruz
  *
  * This code example is in the public domain.
  * http://www.botnroll.com
  */
 
 #include <BnrOneAPlus.h>
-#include <EEPROM.h>  // EEPROM reading and writing
-#include <SPI.h>     // required by BnrOneAPlus.cpp
+#include <SPI.h>  // required by BnrOneAPlus.cpp
 
 // Constants definitions
 // Definir constantes
@@ -19,7 +19,7 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 void setup() {
   // setup routines
   Serial.begin(115200);  // set baud rate to 115200bps for printing values in
-                        // serial monitor. Press (ctrl+shift+m) after uploading
+                         // serial monitor. Press (ctrl+shift+m) after uploading
   one.spiConnect(SSPIN);  // start the SPI module
   one.stop();             // stop motors
   one.lcd1(" Bot'n Roll ONE");
@@ -66,5 +66,5 @@ void loop() {
 
   // This delay must be removed when the robot follows the line
   // Esta pausa deve ser removida quando o robô seguir a linha
-  delay(100);
+  delay(50);
 }

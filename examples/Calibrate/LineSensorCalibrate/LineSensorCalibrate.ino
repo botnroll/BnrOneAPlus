@@ -1,6 +1,7 @@
 /**
  * This example was created by José Cruz on October 2016
- * Updated on January 2023 by José Cruz
+ * Updated on January 2025 by Nino Pereira
+ *
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
@@ -51,7 +52,7 @@
  * Calibração do sensor de linha
  * A rotina de calibração é chamada em Setup()
  * Lê e armazena o valor máximo e mínimo de cada sensor nos vectores
- * sensorValueMax[8] e sensorValueMin[8].
+ * sensor_value_max[8] e sensor_value_min[8].
  * Valores baixos para o branco e valores altos para o preto.
  * São apresentadas ao utilizador as opções:
  * - calibração simples
@@ -99,14 +100,13 @@
 #define M1 1     // Motor1
 #define M2 2     // Motor2
 #define VMAX 1000
+#define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 using uint = unsigned int;
 
 BnrOneAPlus one;            //  object to control the Bot'n Roll ONE A
 Config config;              // variable used to load and save config values
 LineDetector lineDetector;  // variable used to detect line
-
-int line = 0;
 
 class Time {
  public:
@@ -123,12 +123,12 @@ class Time {
     sei();
   }
 
-  void update() { _time += 1; }
+  void update() { time_ += 1; }
 
-  uint now() { return _time; }
+  uint now() { return time_; }
 
  private:
-  volatile uint _time = 0;
+  volatile uint time_ = 0;
 };
 
 Time time;
@@ -231,26 +231,26 @@ void saveConfig() {
 /**
  * @brief Finds the min and max value for each sensor
  *
- * @param sensorValueMin
- * @param sensorValueMax
+ * @param sensor_value_min
+ * @param sensor_value_max
  */
-void CalibrateMinMax(int sensorValueMin[8], int sensorValueMax[8]) {
+void CalibrateMinMax(int sensor_value_min[8], int sensor_value_max[8]) {
   printMsg("Computing min and max for sensor readings...");
   one.move(15, -15);
-  const auto startTime = time.now();
-  while (time.now() < (startTime + 6)) {
+  const auto start_time = time.now();
+  while (time.now() < (start_time + 6)) {
     const auto reading = one.readLineSensor();
     printArray("Readings: ", reading);
     for (int i = 0; i < 8; ++i) {
-      if (reading[i] > sensorValueMax[i]) {
-        sensorValueMax[i] = reading[i];
+      if (reading[i] > sensor_value_max[i]) {
+        sensor_value_max[i] = reading[i];
       }
-      if (reading[i] < sensorValueMin[i]) {
-        sensorValueMin[i] = reading[i];
+      if (reading[i] < sensor_value_min[i]) {
+        sensor_value_min[i] = reading[i];
       }
     }
-    printArray("Max: ", sensorValueMax);
-    printArray("Min: ", sensorValueMin);
+    printArray("Max: ", sensor_value_max);
+    printArray("Min: ", sensor_value_min);
     delay(50);
   }
   one.stop();
@@ -275,36 +275,36 @@ void updateLcdInfo(const String& text,
 /**
  * @brief Displays calibration data on the lcd
  */
-void displayCalibration(const int sensorValueMin[8],
-                        const int sensorValueMax[8]) {
+void displayCalibration(const int sensor_value_min[8],
+                        const int sensor_value_max[8]) {
   one.lcd1("                ");
   one.lcd2(" Press a button ");
   waitButtonPress();
   waitButtonRelease();
 
   updateLcdInfo("Max1  2   3   4 ",
-                sensorValueMax[0],
-                sensorValueMax[1],
-                sensorValueMax[2],
-                sensorValueMax[3]);
+                sensor_value_max[0],
+                sensor_value_max[1],
+                sensor_value_max[2],
+                sensor_value_max[3]);
 
   updateLcdInfo("Max5  6   7   8 ",
-                sensorValueMax[4],
-                sensorValueMax[5],
-                sensorValueMax[6],
-                sensorValueMax[7]);
+                sensor_value_max[4],
+                sensor_value_max[5],
+                sensor_value_max[6],
+                sensor_value_max[7]);
 
   updateLcdInfo("Min1  2   3   4 ",
-                sensorValueMin[0],
-                sensorValueMin[1],
-                sensorValueMin[2],
-                sensorValueMin[3]);
+                sensor_value_min[0],
+                sensor_value_min[1],
+                sensor_value_min[2],
+                sensor_value_min[3]);
 
   updateLcdInfo("Min5  6   7   8 ",
-                sensorValueMin[4],
-                sensorValueMin[5],
-                sensorValueMin[6],
-                sensorValueMin[7]);
+                sensor_value_min[4],
+                sensor_value_min[5],
+                sensor_value_min[6],
+                sensor_value_min[7]);
 }
 
 /**
@@ -458,18 +458,18 @@ void displayMenu() {
  */
 void calibrateLine(bool fullCalibration = false) {
   prepareCalibration();
-  static int sensorValueMin[8] = {
+  static int sensor_value_min[8] = {
       1024, 1024, 1024, 1024, 1024, 1024, 1024, 1024};
-  static int sensorValueMax[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+  static int sensor_value_max[8] = {0, 0, 0, 0, 0, 0, 0, 0};
   while (one.readButton() != 3) {
-    CalibrateMinMax(sensorValueMin, sensorValueMax);
-    displayCalibration(sensorValueMin, sensorValueMax);
+    CalibrateMinMax(sensor_value_min, sensor_value_max);
+    displayCalibration(sensor_value_min, sensor_value_max);
     displayMenu();
   }
 
-  config.SetSensorMin(sensorValueMin);
+  config.SetSensorMin(sensor_value_min);
   config.SaveSensorMin();
-  config.SetSensorMax(sensorValueMax);
+  config.SetSensorMax(sensor_value_max);
   config.SaveSensorMax();
 
   if (fullCalibration) {
@@ -498,7 +498,7 @@ void calibrateLine(bool fullCalibration = false) {
  */
 void viewCalibration() {
   config.Load();
-  config.printMsg();
+  config.Print();
 }
 
 /**
@@ -522,31 +522,34 @@ int getUserOption() {
 }
 
 void setup() {
-  one.spiConnect(SSPIN);    // starts the SPI communication module
-  one.stop();               // stop motors
-  one.setMinBatteryV(9.5);  // safety voltage for discharging the battery
+  one.spiConnect(SSPIN);                  // starts the SPI communication module
+  one.stop();                             // stop motors
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
   time.start();
   config.Load();
-  config.printMsg();
+  config.Print();
   delay(1000);
   const auto option = getUserOption();
   if (option != 3) {
-    bool doFullCalibration = false;
+    bool do_full_calibration = false;
     if (option == 2) {
-      doFullCalibration = true;
+      do_full_calibration = true;
     }
-    calibrateLine(doFullCalibration);  // calibrate line sensor <> Calibração do
-                                       // sensor de linha
+    calibrateLine(do_full_calibration);  // calibrate line sensor <> Calibração
+                                         // do sensor de linha
   }
   viewCalibration();  // read line calibrate values from EEPROM <> Ler valores
                       // de calibração da linha da EEPROM
 }
 
 void loop() {
-  line = one.readLine();  // Read line <> Ler a linha
-  printValue(" Line: ", line);
-  // printMsg values on the LCD <> Apresenta valores no LCD
-  one.lcd1("     Line:");
-  one.lcd2("      ", line);
-  delay(50);
+  const int line = one.readLine();  // Read line <> Ler a linha
+  while (True) {
+    printValue(" Line: ", line);
+    // printMsg values on the LCD <> Apresenta valores no LCD
+    one.lcd1("     Line:");
+    one.lcd2("      ", line);
+    delay(50);
+  }
 }

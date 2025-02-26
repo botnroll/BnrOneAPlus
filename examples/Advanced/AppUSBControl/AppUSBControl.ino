@@ -1,6 +1,5 @@
 /*
- This example was created by José Cruz (www.botnroll.com)
- on 18 December 2024
+ This example was created by Antonio Ribeiro on February 2025
 
  This code example is in the public domain.
  http://www.botnroll.com
@@ -17,33 +16,36 @@
 #include <Servo.h>  // Gripper
 #include <Wire.h>   // Compass
 
-BnrOneAPlus
-    one;  // declaration of object variable to control the Bot'n Roll ONE A+
+#include "include/ArduinoCommands.h"
+#include "include/SpiCommands.h"
+
+BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 Servo gripper1;
 Servo gripper2;
 
 // constants definition
-#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
+#define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 #define ADDRESS 0x60  // Defines address of CMPS11
 
-#define echoPin 6         // Echo Pin
-#define trigPin 7         // Trigger Pin
-#define maximumRange 200  // Maximum range needed (200cm)
-#define minimumRange 0    // Minimum range needed
+#define ECHO_PIN 6     // Echo Pin
+#define TRIG_PIN 7     // Trigger Pin
+#define MAX_RANGE 200  // Maximum range needed (200cm)
+#define MIN_RANGE 0    // Minimum range needed
 
 #define CONTROL 5  // Delay Time
 
-struct TRAMA {
+struct Message {
   byte AA;
   byte address;
   byte command;
   signed char data[16];
-} trama;
+} message;
 
-float read_bearing() {
-  byte highByte, lowByte;  // highByte and lowByte store the bearing and fine
-                           // stores decimal place of bearing
+float readBearing() {
+  byte high_byte, low_byte;  // high_byte and low_byte store the bearing and
+                             // fine stores decimal place of bearing
 
   Wire.beginTransmission(ADDRESS);  // starts communication with CMPS11
   Wire.write(2);  // Sends the register we wish to start reading from
@@ -51,70 +53,65 @@ float read_bearing() {
 
   Wire.requestFrom(ADDRESS, 2);  // Request 4 bytes from CMPS11
   while (Wire.available() < 2);  // Wait for bytes to become available
-  highByte = Wire.read();
-  lowByte = Wire.read();
+  high_byte = Wire.read();
+  low_byte = Wire.read();
 
-  return (float)((highByte << 8) + lowByte) / 10;
+  return (float)((high_byte << 8) + low_byte) / 10;
 }
 
-char read_roll() {
-  char roll;  // Stores  roll values of CMPS11, chars are used because they
-              // support signed value
-
+char readRoll() {
   Wire.beginTransmission(ADDRESS);  // starts communication with CMPS11
   Wire.write(5);  // Sends the register we wish to start reading from
   Wire.endTransmission();
 
-  Wire.requestFrom(ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1);  // Wait for bytes to become available
-  roll = Wire.read();
+  Wire.requestFrom(ADDRESS, 1);   // Request 4 bytes from CMPS11
+  while (Wire.available() < 1);   // Wait for bytes to become available
+  const char roll = Wire.read();  // Stores  roll values of CMPS11
+
   return roll;
 }
 
-char read_pitch() {
-  char pitch;  // Stores pitch values of CMPS11, chars are used because they
-               // support signed value
-
+char readPitch() {
   Wire.beginTransmission(ADDRESS);  // starts communication with CMPS11
   Wire.write(4);  // Sends the register we wish to start reading from
   Wire.endTransmission();
 
-  Wire.requestFrom(ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1);  // Wait for bytes to become available
-  pitch = Wire.read();
+  Wire.requestFrom(ADDRESS, 1);    // Request 4 bytes from CMPS11
+  while (Wire.available() < 1);    // Wait for bytes to become available
+  const char pitch = Wire.read();  // Stores pitch values of CMPS11
 
   return pitch;
 }
 
-void le_trama() {
-  int i;
-
-  //  if (Serial.available() > 0) // Don't read unless
-  //  {
-  trama.AA = Serial.read();  // Read a character
+Message getMessage() {
+  Message message;
+  message.AA = Serial.read();  // Read a character
   delay(CONTROL);
-  trama.address = Serial.read();  // Read a character
+  message.address = Serial.read();  // Read a character
   delay(CONTROL);
-  trama.command = Serial.read();  // Read a character
+  message.command = Serial.read();  // Read a character
   delay(CONTROL);
-  i = 0;
+  int i = 0;
   while (i < 16) {
-    trama.data[i++] = Serial.read();  // Read a character
+    message.data[i++] = Serial.read();  // Read a character
     delay(CONTROL);
   }
-  //  }
+
+  return message;
 }
 
 void setup() {
-  Serial.begin(115200);    // sets baud rate to 115200bps for printing values at
+  Serial.begin(115200);   // sets baud rate to 115200bps for printing values at
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
   one.stop();             // stops motors
+  one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
+  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
 
   Wire.begin();  // Start I2C BUS
 
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
 
   gripper1.attach(3);
   gripper2.attach(5);
@@ -125,7 +122,7 @@ void setup() {
 }
 
 void loop() {
-  static int opcao = 0;
+  static int option = 0;
 
   // Temporary variables;
   char str[50];
@@ -135,56 +132,56 @@ void loop() {
   float battery;
 
   if (Serial.available() > 0) {
-    le_trama();
-    if (trama.AA == 0xAA) {
-      switch (trama.command) {
+    getMessage();
+    if (message.AA == 0xAA) {
+      switch (message.command) {
         case COMMAND_FIRMWARE:  //  0xFE // Read firmware value (integer value)
           break;
 
           /* Write Commands->Don't require response from Bot'n Roll ONE A+ */
         case COMMAND_LED:  //  0xFD // Debug LED
-          one.setLed(trama.data[0]);
+          one.setLed(message.data[0]);
           break;
         case COMMAND_SERVO1:  //  0xFC // Move Servo1
-          one.servo1(trama.data[0]);
+          one.servo1(message.data[0]);
           break;
         case COMMAND_SERVO2:  //  0xFB // Move Servo2
-          one.servo2(trama.data[0]);
+          one.servo2(message.data[0]);
           break;
         case COMMAND_LCD_L1:  //  0xFA // Write LCD line1
-          sprintf(str, "%s", trama.data);
+          sprintf(str, "%s", message.data);
           str[16] = 0;
           one.lcd1(str);
           break;
         case COMMAND_LCD_L2:  //  0xF9 // Write LCD line2
-          sprintf(str, "%s", trama.data);
+          sprintf(str, "%s", message.data);
           str[16] = 0;
           one.lcd2(str);
           break;
         case COMMAND_IR_EMITTERS:  //  0xF8 // IR Emitters ON/OFF
-          one.obstacleSensorsEmitters(trama.data[0]);
+          one.obstacleSensorsEmitters(message.data[0]);
           break;
         case COMMAND_STOP:  //  0xF7 // Stop motors freely
           one.stop();
           break;
         case COMMAND_MOVE:  //  0xF6 // Move motors with no PID control
-          one.move((signed char)trama.data[0], (signed char)trama.data[1]);
+          one.move((signed char)message.data[0], (signed char)message.data[1]);
           sprintf(str,
                   "%d,%d    ",
-                  (signed char)trama.data[0],
-                  (signed char)trama.data[1]);
+                  (signed char)message.data[0],
+                  (signed char)message.data[1]);
           one.lcd2(str);
           break;
         case COMMAND_BRAKE:  //  0xF5 // Stop motors with brake torque
-          one.brake((byte)trama.data[0], (byte)trama.data[1]);
+          one.brake((byte)message.data[0], (byte)message.data[1]);
           sprintf(str,
                   "%d,%d    ",
-                  (signed char)trama.data[0],
-                  (signed char)trama.data[1]);
+                  (signed char)message.data[0],
+                  (signed char)message.data[1]);
           one.lcd2(str);
           break;
         case COMMAND_BAT_MIN:  //  0xF4 // Configure low battery level
-          tempfloatp = (float *)trama.data;
+          tempfloatp = (float *)message.data;
           one.setMinBatteryV(*tempfloatp);
           break;
         case COMMAND_MOVE_PID:  //  0xF3 // Move motor with PID control
@@ -271,11 +268,11 @@ void loop() {
         case COMMAND_ARDUINO_BUZ:  //  0xad // buzzer
           sprintf(str,
                   "%c%c%c%c%c",
-                  trama.data[0],
-                  trama.data[1],
-                  trama.data[2],
-                  trama.data[3],
-                  trama.data[4]);
+                  message.data[0],
+                  message.data[1],
+                  message.data[2],
+                  message.data[3],
+                  message.data[4]);
           tone(9, atoi(str), 250);
           delay(250);
           noTone(9);
@@ -283,12 +280,9 @@ void loop() {
           break;
         case COMMAND_ARDUINO_CMP:  //  0xac // compass
         {
-          float bearing;
-          char roll, pitch;
-
-          bearing = read_bearing();
-          roll = read_roll();
-          pitch = read_pitch();
+          const float bearing = readBearing();
+          const char roll = readRoll();
+          const char pitch = readPitch();
 
           sprintf(str,
                   "CP%d.%d,%d,%d",
@@ -301,37 +295,32 @@ void loop() {
         } break;
         case COMMAND_ARDUINO_SNR:  //  0xac // compass
         {
-          long distance;
-          unsigned long duration;  // Duration used to calculate distance
           unsigned long tempo = micros();
 
-          digitalWrite(trigPin, LOW);
+          digitalWrite(TRIG_PIN, LOW);
           delayMicroseconds(2);
 
-          digitalWrite(trigPin, HIGH);
+          digitalWrite(TRIG_PIN, HIGH);
           delayMicroseconds(10);
 
-          digitalWrite(trigPin, LOW);
-          duration = pulseIn(echoPin, HIGH, 11640);
-          delayMicroseconds(
-              16000 -
-              (micros() -
-               tempo));  // this routine has fixed time (16 milliseconds)
+          digitalWrite(TRIG_PIN, LOW);
+          const unsigned long duration = pulseIn(ECHO_PIN, HIGH, 11640);
+          // this routine has fixed time (16 milliseconds)
+          delayMicroseconds(16000 - (micros() - tempo));
 
           // Calculate the distance (in cm) based on the speed of sound
-          distance = (int)(duration / 58.2);
-          if (distance >= maximumRange || distance <= minimumRange)
-            distance = -1;
+          const long distance = (int)(duration / 58.2);
+          if (distance >= MAX_RANGE || distance <= MIN_RANGE) distance = -1;
 
           sprintf(str, "SN%ld", distance);
           Serial.write(str);
           one.lcd2(str + 2);
         } break;
         case COMMAND_ARDUINO_GRP1:  //  0xac // compass
-          gripper1.write((unsigned char)trama.data[0]);
+          gripper1.write((unsigned char)message.data[0]);
           break;
         case COMMAND_ARDUINO_GRP2:  //  0xac // compass
-          gripper2.write((unsigned char)trama.data[0]);
+          gripper2.write((unsigned char)message.data[0]);
           break;
       }
     }
