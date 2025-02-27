@@ -1,8 +1,8 @@
 #include "BnrOneAPlus.h"
 
+#include "ArduinoCommands.h"
 #include "SPI.h"
-#include "include/ArduinoCommands.h"
-#include "include/SpiCommands.h"
+#include "SpiCommands.h"
 
 #define DELAY_TR 20  // 20 MinStable:15  Crash:14
 #define DELAY_SS 20  // 20 Crash: No crash even with 0 (ZERO)
@@ -142,10 +142,10 @@ void BnrOneAPlus::spiSendData(const byte command,
 }
 
 void BnrOneAPlus::move(const int left_speed, const int right_speed) const {
-  byte leftSpeed_H = high_byte(left_speed);
-  byte leftSpeed_L = low_byte(left_speed);
-  byte rightSpeed_H = high_byte(right_speed);
-  byte rightSpeed_L = low_byte(right_speed);
+  byte leftSpeed_H = highByte(left_speed);
+  byte leftSpeed_L = lowByte(left_speed);
+  byte rightSpeed_H = highByte(right_speed);
+  byte rightSpeed_L = lowByte(right_speed);
 
   byte buffer[] = {
       KEY1, KEY2, leftSpeed_H, leftSpeed_L, rightSpeed_H, rightSpeed_L};
@@ -158,10 +158,10 @@ void BnrOneAPlus::sendMoveRpm(const byte command,
                               const int right_rpm) const {
   byte buffer[] = {KEY1,
                    KEY2,
-                   high_byte(left_rpm),
-                   low_byte(left_rpm),
-                   high_byte(right_rpm),
-                   low_byte(right_rpm)};
+                   highByte(left_rpm),
+                   lowByte(left_rpm),
+                   highByte(right_rpm),
+                   lowByte(right_rpm)};
   spiSendDataOnly(command, buffer, sizeof(buffer));
 }
 
@@ -197,10 +197,10 @@ void BnrOneAPlus::moveRpmGetEncoders(const int left_rpm,
 
 void BnrOneAPlus::moveRAW(const int left_duty_cycle,
                           const int right_duty_cycle) const {
-  byte leftPower_H = high_byte(left_duty_cycle);
-  byte leftPower_L = low_byte(left_duty_cycle);
-  byte rightPower_H = high_byte(right_duty_cycle);
-  byte rightPower_L = low_byte(right_duty_cycle);
+  byte leftPower_H = highByte(left_duty_cycle);
+  byte leftPower_L = lowByte(left_duty_cycle);
+  byte rightPower_H = highByte(right_duty_cycle);
+  byte rightPower_L = lowByte(right_duty_cycle);
 
   byte buffer[] = {
       KEY1, KEY2, leftPower_H, leftPower_L, rightPower_H, rightPower_L};
@@ -209,8 +209,8 @@ void BnrOneAPlus::moveRAW(const int left_duty_cycle,
 }
 
 void BnrOneAPlus::move1m(const byte motor_id, const int speed) const {
-  byte speed_H = high_byte(speed);
-  byte speed_L = low_byte(speed);
+  byte speed_H = highByte(speed);
+  byte speed_L = lowByte(speed);
 
   byte buffer[] = {KEY1, KEY2, motor_id, speed_H, speed_L};
   spiSendData(COMMAND_MOVE_1M, buffer, sizeof(buffer));
@@ -283,12 +283,12 @@ void BnrOneAPlus::setMinBatteryV(const float min_battery_V) const {
 void BnrOneAPlus::setPid(const int kp, const int ki, const int kd) const {
   byte buffer[] = {KEY1,
                    KEY2,
-                   high_byte(kp),
-                   low_byte(kp),
-                   high_byte(ki),
-                   low_byte(ki),
-                   high_byte(kd),
-                   low_byte(kd)};
+                   highByte(kp),
+                   lowByte(kp),
+                   highByte(ki),
+                   lowByte(ki),
+                   highByte(kd),
+                   lowByte(kd)};
   spiSendData(COMMAND_SET_PID, buffer, sizeof(buffer));
   delay(35);  // Delay for EEPROM writing
 }
@@ -297,10 +297,10 @@ void BnrOneAPlus::setMotors(const int motor_power,
                             const int ctrl_pulses) const {
   const byte buffer[] = {KEY1,
                          KEY2,
-                         high_byte(motor_power),
-                         low_byte(motor_power),
-                         high_byte(ctrl_pulses),
-                         low_byte(ctrl_pulses)};
+                         highByte(motor_power),
+                         lowByte(motor_power),
+                         highByte(ctrl_pulses),
+                         lowByte(ctrl_pulses)};
   spiSendData(COMMAND_SET_MOTORS, buffer, sizeof(buffer));
   delay(25);  // Delay for EEPROM writing
 }
