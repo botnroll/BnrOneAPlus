@@ -1,34 +1,32 @@
 /**
  * @brief This example was created by José Cruz (www.botnroll.com)
- * on 18 December 2024
- * Updated on February 2025 by José Cruz
+ * on 26th of February 2025
  *
  * This code example is in the public domain.
  * http://www.botnroll.com
  *
  */
 
+#include <BnrCompass.h>   // Compass library
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <SPI.h>          // SPI communication library required by BnrOneAPlus.cpp
-
-BnrOneAPlus one;     // declaration of object variable to control the Bot'n Roll ONE A+
-BnrCompass compass;  // declaration of object variable to control the CMPS11 compass
+#include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
 
 // constants definition
-#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define SSPIN 2       // Slave Select (SS) pin for SPI communication
 #define ADDRESS 0x60  // CMPS11 I2C address
 
+BnrOneAPlus one;              // declaration of the Bot'n Roll ONE A+
+BnrCompass compass(ADDRESS);  // declaration of the CMPS12 compass
+
 void setup() {
-  Serial.begin(57600);
+  Serial.begin(115200);
   one.spiConnect(SSPIN);  // start SPI communication module
   one.stop();             // stop motors
-  compass.i2cConnect(ADDRESS);
 }
 
 void loop() {
   float bearing;
   char roll, pitch;
-  char str[16];
 
   bearing = compass.readBearing();
   roll = compass.readRoll();

@@ -10,13 +10,9 @@
 #include <string.h>
 
 #include "Arduino.h"
-
-#include "utility/LineDetector.h"
-#include "utility/BnrColorSensor.h"
-#include "utility/BnrCompass.h"
-
 #include "include/ArduinoCommands.h"
 #include "include/SpiCommands.h"
+#include "utility/LineDetector.h"
 
 class BnrOneAPlus {
  public:

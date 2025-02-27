@@ -3,7 +3,7 @@ Language: Cpp
 BasedOnStyle: Google
 IndentWidth: 2
 UseTab: Never
-ColumnLimit: 125
+ColumnLimit: 80
 
 # Spacing
 SpaceBeforeAssignmentOperators: true

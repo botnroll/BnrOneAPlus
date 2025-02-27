@@ -1,6 +1,6 @@
 /*
  This example was created by José Cruz (www.botnroll.com)
- on 18 December 2024
+ on 26th of February 2025
 
  This code example is in the public domain.
  http://www.botnroll.com
@@ -11,19 +11,21 @@
  control Bot'n Roll ONE A+
 */
 
-#include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
-#include <SPI.h>          // SPI communication library required by BnrOneAPlus.cpp
-#include <Servo.h>        // Gripper
-
-BnrOneAPlus one;             // declaration of object variable to control the Bot'n Roll ONE A+
-BnrColorSensor colorsensor;  // declaration of object variable to control Bot'n Roll Color Sensor
-BnrCompass compass;          // declaration of object variable to control the CMPS11 compass
+#include <BnrColorSensor.h>  // Bot'n Roll Color Sensor library
+#include <BnrCompass.h>      // Compass library
+#include <BnrOneAPlus.h>     // Bot'n Roll ONE A+ library
+#include <SPI.h>    // SPI communication library required by BnrOneAPlus.cpp
+#include <Servo.h>  // Gripper
 
 // constants definition
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
 #define COLOR_SENSOR_ADDRESS 0x2C  // default factory address
-#define COMPASS_ADDRESS 0x60  // Defines address of CMPS11
-#define CONTROL 1  // Delay Time
+#define COMPASS_ADDRESS 0x60       // Defines address of CMPS12
+#define CONTROL 1                  // Delay Time
+
+BnrOneAPlus one;  // declaration of object of Bot'n Roll ONE A+
+BnrColorSensor colorsensor(COLOR_SENSOR_ADDRESS);  // declaration of Bot'n Roll
+BnrCompass compass(COMPASS_ADDRESS);  // declaration of the CMPS12 compass
 
 // TO CLEANUP VARIABLES
 float g_battery;
@@ -73,10 +75,7 @@ void setup() {
   one.spiConnect(SSPIN);  // starts the SPI communication module
   one.stop();             // stops motors
 
-  colorsensor.i2cConnect(COLOR_SENSOR_ADDRESS);  // Enable I2C communication
-  colorsensor.setRgbStatus(ENABLE);              // Enable/Disable RGB scanning
-
-  compass.i2cConnect(COMPASS_ADDRESS);  // Enable I2C communication
+  colorsensor.setRgbStatus(ENABLE);  // Enable/Disable RGB scanning
 
   g_servo1.attach(5);
   g_servo2.attach(6);
@@ -109,8 +108,10 @@ void loop() {
           g_encL = one.readIncrementalLeftEncoder();
           g_encR = one.readIncrementalRightEncoder();
 
-          g_rangeL = one.readLeftRangeSensor();   // read left obstacle sensor range
-          g_rangeR = one.readRightRangeSensor();  // read right obstacle sensor range
+          g_rangeL =
+              one.readLeftRangeSensor();  // read left obstacle sensor range
+          g_rangeR =
+              one.readRightRangeSensor();  // read right obstacle sensor range
 
           sprintf(g_str,
                   "AL%d.%d;%d;%d,%d;%d,%d;%d,%d,%d,%d,%d,%d,%d,%d",
@@ -158,7 +159,10 @@ void loop() {
           } else {
             one.move((signed char)packet.data[0], (signed char)packet.data[1]);
           }
-          sprintf(g_str, "%d,%d    ", (signed char)packet.data[0], (signed char)packet.data[1]);
+          sprintf(g_str,
+                  "%d,%d    ",
+                  (signed char)packet.data[0],
+                  (signed char)packet.data[1]);
           one.lcd2(g_str);
           break;
 
@@ -179,7 +183,16 @@ void loop() {
           g_b5 = one.readAdc(5);
           g_b6 = one.readAdc(6);
           g_b7 = one.readAdc(7);
-          sprintf(g_str, "AD%d,%d,%d,%d,%d,%d,%d,%d", g_b0, g_b1, g_b2, g_b3, g_b4, g_b5, g_b6, g_b7);
+          sprintf(g_str,
+                  "AD%d,%d,%d,%d,%d,%d,%d,%d",
+                  g_b0,
+                  g_b1,
+                  g_b2,
+                  g_b3,
+                  g_b4,
+                  g_b5,
+                  g_b6,
+                  g_b7);
           Serial.write(g_str);
           one.lcd2(g_str + 2);
           break;
@@ -187,7 +200,10 @@ void loop() {
         // ----------- COMMAND_BAT_READ ----------------
         case COMMAND_BAT_READ:
           g_battery = one.readBattery();
-          sprintf(g_str, "BV%d.%d", (int)g_battery, (int)((g_battery - (int)g_battery) * 100));
+          sprintf(g_str,
+                  "BV%d.%d",
+                  (int)g_battery,
+                  (int)((g_battery - (int)g_battery) * 100));
           Serial.write(g_str);
           one.lcd2(g_str + 2);
           break;
@@ -213,8 +229,10 @@ void loop() {
         // ----------- COMMAND_OBSTACLES ----------------
         case COMMAND_RANGE_LEFT:
         case COMMAND_RANGE_RIGHT:
-          g_rangeL = one.readLeftRangeSensor();   // read left obstacle sensor range
-          g_rangeR = one.readRightRangeSensor();  // read right obstacle sensor range
+          g_rangeL =
+              one.readLeftRangeSensor();  // read left obstacle sensor range
+          g_rangeR =
+              one.readRightRangeSensor();  // read right obstacle sensor range
           sprintf(g_str, "RI%d,%d", g_rangeL, g_rangeR);
           Serial.write(g_str);
           one.lcd2(g_str + 2);
@@ -242,19 +260,26 @@ void loop() {
         // ----------- COMMAND_ARDUINO_COMPASS ----------------
         case COMMAND_ARDUINO_CMP:
           one.lcd2(g_str + 2);
-          g_bearing = compass.read_bearing();
-          g_roll = compass.read_roll();
-          g_pitch = compass.read_pitch();
+          g_bearing = compass.readBearing();
+          g_roll = compass.readRoll();
+          g_pitch = compass.readPitch();
 
-          sprintf(g_str, "CP%d.%d,%d,%d", (int)g_bearing, (int)((g_bearing - (int)g_bearing) * 100), g_roll, g_pitch);
+          sprintf(g_str,
+                  "CP%d.%d,%d,%d",
+                  (int)g_bearing,
+                  (int)((g_bearing - (int)g_bearing) * 100),
+                  g_roll,
+                  g_pitch);
           Serial.write(g_str);
           break;
 
         // ----------- COMMAND_READ_COLOR_SENSOR ----------------
         case COMMAND_READ_COLOR_SENSOR:
-          colorsensor.readRGBL(&g_rgbL[0], &g_rgbL[1], &g_rgbL[2]);  // Read Left RGB sensor
-          colorsensor.readRGBR(&g_rgbR[0], &g_rgbR[1], &g_rgbR[2]);  // Read Right RGB sensor     //
-                                                                     // 0xF1 //Save calibration data
+          colorsensor.readRGBL(
+              g_rgbL[0], g_rgbL[1], g_rgbL[2]);  // Read Left RGB sensor
+          colorsensor.readRGBR(
+              g_rgbR[0], g_rgbR[1], g_rgbR[2]);  // Read Right RGB sensor     //
+                                                 // 0xF1 //Save calibration data
           sprintf(g_str,
                   "CS%d,%d,%d;%d,%d,%d",
                   (int)g_rgbL[0],
