@@ -151,24 +151,24 @@ void Config::PrintValue(const String& text, const int value) const {
 
 byte Config::SaveArrayValues(byte eeprom_address, const int array[8]) const {
   for (int i = 0; i < 8; ++i) {
-    EEPROM.write(eeprom_address, high_byte(array[i]));
+    EEPROM.write(eeprom_address, highByte(array[i]));
     eeprom_address += 1;
-    EEPROM.write(eeprom_address, low_byte(array[i]));
+    EEPROM.write(eeprom_address, lowByte(array[i]));
     eeprom_address += 1;
   }
   return eeprom_address;
 }
 
 byte Config::SaveWord(byte eeprom_address, const int value) const {
-  EEPROM.write(eeprom_address, high_byte(value));
+  EEPROM.write(eeprom_address, highByte(value));
   eeprom_address += 1;
-  EEPROM.write(eeprom_address, low_byte(value));
+  EEPROM.write(eeprom_address, lowByte(value));
   eeprom_address += 1;
   return eeprom_address;
 }
 
 byte Config::SaveByte(byte eeprom_address, const int value) const {
-  EEPROM.write(eeprom_address, low_byte(value));
+  EEPROM.write(eeprom_address, lowByte(value));
   eeprom_address += 1;
   return eeprom_address;
 }

@@ -11,11 +11,13 @@
  control Bot'n Roll ONE A+
 */
 
+#include <ArduinoCommands.h>
 #include <BnrColorSensor.h>  // Bot'n Roll Color Sensor library
 #include <BnrCompass.h>      // Compass library
 #include <BnrOneAPlus.h>     // Bot'n Roll ONE A+ library
 #include <SPI.h>    // SPI communication library required by BnrOneAPlus.cpp
 #include <Servo.h>  // Gripper
+#include <SpiCommands.h>
 
 // constants definition
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
