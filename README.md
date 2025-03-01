@@ -10,7 +10,7 @@ The Bot'n Roll One A+ is a versatile and customizable robot designed for student
 ![Bot'n Roll One A+](https://botnroll.com/one-a-plus/BotnrollOneAPlus.png)
 
 ## Features
-- Easy integration with the Arduino IDE.
+- Easy integration with Arduino® IDE, Raspberry Pi® 5, Open Roberta® Lab, Matlab Simulink® and others.
 - Provides functions to control motors, sensors, and other peripherals.
 - Full documentation and support provided.
 
