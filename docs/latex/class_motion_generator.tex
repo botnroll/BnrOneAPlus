@@ -1,0 +1,302 @@
+\doxysection{Motion\+Generator Class Reference}
+\hypertarget{class_motion_generator}{}\label{class_motion_generator}\index{MotionGenerator@{MotionGenerator}}
+
+
+Class that enables moving in curved or straight lines by specifying the distance and/or angle and speed of the desired motion.  
+
+
+
+
+{\ttfamily \#include $<$Motion\+Generator.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_motion_generator_a92182b4119e5154cd2a375d14bfd9190}{Motion\+Generator}} (Bnr\+One\+APlus \&one, const float slip\+\_\+factor=1.\+0)
+\begin{DoxyCompactList}\small\item\em Constructor for \doxylink{class_motion_generator}{Motion\+Generator}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_generator_a3bfca2b7ed2a9a730b721cea2fb3ccd1}{move\+Straight\+At\+Speed}} (const float distance, const float speed=50, const float slow\+\_\+down\+\_\+distance=0)
+\begin{DoxyCompactList}\small\item\em Moves the robot for the given distance at the given speed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_generator_a35d69aed8b2e50cb53e65435ecaa1c75}{rotate\+Angle\+Deg\+At\+Speed}} (const float angle\+\_\+deg, const float speed=50, const float radius\+\_\+of\+\_\+curvature\+\_\+mm=0, const float slow\+\_\+down\+\_\+thresh\+\_\+deg=0)
+\begin{DoxyCompactList}\small\item\em Rotates the robot the specified angle at the given speed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_motion_generator_ac3b6ba765c1f902bcd70bcf12d45fdd6}{reset\+Encoders}} () const
+\begin{DoxyCompactList}\small\item\em Resets both encoders. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_motion_generator_a5c61b089a72945c31fd544a64908a417}{compute\+Angular\+Speed}} (const float speed, const float radius\+\_\+of\+\_\+curvature\+\_\+mm, const int direction=1) const
+\begin{DoxyCompactList}\small\item\em Computes the angular speed given the linear speed, radius of curvature, and direction. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_generator_a2230be71180b23d769f0c438a28f8ba4}{maybe\+Slow\+Down}} (float \&linear\+\_\+speed, float \&angular\+\_\+speed\+\_\+rad, const float speed, const float pulses\+\_\+remaining, const float slow\+\_\+down\+\_\+thresh, const float radius\+\_\+of\+\_\+curvature\+\_\+mm, const int direction) const
+\begin{DoxyCompactList}\small\item\em Adjusts the speed if the robot needs to slow down. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_generator_aa0d9fba321e668955878e9cb86c4bc95}{move\+And\+Slow\+Down}} (const float total\+\_\+pulses, const float speed=50, const int direction=1, const float radius\+\_\+of\+\_\+curvature\+\_\+mm=0, const float slow\+\_\+down\+\_\+thresh=4000) const
+\begin{DoxyCompactList}\small\item\em Moves the robot and slows down when pulses remaining are less than the threshold. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_motion_generator_a3f6b9d3a1c6daf13470e486000ff702c}{get\+Sign}} (const float value) const
+\begin{DoxyCompactList}\small\item\em Gets the sign of a value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_generator_a0171c6e77864c643f942eeb1eb675d58}{check\+Wheel\+Speed\+Limit}} (const float speed) const
+\begin{DoxyCompactList}\small\item\em Checks if the wheel speed is within limits. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_motion_generator_a3b8b3bcf7c5e78dc49e3549603784cb1}{check\+Speed\+Limits}} (const float linear\+\_\+speed, const float angular\+\_\+speed\+\_\+rad) const
+\begin{DoxyCompactList}\small\item\em Checks if the speed limits are within bounds. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_motion_generator_a9a61f2a417d3f284bcb75d65dd2ead70}{apply\+Slip}} (const float value) const
+\begin{DoxyCompactList}\small\item\em Applies the slip factor to a value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Bnr\+One\+APlus \& \mbox{\hyperlink{class_motion_generator_a8a8d88014dbf923caf5735a275866612}{one\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Reference to Bnr\+One\+APlus object. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_motion_generator_ae35dea5463e620f5734e927bcca78204}{slip\+\_\+factor\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Slip factor for the robot. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_motion_generator_ad4a79f26facba4d02dd376e38a3e6b7e}{axis\+\_\+length\+\_\+mm\+\_\+}}
+\begin{DoxyCompactList}\small\item\em Axis length of the robot in millimeters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class that enables moving in curved or straight lines by specifying the distance and/or angle and speed of the desired motion. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_motion_generator_a92182b4119e5154cd2a375d14bfd9190}\index{MotionGenerator@{MotionGenerator}!MotionGenerator@{MotionGenerator}}
+\index{MotionGenerator@{MotionGenerator}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{MotionGenerator()}{MotionGenerator()}}
+{\footnotesize\ttfamily \label{class_motion_generator_a92182b4119e5154cd2a375d14bfd9190} 
+Motion\+Generator\+::\+Motion\+Generator (\begin{DoxyParamCaption}\item[{Bnr\+One\+APlus \&}]{one}{, }\item[{const float}]{slip\+\_\+factor}{ = {\ttfamily 1.0}}\end{DoxyParamCaption})}
+
+
+
+Constructor for \doxylink{class_motion_generator}{Motion\+Generator}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em one} & Reference to Bnr\+One\+APlus object. \\
+\hline
+{\em slip\+\_\+factor} & Slip factor for the robot. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_motion_generator_a9a61f2a417d3f284bcb75d65dd2ead70}\index{MotionGenerator@{MotionGenerator}!applySlip@{applySlip}}
+\index{applySlip@{applySlip}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{applySlip()}{applySlip()}}
+{\footnotesize\ttfamily \label{class_motion_generator_a9a61f2a417d3f284bcb75d65dd2ead70} 
+float Motion\+Generator\+::apply\+Slip (\begin{DoxyParamCaption}\item[{const float}]{value}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Applies the slip factor to a value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to apply slip to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value after applying slip. 
+\end{DoxyReturn}
+\Hypertarget{class_motion_generator_a3b8b3bcf7c5e78dc49e3549603784cb1}\index{MotionGenerator@{MotionGenerator}!checkSpeedLimits@{checkSpeedLimits}}
+\index{checkSpeedLimits@{checkSpeedLimits}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{checkSpeedLimits()}{checkSpeedLimits()}}
+{\footnotesize\ttfamily \label{class_motion_generator_a3b8b3bcf7c5e78dc49e3549603784cb1} 
+void Motion\+Generator\+::check\+Speed\+Limits (\begin{DoxyParamCaption}\item[{const float}]{linear\+\_\+speed}{, }\item[{const float}]{angular\+\_\+speed\+\_\+rad}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Checks if the speed limits are within bounds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em linear\+\_\+speed} & Linear speed. \\
+\hline
+{\em angular\+\_\+speed\+\_\+rad} & Angular speed. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_motion_generator_a0171c6e77864c643f942eeb1eb675d58}\index{MotionGenerator@{MotionGenerator}!checkWheelSpeedLimit@{checkWheelSpeedLimit}}
+\index{checkWheelSpeedLimit@{checkWheelSpeedLimit}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{checkWheelSpeedLimit()}{checkWheelSpeedLimit()}}
+{\footnotesize\ttfamily \label{class_motion_generator_a0171c6e77864c643f942eeb1eb675d58} 
+void Motion\+Generator\+::check\+Wheel\+Speed\+Limit (\begin{DoxyParamCaption}\item[{const float}]{speed}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Checks if the wheel speed is within limits. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & Speed to check. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_motion_generator_a5c61b089a72945c31fd544a64908a417}\index{MotionGenerator@{MotionGenerator}!computeAngularSpeed@{computeAngularSpeed}}
+\index{computeAngularSpeed@{computeAngularSpeed}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{computeAngularSpeed()}{computeAngularSpeed()}}
+{\footnotesize\ttfamily \label{class_motion_generator_a5c61b089a72945c31fd544a64908a417} 
+float Motion\+Generator\+::compute\+Angular\+Speed (\begin{DoxyParamCaption}\item[{const float}]{speed}{, }\item[{const float}]{radius\+\_\+of\+\_\+curvature\+\_\+mm}{, }\item[{const int}]{direction}{ = {\ttfamily 1}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Computes the angular speed given the linear speed, radius of curvature, and direction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em speed} & Linear speed. \\
+\hline
+{\em radius\+\_\+of\+\_\+curvature\+\_\+mm} & Radius of curvature. \\
+\hline
+{\em direction} & Direction of motion. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Angular speed. 
+\end{DoxyReturn}
+\Hypertarget{class_motion_generator_a3f6b9d3a1c6daf13470e486000ff702c}\index{MotionGenerator@{MotionGenerator}!getSign@{getSign}}
+\index{getSign@{getSign}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{getSign()}{getSign()}}
+{\footnotesize\ttfamily \label{class_motion_generator_a3f6b9d3a1c6daf13470e486000ff702c} 
+int Motion\+Generator\+::get\+Sign (\begin{DoxyParamCaption}\item[{const float}]{value}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Gets the sign of a value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & Value to check. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if value is positive or zero, -\/1 if value is negative. 
+\end{DoxyReturn}
+\Hypertarget{class_motion_generator_a2230be71180b23d769f0c438a28f8ba4}\index{MotionGenerator@{MotionGenerator}!maybeSlowDown@{maybeSlowDown}}
+\index{maybeSlowDown@{maybeSlowDown}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{maybeSlowDown()}{maybeSlowDown()}}
+{\footnotesize\ttfamily \label{class_motion_generator_a2230be71180b23d769f0c438a28f8ba4} 
+void Motion\+Generator\+::maybe\+Slow\+Down (\begin{DoxyParamCaption}\item[{float \&}]{linear\+\_\+speed}{, }\item[{float \&}]{angular\+\_\+speed\+\_\+rad}{, }\item[{const float}]{speed}{, }\item[{const float}]{pulses\+\_\+remaining}{, }\item[{const float}]{slow\+\_\+down\+\_\+thresh}{, }\item[{const float}]{radius\+\_\+of\+\_\+curvature\+\_\+mm}{, }\item[{const int}]{direction}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Adjusts the speed if the robot needs to slow down. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em linear\+\_\+speed} & Reference to linear speed. \\
+\hline
+{\em angular\+\_\+speed\+\_\+rad} & Reference to angular speed. \\
+\hline
+{\em speed} & Current speed. \\
+\hline
+{\em pulses\+\_\+remaining} & Pulses remaining to complete the motion. \\
+\hline
+{\em slow\+\_\+down\+\_\+thresh} & Threshold for slowing down. \\
+\hline
+{\em radius\+\_\+of\+\_\+curvature\+\_\+mm} & Radius of curvature. \\
+\hline
+{\em direction} & Direction of motion. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_motion_generator_aa0d9fba321e668955878e9cb86c4bc95}\index{MotionGenerator@{MotionGenerator}!moveAndSlowDown@{moveAndSlowDown}}
+\index{moveAndSlowDown@{moveAndSlowDown}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{moveAndSlowDown()}{moveAndSlowDown()}}
+{\footnotesize\ttfamily \label{class_motion_generator_aa0d9fba321e668955878e9cb86c4bc95} 
+void Motion\+Generator\+::move\+And\+Slow\+Down (\begin{DoxyParamCaption}\item[{const float}]{total\+\_\+pulses}{, }\item[{const float}]{speed}{ = {\ttfamily 50}, }\item[{const int}]{direction}{ = {\ttfamily 1}, }\item[{const float}]{radius\+\_\+of\+\_\+curvature\+\_\+mm}{ = {\ttfamily 0}, }\item[{const float}]{slow\+\_\+down\+\_\+thresh}{ = {\ttfamily 4000}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Moves the robot and slows down when pulses remaining are less than the threshold. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em total\+\_\+pulses} & Total pulses required for the motion. \\
+\hline
+{\em speed} & Speed to move at. \\
+\hline
+{\em direction} & Direction of motion. \\
+\hline
+{\em radius\+\_\+of\+\_\+curvature\+\_\+mm} & Radius of curvature. \\
+\hline
+{\em slow\+\_\+down\+\_\+thresh} & Threshold for slowing down. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_motion_generator_a3bfca2b7ed2a9a730b721cea2fb3ccd1}\index{MotionGenerator@{MotionGenerator}!moveStraightAtSpeed@{moveStraightAtSpeed}}
+\index{moveStraightAtSpeed@{moveStraightAtSpeed}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{moveStraightAtSpeed()}{moveStraightAtSpeed()}}
+{\footnotesize\ttfamily \label{class_motion_generator_a3bfca2b7ed2a9a730b721cea2fb3ccd1} 
+void Motion\+Generator\+::move\+Straight\+At\+Speed (\begin{DoxyParamCaption}\item[{const float}]{distance}{, }\item[{const float}]{speed}{ = {\ttfamily 50}, }\item[{const float}]{slow\+\_\+down\+\_\+distance}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+
+
+Moves the robot for the given distance at the given speed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em distance} & Distance to move. \\
+\hline
+{\em speed} & Speed to move at. \\
+\hline
+{\em slow\+\_\+down\+\_\+distance} & Distance at which to start slowing down. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_motion_generator_ac3b6ba765c1f902bcd70bcf12d45fdd6}\index{MotionGenerator@{MotionGenerator}!resetEncoders@{resetEncoders}}
+\index{resetEncoders@{resetEncoders}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{resetEncoders()}{resetEncoders()}}
+{\footnotesize\ttfamily \label{class_motion_generator_ac3b6ba765c1f902bcd70bcf12d45fdd6} 
+void Motion\+Generator\+::reset\+Encoders (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Resets both encoders. 
+
+\Hypertarget{class_motion_generator_a35d69aed8b2e50cb53e65435ecaa1c75}\index{MotionGenerator@{MotionGenerator}!rotateAngleDegAtSpeed@{rotateAngleDegAtSpeed}}
+\index{rotateAngleDegAtSpeed@{rotateAngleDegAtSpeed}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{rotateAngleDegAtSpeed()}{rotateAngleDegAtSpeed()}}
+{\footnotesize\ttfamily \label{class_motion_generator_a35d69aed8b2e50cb53e65435ecaa1c75} 
+void Motion\+Generator\+::rotate\+Angle\+Deg\+At\+Speed (\begin{DoxyParamCaption}\item[{const float}]{angle\+\_\+deg}{, }\item[{const float}]{speed}{ = {\ttfamily 50}, }\item[{const float}]{radius\+\_\+of\+\_\+curvature\+\_\+mm}{ = {\ttfamily 0}, }\item[{const float}]{slow\+\_\+down\+\_\+thresh\+\_\+deg}{ = {\ttfamily 0}}\end{DoxyParamCaption})}
+
+
+
+Rotates the robot the specified angle at the given speed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em angle\+\_\+deg} & Angle to rotate in degrees. \\
+\hline
+{\em speed} & Speed to rotate at. \\
+\hline
+{\em radius\+\_\+of\+\_\+curvature\+\_\+mm} & Radius of curvature for the rotation. \\
+\hline
+{\em slow\+\_\+down\+\_\+thresh\+\_\+deg} & Angle at which to start slowing down. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_motion_generator_ad4a79f26facba4d02dd376e38a3e6b7e}\index{MotionGenerator@{MotionGenerator}!axis\_length\_mm\_@{axis\_length\_mm\_}}
+\index{axis\_length\_mm\_@{axis\_length\_mm\_}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{axis\_length\_mm\_}{axis\_length\_mm\_}}
+{\footnotesize\ttfamily \label{class_motion_generator_ad4a79f26facba4d02dd376e38a3e6b7e} 
+float Motion\+Generator\+::axis\+\_\+length\+\_\+mm\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Axis length of the robot in millimeters. 
+
+\Hypertarget{class_motion_generator_a8a8d88014dbf923caf5735a275866612}\index{MotionGenerator@{MotionGenerator}!one\_@{one\_}}
+\index{one\_@{one\_}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{one\_}{one\_}}
+{\footnotesize\ttfamily \label{class_motion_generator_a8a8d88014dbf923caf5735a275866612} 
+Bnr\+One\+APlus\& Motion\+Generator\+::one\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Reference to Bnr\+One\+APlus object. 
+
+\Hypertarget{class_motion_generator_ae35dea5463e620f5734e927bcca78204}\index{MotionGenerator@{MotionGenerator}!slip\_factor\_@{slip\_factor\_}}
+\index{slip\_factor\_@{slip\_factor\_}!MotionGenerator@{MotionGenerator}}
+\doxysubsubsection{\texorpdfstring{slip\_factor\_}{slip\_factor\_}}
+{\footnotesize\ttfamily \label{class_motion_generator_ae35dea5463e620f5734e927bcca78204} 
+float Motion\+Generator\+::slip\+\_\+factor\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Slip factor for the robot. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/utility/\mbox{\hyperlink{_motion_generator_8h}{Motion\+Generator.\+h}}\end{DoxyCompactItemize}
