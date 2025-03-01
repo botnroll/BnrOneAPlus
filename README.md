@@ -1,7 +1,8 @@
 # Bot'n Roll One A+ Arduino Library
 
 Welcome to the Bot'n Roll One A+ Arduino library! 
-This library enables seamless control of the Bot'n Roll One A+, allowing you to quickly program and interact with your Bot'n Roll One A+.
+This library enables seamless control of the Bot'n Roll One A+, allowing you to quickly program and interact with your Bot'n Roll One A+.<br>
+For the most up-to-date C++ reference documentation please check [Online Documentation](https://botnroll.github.io/BnrOneAPlus/class_bnr_one_a_plus.html).
 
 ## About
 The Bot'n Roll One A+ is a versatile and customizable robot designed for students, hobbyists, and educators. With its robust hardware and software capabilities, it is an excellent tool for learning and experimenting with robotics and Arduino programming.
@@ -24,7 +25,7 @@ The Bot'n Roll One A+ is a versatile and customizable robot designed for student
 To get started with your Bot'n Roll One A+, refer to the following manuals:
 
 - [Assembly Manual](https://botnroll.com/onea/downloads/Manual-Montagem-Bot'n-Roll-ONE-A.pdf)
-- [Software Manual](https://botnroll.com/onea/downloads/Manual-Software-Bot'n-Roll-ONE-A.pdf)
+- [Software Manual](https://botnroll.com/onea/downloads/Manual-Software-Bot'n-Roll-ONE-A.pdf) or [Online Documentation](https://botnroll.github.io/BnrOneAPlus/class_bnr_one_a_plus.html)
 - [Extras Manual](https://botnroll.com/onea/downloads/Manual-Extras-Bot'n-Roll-ONE-A.pdf)
 
 For further assistance, visit the [Support Page](https://www.botnroll.com/onea/).
