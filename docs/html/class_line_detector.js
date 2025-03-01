@@ -1,0 +1,28 @@
+var class_line_detector =
+[
+    [ "LineDetector", "class_line_detector.html#a39b34cdd80ad5d706b276bdf0b50c744", null ],
+    [ "CalculateFactor", "class_line_detector.html#a174bc6de6d72526639c6d9d13a693cf6", null ],
+    [ "CalculateScalingFactors", "class_line_detector.html#ac367b704276b9a53d1812b2a5fbc93b4", null ],
+    [ "CapValue", "class_line_detector.html#a681c17fc737528ff65690683f92ead12", null ],
+    [ "CastToLongInt", "class_line_detector.html#acf6cba40a9b902d7eff9d06ad92cd521", null ],
+    [ "ComputeLine", "class_line_detector.html#a7f6ea080180b793ae9ac6ccedb7365dd", null ],
+    [ "ComputeLineValue", "class_line_detector.html#a8d530960d9251cd12fffc79b4bd2fa5d", null ],
+    [ "ComputeMeanGaussian", "class_line_detector.html#ad42faa73d686759d71bc2d3a4728332b", null ],
+    [ "ConvertRange", "class_line_detector.html#a349923b55f7f56b7213b06fb9d728cdc", null ],
+    [ "FilterLineValue", "class_line_detector.html#a8afa1971a787fd196678c0705defee72", null ],
+    [ "GetConfig", "class_line_detector.html#a7fd1a0899f255d783c69797450374b7c", null ],
+    [ "GetMaxFromArray", "class_line_detector.html#ad490812b0ab71af6e039081fff3a512b", null ],
+    [ "GetMaxValueAndIndex", "class_line_detector.html#a98a577704509458bf101b62d030744c1", null ],
+    [ "LoadConfig", "class_line_detector.html#aecedf6cd2b88c1da2d94595cab1ea22b", null ],
+    [ "LoadIfNecessary", "class_line_detector.html#ac576a77b66a3d994673c31ee856514c1", null ],
+    [ "Normalise", "class_line_detector.html#aa3fef0ae396112d2d2e567734cf8ab1a", null ],
+    [ "NormaliseLineValue", "class_line_detector.html#afb948ea2f7042dfaaf50d7cb804f37d5", null ],
+    [ "NormaliseReadings", "class_line_detector.html#affe740a6e3814d983094d42b0c689e88", null ],
+    [ "Prune", "class_line_detector.html#a8853928eb3eb21b1a88fee7b88f0f53f", null ],
+    [ "SetConfig", "class_line_detector.html#acd690650f7c91bec033b43e8910c8119", null ],
+    [ "Sum", "class_line_detector.html#a016d14edf3b8a513c6e3b976ba2f54da", null ],
+    [ "_cfgLoaded", "class_line_detector.html#a8646ffe114063760e7d33c46f2119f6b", null ],
+    [ "_config", "class_line_detector.html#a06b26d7ac645121a68ff3fa3c1171fc9", null ],
+    [ "_previousLineValue", "class_line_detector.html#a1d4f4b6a173ebd82445948ddd02438fe", null ],
+    [ "_scalingFactor", "class_line_detector.html#ac2f37aef4a74858c240fe691b8ce9c7c", null ]
+];

@@ -1,0 +1,448 @@
+\doxysection{src/\+Spi\+Commands.h File Reference}
+\hypertarget{_spi_commands_8h}{}\label{_spi_commands_8h}\index{src/SpiCommands.h@{src/SpiCommands.h}}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_af709a8c6c00929607ff2bb1f35e14754}{KEY1}}~0x\+AA
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a28139a703782c6706c0c53bda00572d3}{KEY2}}~0x55
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a29e413f6725b2ba32d165ffaa35b01e5}{OFF}}~False
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_ad76d1750a6cdeebd506bfcd6752554d2}{ON}}~True
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a099995994c74b5fff8f7de4ff3eac550}{AN0}}~0
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a4903de2a52966c8dc2c20faf565d451d}{AN1}}~1
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a9b0754e893d69a1e69e856853f70da1f}{AN2}}~2
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a9f593faa38f1023698d74f03a457abe3}{AN3}}~3
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_adc95f1e9cdc00268d7bca5885052171f}{AN4}}~4
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a99ed455a0d536be03f12eba18ccff71b}{AN5}}~5
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_ad63d6861c3fa5e606de5c18ada3b4d10}{AN6}}~6
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a277d706ee82bd70459b63e85489c7074}{AN7}}~7
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_ad2b14deb249241ef160eab4c74de5d5c}{COMMAND\+\_\+\+FIRMWARE}}~0x\+FE
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a35c97d7f66a047823cbbaa9a3c5c85cc}{COMMAND\+\_\+\+LED}}~0x\+FD
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_ab10e979c7e72bfabb2226d63b929a2c3}{COMMAND\+\_\+\+LCD\+\_\+\+L1}}~0x\+FA
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_aa9051429ff72370433d95395d351a11e}{COMMAND\+\_\+\+LCD\+\_\+\+L2}}~0x\+F9
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a7ceafe2d37e7e9f175b5602249bf4691}{COMMAND\+\_\+\+IR\+\_\+\+EMITTERS}}~0x\+F8
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a6b66389416f72046f80d9c2c1a77d63f}{COMMAND\+\_\+\+STOP}}~0x\+F7
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a1bc4e1b4e7d2414f1a111f767956fd2e}{COMMAND\+\_\+\+MOVE}}~0x\+F6
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_af6e05b636eda371450976e01586f51c8}{COMMAND\+\_\+\+BRAKE\+\_\+\+SET\+\_\+T}}~0x\+F5
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a636c3200e52a4682f31a8d4a003183d7}{COMMAND\+\_\+\+SET\+\_\+\+BAT\+\_\+\+MIN}}~0x\+F4
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a2d8452fb40d8dc3397ea44034aceefad}{COMMAND\+\_\+\+SET\+\_\+\+PID}}~0x\+F3
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_aeb4d9ef710ac3a5110b241f2fb6bf84a}{COMMAND\+\_\+\+MOVE\+\_\+\+RAW}}~0x\+F2
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a589a92e2f1e391cc3ef4789033821fbe}{COMMAND\+\_\+\+SET\+\_\+\+MOTORS}}~0x\+F1
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_ab02ac08533bfae48cb4ee8a6aa3cbf5f}{COMMAND\+\_\+\+ENCL\+\_\+\+RESET}}~0x\+F0
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a3df80fb1e411171957cf579637324533}{COMMAND\+\_\+\+ENCR\+\_\+\+RESET}}~0x\+EF
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a9f2eee1aea4738323271fae1c587f94b}{COMMAND\+\_\+\+MOVE\+\_\+\+RPM}}~0x\+EE
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a79188424cf44051cd3382c4b09a7da7e}{COMMAND\+\_\+\+MOVE\+\_\+\+RPM\+\_\+\+R\+\_\+\+ENC}}~0x\+ED
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a502678b0b271bb38ce590e951cd86a8d}{COMMAND\+\_\+\+FUTURE\+\_\+\+USE4}}~0x\+EC
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a11c4db565b7902e7cd51ec86c3532ca6}{COMMAND\+\_\+\+BRAKE\+\_\+\+MAX\+\_\+T}}~0x\+EB
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_abc46e34596d9e3a2822a5fb72b18be34}{COMMAND\+\_\+\+MOVE\+\_\+1M}}~0x\+EA
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a64a844438ff5ae415ee268af004aa6e8}{COMMAND\+\_\+\+STOP\+\_\+1M}}~0x\+E9
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_aaa902cd8b24f4223d93e3a4bb0959ac6}{COMMAND\+\_\+\+BRAKE\+\_\+1M}}~0x\+E8
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a29d2f0033d30a3262fbd55dcb7037126}{COMMAND\+\_\+\+FUTURE\+\_\+\+USE5}}~0x\+E7
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a48e277373a022c16f0246db20342c106}{COMMAND\+\_\+\+ADC0}}~0x\+DF
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_aa3eb6b4f80f729f6794677ff0ad106c0}{COMMAND\+\_\+\+ADC1}}~0x\+DE
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a6f063a5694837e156b9f1bb81efa214f}{COMMAND\+\_\+\+ADC2}}~0x\+DD
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_aeb92c6d9611b4e0c57673cfdb7072423}{COMMAND\+\_\+\+ADC3}}~0x\+DC
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_ac1bca4d341e724ce2420d35edbefb496}{COMMAND\+\_\+\+ADC4}}~0x\+DB
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_adaa179deda5b99e2762cf765213879b5}{COMMAND\+\_\+\+ADC5}}~0x\+DA
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_aeaabd627c37c017c283d0e7788c2d51a}{COMMAND\+\_\+\+ADC6}}~0x\+D9
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a1c247595fa5b1e46eed094deaffb212d}{COMMAND\+\_\+\+ADC7}}~0x\+D8
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a4a2f77a564d706c80507d91f391eb40d}{COMMAND\+\_\+\+BAT\+\_\+\+READ}}~0x\+D7
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a1d0ddbf2c3d6ef5bc58380e7f5417e70}{COMMAND\+\_\+\+BUT\+\_\+\+READ}}~0x\+D6
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a1e353b6ef8d7bb205ebd09966b80cf77}{COMMAND\+\_\+\+OBSTACLES}}~0x\+D5
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a0b0aea42fff76349258db4920957ce2a}{COMMAND\+\_\+\+FUTURE\+\_\+\+USE7}}~0x\+D4
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_acc40e9d9a0230ee67d8eca346b1a7dac}{COMMAND\+\_\+\+ENCL}}~0x\+D3
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_ab0ac271d36a30cd321f647a23e80f1bd}{COMMAND\+\_\+\+ENCR}}~0x\+D2
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a319644a3ef4512b02c9e38f1937dfb16}{COMMAND\+\_\+\+ENCL\+\_\+\+INC}}~0x\+D1
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_ac76ec1aab1d73741d0236d06a3fbb876}{COMMAND\+\_\+\+ENCR\+\_\+\+INC}}~0x\+D0
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a081f75dbd214fa4affdeef42d4468395}{COMMAND\+\_\+\+LINE\+\_\+\+READ}}~0x\+CF
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a68b054fb8fc316d7eac237a0e1a76443}{COMMAND\+\_\+\+RANGE\+\_\+\+LEFT}}~0x\+CE
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a1292cb87b09ebeb0c04abfa4472f1f88}{COMMAND\+\_\+\+RANGE\+\_\+\+RIGHT}}~0x\+CD
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a32a44fcae624d1662325476b9e18f0ae}{COMMAND\+\_\+\+ENCODERS\+\_\+\+READ}}~0\+XCC
+\item 
+\#define \mbox{\hyperlink{_spi_commands_8h_a2297360d5698c3a4565650a9441de9fa}{COMMAND\+\_\+\+RANGES\+\_\+\+READ}}~0\+XCB
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_spi_commands_8h_a099995994c74b5fff8f7de4ff3eac550}\index{SpiCommands.h@{SpiCommands.h}!AN0@{AN0}}
+\index{AN0@{AN0}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{AN0}{AN0}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a099995994c74b5fff8f7de4ff3eac550} 
+\#define AN0~0}
+
+\Hypertarget{_spi_commands_8h_a4903de2a52966c8dc2c20faf565d451d}\index{SpiCommands.h@{SpiCommands.h}!AN1@{AN1}}
+\index{AN1@{AN1}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{AN1}{AN1}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a4903de2a52966c8dc2c20faf565d451d} 
+\#define AN1~1}
+
+\Hypertarget{_spi_commands_8h_a9b0754e893d69a1e69e856853f70da1f}\index{SpiCommands.h@{SpiCommands.h}!AN2@{AN2}}
+\index{AN2@{AN2}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{AN2}{AN2}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a9b0754e893d69a1e69e856853f70da1f} 
+\#define AN2~2}
+
+\Hypertarget{_spi_commands_8h_a9f593faa38f1023698d74f03a457abe3}\index{SpiCommands.h@{SpiCommands.h}!AN3@{AN3}}
+\index{AN3@{AN3}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{AN3}{AN3}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a9f593faa38f1023698d74f03a457abe3} 
+\#define AN3~3}
+
+\Hypertarget{_spi_commands_8h_adc95f1e9cdc00268d7bca5885052171f}\index{SpiCommands.h@{SpiCommands.h}!AN4@{AN4}}
+\index{AN4@{AN4}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{AN4}{AN4}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_adc95f1e9cdc00268d7bca5885052171f} 
+\#define AN4~4}
+
+\Hypertarget{_spi_commands_8h_a99ed455a0d536be03f12eba18ccff71b}\index{SpiCommands.h@{SpiCommands.h}!AN5@{AN5}}
+\index{AN5@{AN5}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{AN5}{AN5}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a99ed455a0d536be03f12eba18ccff71b} 
+\#define AN5~5}
+
+\Hypertarget{_spi_commands_8h_ad63d6861c3fa5e606de5c18ada3b4d10}\index{SpiCommands.h@{SpiCommands.h}!AN6@{AN6}}
+\index{AN6@{AN6}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{AN6}{AN6}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_ad63d6861c3fa5e606de5c18ada3b4d10} 
+\#define AN6~6}
+
+\Hypertarget{_spi_commands_8h_a277d706ee82bd70459b63e85489c7074}\index{SpiCommands.h@{SpiCommands.h}!AN7@{AN7}}
+\index{AN7@{AN7}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{AN7}{AN7}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a277d706ee82bd70459b63e85489c7074} 
+\#define AN7~7}
+
+\Hypertarget{_spi_commands_8h_a48e277373a022c16f0246db20342c106}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ADC0@{COMMAND\_ADC0}}
+\index{COMMAND\_ADC0@{COMMAND\_ADC0}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ADC0}{COMMAND\_ADC0}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a48e277373a022c16f0246db20342c106} 
+\#define COMMAND\+\_\+\+ADC0~0x\+DF}
+
+\Hypertarget{_spi_commands_8h_aa3eb6b4f80f729f6794677ff0ad106c0}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ADC1@{COMMAND\_ADC1}}
+\index{COMMAND\_ADC1@{COMMAND\_ADC1}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ADC1}{COMMAND\_ADC1}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_aa3eb6b4f80f729f6794677ff0ad106c0} 
+\#define COMMAND\+\_\+\+ADC1~0x\+DE}
+
+\Hypertarget{_spi_commands_8h_a6f063a5694837e156b9f1bb81efa214f}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ADC2@{COMMAND\_ADC2}}
+\index{COMMAND\_ADC2@{COMMAND\_ADC2}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ADC2}{COMMAND\_ADC2}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a6f063a5694837e156b9f1bb81efa214f} 
+\#define COMMAND\+\_\+\+ADC2~0x\+DD}
+
+\Hypertarget{_spi_commands_8h_aeb92c6d9611b4e0c57673cfdb7072423}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ADC3@{COMMAND\_ADC3}}
+\index{COMMAND\_ADC3@{COMMAND\_ADC3}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ADC3}{COMMAND\_ADC3}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_aeb92c6d9611b4e0c57673cfdb7072423} 
+\#define COMMAND\+\_\+\+ADC3~0x\+DC}
+
+\Hypertarget{_spi_commands_8h_ac1bca4d341e724ce2420d35edbefb496}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ADC4@{COMMAND\_ADC4}}
+\index{COMMAND\_ADC4@{COMMAND\_ADC4}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ADC4}{COMMAND\_ADC4}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_ac1bca4d341e724ce2420d35edbefb496} 
+\#define COMMAND\+\_\+\+ADC4~0x\+DB}
+
+\Hypertarget{_spi_commands_8h_adaa179deda5b99e2762cf765213879b5}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ADC5@{COMMAND\_ADC5}}
+\index{COMMAND\_ADC5@{COMMAND\_ADC5}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ADC5}{COMMAND\_ADC5}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_adaa179deda5b99e2762cf765213879b5} 
+\#define COMMAND\+\_\+\+ADC5~0x\+DA}
+
+\Hypertarget{_spi_commands_8h_aeaabd627c37c017c283d0e7788c2d51a}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ADC6@{COMMAND\_ADC6}}
+\index{COMMAND\_ADC6@{COMMAND\_ADC6}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ADC6}{COMMAND\_ADC6}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_aeaabd627c37c017c283d0e7788c2d51a} 
+\#define COMMAND\+\_\+\+ADC6~0x\+D9}
+
+\Hypertarget{_spi_commands_8h_a1c247595fa5b1e46eed094deaffb212d}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ADC7@{COMMAND\_ADC7}}
+\index{COMMAND\_ADC7@{COMMAND\_ADC7}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ADC7}{COMMAND\_ADC7}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a1c247595fa5b1e46eed094deaffb212d} 
+\#define COMMAND\+\_\+\+ADC7~0x\+D8}
+
+\Hypertarget{_spi_commands_8h_a4a2f77a564d706c80507d91f391eb40d}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_BAT\_READ@{COMMAND\_BAT\_READ}}
+\index{COMMAND\_BAT\_READ@{COMMAND\_BAT\_READ}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_BAT\_READ}{COMMAND\_BAT\_READ}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a4a2f77a564d706c80507d91f391eb40d} 
+\#define COMMAND\+\_\+\+BAT\+\_\+\+READ~0x\+D7}
+
+\Hypertarget{_spi_commands_8h_aaa902cd8b24f4223d93e3a4bb0959ac6}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_BRAKE\_1M@{COMMAND\_BRAKE\_1M}}
+\index{COMMAND\_BRAKE\_1M@{COMMAND\_BRAKE\_1M}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_BRAKE\_1M}{COMMAND\_BRAKE\_1M}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_aaa902cd8b24f4223d93e3a4bb0959ac6} 
+\#define COMMAND\+\_\+\+BRAKE\+\_\+1M~0x\+E8}
+
+\Hypertarget{_spi_commands_8h_a11c4db565b7902e7cd51ec86c3532ca6}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_BRAKE\_MAX\_T@{COMMAND\_BRAKE\_MAX\_T}}
+\index{COMMAND\_BRAKE\_MAX\_T@{COMMAND\_BRAKE\_MAX\_T}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_BRAKE\_MAX\_T}{COMMAND\_BRAKE\_MAX\_T}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a11c4db565b7902e7cd51ec86c3532ca6} 
+\#define COMMAND\+\_\+\+BRAKE\+\_\+\+MAX\+\_\+T~0x\+EB}
+
+\Hypertarget{_spi_commands_8h_af6e05b636eda371450976e01586f51c8}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_BRAKE\_SET\_T@{COMMAND\_BRAKE\_SET\_T}}
+\index{COMMAND\_BRAKE\_SET\_T@{COMMAND\_BRAKE\_SET\_T}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_BRAKE\_SET\_T}{COMMAND\_BRAKE\_SET\_T}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_af6e05b636eda371450976e01586f51c8} 
+\#define COMMAND\+\_\+\+BRAKE\+\_\+\+SET\+\_\+T~0x\+F5}
+
+\Hypertarget{_spi_commands_8h_a1d0ddbf2c3d6ef5bc58380e7f5417e70}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_BUT\_READ@{COMMAND\_BUT\_READ}}
+\index{COMMAND\_BUT\_READ@{COMMAND\_BUT\_READ}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_BUT\_READ}{COMMAND\_BUT\_READ}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a1d0ddbf2c3d6ef5bc58380e7f5417e70} 
+\#define COMMAND\+\_\+\+BUT\+\_\+\+READ~0x\+D6}
+
+\Hypertarget{_spi_commands_8h_acc40e9d9a0230ee67d8eca346b1a7dac}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ENCL@{COMMAND\_ENCL}}
+\index{COMMAND\_ENCL@{COMMAND\_ENCL}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ENCL}{COMMAND\_ENCL}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_acc40e9d9a0230ee67d8eca346b1a7dac} 
+\#define COMMAND\+\_\+\+ENCL~0x\+D3}
+
+\Hypertarget{_spi_commands_8h_a319644a3ef4512b02c9e38f1937dfb16}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ENCL\_INC@{COMMAND\_ENCL\_INC}}
+\index{COMMAND\_ENCL\_INC@{COMMAND\_ENCL\_INC}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ENCL\_INC}{COMMAND\_ENCL\_INC}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a319644a3ef4512b02c9e38f1937dfb16} 
+\#define COMMAND\+\_\+\+ENCL\+\_\+\+INC~0x\+D1}
+
+\Hypertarget{_spi_commands_8h_ab02ac08533bfae48cb4ee8a6aa3cbf5f}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ENCL\_RESET@{COMMAND\_ENCL\_RESET}}
+\index{COMMAND\_ENCL\_RESET@{COMMAND\_ENCL\_RESET}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ENCL\_RESET}{COMMAND\_ENCL\_RESET}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_ab02ac08533bfae48cb4ee8a6aa3cbf5f} 
+\#define COMMAND\+\_\+\+ENCL\+\_\+\+RESET~0x\+F0}
+
+\Hypertarget{_spi_commands_8h_a32a44fcae624d1662325476b9e18f0ae}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ENCODERS\_READ@{COMMAND\_ENCODERS\_READ}}
+\index{COMMAND\_ENCODERS\_READ@{COMMAND\_ENCODERS\_READ}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ENCODERS\_READ}{COMMAND\_ENCODERS\_READ}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a32a44fcae624d1662325476b9e18f0ae} 
+\#define COMMAND\+\_\+\+ENCODERS\+\_\+\+READ~0\+XCC}
+
+\Hypertarget{_spi_commands_8h_ab0ac271d36a30cd321f647a23e80f1bd}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ENCR@{COMMAND\_ENCR}}
+\index{COMMAND\_ENCR@{COMMAND\_ENCR}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ENCR}{COMMAND\_ENCR}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_ab0ac271d36a30cd321f647a23e80f1bd} 
+\#define COMMAND\+\_\+\+ENCR~0x\+D2}
+
+\Hypertarget{_spi_commands_8h_ac76ec1aab1d73741d0236d06a3fbb876}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ENCR\_INC@{COMMAND\_ENCR\_INC}}
+\index{COMMAND\_ENCR\_INC@{COMMAND\_ENCR\_INC}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ENCR\_INC}{COMMAND\_ENCR\_INC}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_ac76ec1aab1d73741d0236d06a3fbb876} 
+\#define COMMAND\+\_\+\+ENCR\+\_\+\+INC~0x\+D0}
+
+\Hypertarget{_spi_commands_8h_a3df80fb1e411171957cf579637324533}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_ENCR\_RESET@{COMMAND\_ENCR\_RESET}}
+\index{COMMAND\_ENCR\_RESET@{COMMAND\_ENCR\_RESET}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ENCR\_RESET}{COMMAND\_ENCR\_RESET}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a3df80fb1e411171957cf579637324533} 
+\#define COMMAND\+\_\+\+ENCR\+\_\+\+RESET~0x\+EF}
+
+\Hypertarget{_spi_commands_8h_ad2b14deb249241ef160eab4c74de5d5c}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_FIRMWARE@{COMMAND\_FIRMWARE}}
+\index{COMMAND\_FIRMWARE@{COMMAND\_FIRMWARE}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_FIRMWARE}{COMMAND\_FIRMWARE}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_ad2b14deb249241ef160eab4c74de5d5c} 
+\#define COMMAND\+\_\+\+FIRMWARE~0x\+FE}
+
+\Hypertarget{_spi_commands_8h_a502678b0b271bb38ce590e951cd86a8d}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_FUTURE\_USE4@{COMMAND\_FUTURE\_USE4}}
+\index{COMMAND\_FUTURE\_USE4@{COMMAND\_FUTURE\_USE4}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_FUTURE\_USE4}{COMMAND\_FUTURE\_USE4}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a502678b0b271bb38ce590e951cd86a8d} 
+\#define COMMAND\+\_\+\+FUTURE\+\_\+\+USE4~0x\+EC}
+
+\Hypertarget{_spi_commands_8h_a29d2f0033d30a3262fbd55dcb7037126}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_FUTURE\_USE5@{COMMAND\_FUTURE\_USE5}}
+\index{COMMAND\_FUTURE\_USE5@{COMMAND\_FUTURE\_USE5}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_FUTURE\_USE5}{COMMAND\_FUTURE\_USE5}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a29d2f0033d30a3262fbd55dcb7037126} 
+\#define COMMAND\+\_\+\+FUTURE\+\_\+\+USE5~0x\+E7}
+
+\Hypertarget{_spi_commands_8h_a0b0aea42fff76349258db4920957ce2a}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_FUTURE\_USE7@{COMMAND\_FUTURE\_USE7}}
+\index{COMMAND\_FUTURE\_USE7@{COMMAND\_FUTURE\_USE7}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_FUTURE\_USE7}{COMMAND\_FUTURE\_USE7}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a0b0aea42fff76349258db4920957ce2a} 
+\#define COMMAND\+\_\+\+FUTURE\+\_\+\+USE7~0x\+D4}
+
+\Hypertarget{_spi_commands_8h_a7ceafe2d37e7e9f175b5602249bf4691}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_IR\_EMITTERS@{COMMAND\_IR\_EMITTERS}}
+\index{COMMAND\_IR\_EMITTERS@{COMMAND\_IR\_EMITTERS}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_IR\_EMITTERS}{COMMAND\_IR\_EMITTERS}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a7ceafe2d37e7e9f175b5602249bf4691} 
+\#define COMMAND\+\_\+\+IR\+\_\+\+EMITTERS~0x\+F8}
+
+\Hypertarget{_spi_commands_8h_ab10e979c7e72bfabb2226d63b929a2c3}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_LCD\_L1@{COMMAND\_LCD\_L1}}
+\index{COMMAND\_LCD\_L1@{COMMAND\_LCD\_L1}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_LCD\_L1}{COMMAND\_LCD\_L1}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_ab10e979c7e72bfabb2226d63b929a2c3} 
+\#define COMMAND\+\_\+\+LCD\+\_\+\+L1~0x\+FA}
+
+\Hypertarget{_spi_commands_8h_aa9051429ff72370433d95395d351a11e}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_LCD\_L2@{COMMAND\_LCD\_L2}}
+\index{COMMAND\_LCD\_L2@{COMMAND\_LCD\_L2}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_LCD\_L2}{COMMAND\_LCD\_L2}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_aa9051429ff72370433d95395d351a11e} 
+\#define COMMAND\+\_\+\+LCD\+\_\+\+L2~0x\+F9}
+
+\Hypertarget{_spi_commands_8h_a35c97d7f66a047823cbbaa9a3c5c85cc}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_LED@{COMMAND\_LED}}
+\index{COMMAND\_LED@{COMMAND\_LED}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_LED}{COMMAND\_LED}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a35c97d7f66a047823cbbaa9a3c5c85cc} 
+\#define COMMAND\+\_\+\+LED~0x\+FD}
+
+\Hypertarget{_spi_commands_8h_a081f75dbd214fa4affdeef42d4468395}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_LINE\_READ@{COMMAND\_LINE\_READ}}
+\index{COMMAND\_LINE\_READ@{COMMAND\_LINE\_READ}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_LINE\_READ}{COMMAND\_LINE\_READ}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a081f75dbd214fa4affdeef42d4468395} 
+\#define COMMAND\+\_\+\+LINE\+\_\+\+READ~0x\+CF}
+
+\Hypertarget{_spi_commands_8h_a1bc4e1b4e7d2414f1a111f767956fd2e}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_MOVE@{COMMAND\_MOVE}}
+\index{COMMAND\_MOVE@{COMMAND\_MOVE}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_MOVE}{COMMAND\_MOVE}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a1bc4e1b4e7d2414f1a111f767956fd2e} 
+\#define COMMAND\+\_\+\+MOVE~0x\+F6}
+
+\Hypertarget{_spi_commands_8h_abc46e34596d9e3a2822a5fb72b18be34}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_MOVE\_1M@{COMMAND\_MOVE\_1M}}
+\index{COMMAND\_MOVE\_1M@{COMMAND\_MOVE\_1M}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_MOVE\_1M}{COMMAND\_MOVE\_1M}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_abc46e34596d9e3a2822a5fb72b18be34} 
+\#define COMMAND\+\_\+\+MOVE\+\_\+1M~0x\+EA}
+
+\Hypertarget{_spi_commands_8h_aeb4d9ef710ac3a5110b241f2fb6bf84a}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_MOVE\_RAW@{COMMAND\_MOVE\_RAW}}
+\index{COMMAND\_MOVE\_RAW@{COMMAND\_MOVE\_RAW}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_MOVE\_RAW}{COMMAND\_MOVE\_RAW}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_aeb4d9ef710ac3a5110b241f2fb6bf84a} 
+\#define COMMAND\+\_\+\+MOVE\+\_\+\+RAW~0x\+F2}
+
+\Hypertarget{_spi_commands_8h_a9f2eee1aea4738323271fae1c587f94b}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_MOVE\_RPM@{COMMAND\_MOVE\_RPM}}
+\index{COMMAND\_MOVE\_RPM@{COMMAND\_MOVE\_RPM}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_MOVE\_RPM}{COMMAND\_MOVE\_RPM}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a9f2eee1aea4738323271fae1c587f94b} 
+\#define COMMAND\+\_\+\+MOVE\+\_\+\+RPM~0x\+EE}
+
+\Hypertarget{_spi_commands_8h_a79188424cf44051cd3382c4b09a7da7e}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_MOVE\_RPM\_R\_ENC@{COMMAND\_MOVE\_RPM\_R\_ENC}}
+\index{COMMAND\_MOVE\_RPM\_R\_ENC@{COMMAND\_MOVE\_RPM\_R\_ENC}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_MOVE\_RPM\_R\_ENC}{COMMAND\_MOVE\_RPM\_R\_ENC}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a79188424cf44051cd3382c4b09a7da7e} 
+\#define COMMAND\+\_\+\+MOVE\+\_\+\+RPM\+\_\+\+R\+\_\+\+ENC~0x\+ED}
+
+\Hypertarget{_spi_commands_8h_a1e353b6ef8d7bb205ebd09966b80cf77}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_OBSTACLES@{COMMAND\_OBSTACLES}}
+\index{COMMAND\_OBSTACLES@{COMMAND\_OBSTACLES}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_OBSTACLES}{COMMAND\_OBSTACLES}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a1e353b6ef8d7bb205ebd09966b80cf77} 
+\#define COMMAND\+\_\+\+OBSTACLES~0x\+D5}
+
+\Hypertarget{_spi_commands_8h_a68b054fb8fc316d7eac237a0e1a76443}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_RANGE\_LEFT@{COMMAND\_RANGE\_LEFT}}
+\index{COMMAND\_RANGE\_LEFT@{COMMAND\_RANGE\_LEFT}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_RANGE\_LEFT}{COMMAND\_RANGE\_LEFT}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a68b054fb8fc316d7eac237a0e1a76443} 
+\#define COMMAND\+\_\+\+RANGE\+\_\+\+LEFT~0x\+CE}
+
+\Hypertarget{_spi_commands_8h_a1292cb87b09ebeb0c04abfa4472f1f88}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_RANGE\_RIGHT@{COMMAND\_RANGE\_RIGHT}}
+\index{COMMAND\_RANGE\_RIGHT@{COMMAND\_RANGE\_RIGHT}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_RANGE\_RIGHT}{COMMAND\_RANGE\_RIGHT}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a1292cb87b09ebeb0c04abfa4472f1f88} 
+\#define COMMAND\+\_\+\+RANGE\+\_\+\+RIGHT~0x\+CD}
+
+\Hypertarget{_spi_commands_8h_a2297360d5698c3a4565650a9441de9fa}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_RANGES\_READ@{COMMAND\_RANGES\_READ}}
+\index{COMMAND\_RANGES\_READ@{COMMAND\_RANGES\_READ}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_RANGES\_READ}{COMMAND\_RANGES\_READ}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a2297360d5698c3a4565650a9441de9fa} 
+\#define COMMAND\+\_\+\+RANGES\+\_\+\+READ~0\+XCB}
+
+\Hypertarget{_spi_commands_8h_a636c3200e52a4682f31a8d4a003183d7}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_SET\_BAT\_MIN@{COMMAND\_SET\_BAT\_MIN}}
+\index{COMMAND\_SET\_BAT\_MIN@{COMMAND\_SET\_BAT\_MIN}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_SET\_BAT\_MIN}{COMMAND\_SET\_BAT\_MIN}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a636c3200e52a4682f31a8d4a003183d7} 
+\#define COMMAND\+\_\+\+SET\+\_\+\+BAT\+\_\+\+MIN~0x\+F4}
+
+\Hypertarget{_spi_commands_8h_a589a92e2f1e391cc3ef4789033821fbe}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_SET\_MOTORS@{COMMAND\_SET\_MOTORS}}
+\index{COMMAND\_SET\_MOTORS@{COMMAND\_SET\_MOTORS}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_SET\_MOTORS}{COMMAND\_SET\_MOTORS}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a589a92e2f1e391cc3ef4789033821fbe} 
+\#define COMMAND\+\_\+\+SET\+\_\+\+MOTORS~0x\+F1}
+
+\Hypertarget{_spi_commands_8h_a2d8452fb40d8dc3397ea44034aceefad}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_SET\_PID@{COMMAND\_SET\_PID}}
+\index{COMMAND\_SET\_PID@{COMMAND\_SET\_PID}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_SET\_PID}{COMMAND\_SET\_PID}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a2d8452fb40d8dc3397ea44034aceefad} 
+\#define COMMAND\+\_\+\+SET\+\_\+\+PID~0x\+F3}
+
+\Hypertarget{_spi_commands_8h_a6b66389416f72046f80d9c2c1a77d63f}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_STOP@{COMMAND\_STOP}}
+\index{COMMAND\_STOP@{COMMAND\_STOP}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_STOP}{COMMAND\_STOP}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a6b66389416f72046f80d9c2c1a77d63f} 
+\#define COMMAND\+\_\+\+STOP~0x\+F7}
+
+\Hypertarget{_spi_commands_8h_a64a844438ff5ae415ee268af004aa6e8}\index{SpiCommands.h@{SpiCommands.h}!COMMAND\_STOP\_1M@{COMMAND\_STOP\_1M}}
+\index{COMMAND\_STOP\_1M@{COMMAND\_STOP\_1M}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_STOP\_1M}{COMMAND\_STOP\_1M}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a64a844438ff5ae415ee268af004aa6e8} 
+\#define COMMAND\+\_\+\+STOP\+\_\+1M~0x\+E9}
+
+\Hypertarget{_spi_commands_8h_af709a8c6c00929607ff2bb1f35e14754}\index{SpiCommands.h@{SpiCommands.h}!KEY1@{KEY1}}
+\index{KEY1@{KEY1}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{KEY1}{KEY1}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_af709a8c6c00929607ff2bb1f35e14754} 
+\#define KEY1~0x\+AA}
+
+\Hypertarget{_spi_commands_8h_a28139a703782c6706c0c53bda00572d3}\index{SpiCommands.h@{SpiCommands.h}!KEY2@{KEY2}}
+\index{KEY2@{KEY2}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{KEY2}{KEY2}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a28139a703782c6706c0c53bda00572d3} 
+\#define KEY2~0x55}
+
+\Hypertarget{_spi_commands_8h_a29e413f6725b2ba32d165ffaa35b01e5}\index{SpiCommands.h@{SpiCommands.h}!OFF@{OFF}}
+\index{OFF@{OFF}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{OFF}{OFF}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_a29e413f6725b2ba32d165ffaa35b01e5} 
+\#define OFF~False}
+
+\Hypertarget{_spi_commands_8h_ad76d1750a6cdeebd506bfcd6752554d2}\index{SpiCommands.h@{SpiCommands.h}!ON@{ON}}
+\index{ON@{ON}!SpiCommands.h@{SpiCommands.h}}
+\doxysubsubsection{\texorpdfstring{ON}{ON}}
+{\footnotesize\ttfamily \label{_spi_commands_8h_ad76d1750a6cdeebd506bfcd6752554d2} 
+\#define ON~True}
+

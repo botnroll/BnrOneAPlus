@@ -1,0 +1,66 @@
+\doxysection{Shape\+Generator.\+h}
+\hypertarget{_shape_generator_8h_source}{}\label{_shape_generator_8h_source}\index{src/utility/ShapeGenerator.h@{src/utility/ShapeGenerator.h}}
+\mbox{\hyperlink{_shape_generator_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <BnrOneAPlus.h>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_motion_generator_8h}{MotionGenerator.h}}"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_shape_generator_a6ea9407a828723c0bff21f6b6b0a3fae}{ShapeGenerator}}\ \{}
+\DoxyCodeLine{00013\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \mbox{\hyperlink{class_shape_generator_a6ea9407a828723c0bff21f6b6b0a3fae}{ShapeGenerator}}(BnrOneAPlus\&\ one,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ slip\_factor\ =\ 1.0);}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00028\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_ae3aff4d8dab29f5dae060da1fedc43bd}{rotateAngleDegAtSpeed}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ angle\_deg,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ speed\ =\ 50,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ radius\_of\_curvature\_mm\ =\ 0,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ slow\_down\_thresh\_deg\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_a4f97bf7103a531c7485208752a66cbca}{moveStraightAtSpeed}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ distance,}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ speed\ =\ 200,}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ slow\_down\_distance\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_ac00339392123cafb101ba12d933bb6f9}{rotate90DegCcw}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ speed,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ slow\_down\_thresh\_deg\ =\ 30)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00058\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_afc1f80b025ae83dfb3e72c5958c8870d}{polygon}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ side\_mm,}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num\_sides,}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ speed\ =\ 200)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00069\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_ac0f8c988b953942132dfe5d89c5c60fe}{roundedPolygon}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ side\_mm,}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num\_sides,}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ speed\ =\ 200)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00078\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_ad746bab6700a0e8f73cba0b58666a9ac}{triangle}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ side\_mm,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ speed\ =\ 200)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00085\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_a561436d188472f98f5ef26981ea911f5}{square}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ side\_mm,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ speed\ =\ 150)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00092\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_a36bb83ade326c0f3003af2994e88509e}{circle}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ radius\_mm,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ speed\ =\ 200)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00099\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_a8ccbfe2fcb6db5742e9f1f077abd876f}{semiCircle}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ radius\_mm,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ speed\ =\ 200)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00107\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_a6a2bceeb53fe04ab02e2946c20a911b9}{fibonacciSpiral}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ seed\_radius,}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num\_segments,}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ speed\ =\ 200)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00117\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_af274a3a13fdd410300a0d785a547dfed}{archimedeanSpiral}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ spiral\_factor,}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ total\_angle\_deg,}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ speed\ =\ 200)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00129\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_a4f11805f40b793fd87efaed3fc99d67d}{snake}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ length\_mm\ =\ 700,}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num\_elements\ =\ 7,}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ speed\ =\ 50,}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ snaking\_angle\_deg\ =\ 60,}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ turning\_rate\_deg\ =\ 0)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00138\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_a4f7c21b856d60bbc05b23e27767b2b2d}{heart}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00140\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00141\ \ \ \mbox{\hyperlink{class_motion_generator}{MotionGenerator}}\ \mbox{\hyperlink{class_shape_generator_a749df6d49e8101ed67780b393e0b7dc2}{mg\_}};\ \ }
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00149\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_shape_generator_af5cdf6c80eaf5a80c14ca3229573dd3b}{computeFibonacciSequence}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ number\_of\_elements,}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}*\ fibonacci\_sequence)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00151\ \};}
+
+\end{DoxyCode}
