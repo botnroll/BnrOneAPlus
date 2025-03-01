@@ -1,0 +1,207 @@
+\doxysection{Bnr\+One\+APlus.\+h}
+\hypertarget{_bnr_one_a_plus_8h_source}{}\label{_bnr_one_a_plus_8h_source}\index{src/BnrOneAPlus.h@{src/BnrOneAPlus.h}}
+\mbox{\hyperlink{_bnr_one_a_plus_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}Arduino.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_line_detector_8h}{utility/LineDetector.h}}"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_bnr_one_a_plus}{BnrOneAPlus}}\ \{}
+\DoxyCodeLine{00016\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ /********************************}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ \ *\ @brief\ \ setup\ routines\ \ \ \ \ \ \ \ *}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ \ *********************************/}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00026\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a6c8f2030db8ef31b8b44c08a683f9015}{spiConnect}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ sspin);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a0eb806ee4ec7de788ccc258823e1b0eb}{setMinBatteryV}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ min\_battery\_V)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00042\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aee7fa9b5a8a3ca481904caeaa8af21eb}{setPid}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ kp,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ ki,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ kd)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00052\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a8bf39632d2d195a7cbbc57d5fb37a007}{setMotors}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ moving\_power,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ max\_speed\_pulses)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00059\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a74c9545d18c0ed8bed54f8ad780b7417}{obstacleSensorsEmitters}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ state)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{comment}{\ \ /********************************}}
+\DoxyCodeLine{00062\ \textcolor{comment}{\ \ \ *\ @brief\ \ reading\ routines\ \ \ \ \ \ *}}
+\DoxyCodeLine{00063\ \textcolor{comment}{\ \ \ *********************************/}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_bnr_one_a_plus_aa82c70d127f9b2a69dcf601112a6f130}{readObstacleSensors}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00081\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_bnr_one_a_plus_a286d066dc4a038b005f06323a36b4738}{readLeftRangeSensor}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00088\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_bnr_one_a_plus_a3474f8066e41ce613096308b853e6c0e}{readRightRangeSensor}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00096\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_bnr_one_a_plus_a09099b1aeec2afbb063f1cbf9bbe3942}{readAdc}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ adc\_channel)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00107\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_bnr_one_a_plus_a884b473b32d58176ab3b64cfb1188bdb}{readButton}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00114\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_bnr_one_a_plus_a9bc7195954ea2cdb35e4c58699224d66}{readBattery}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00119\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_bnr_one_a_plus_a0c8bd88aff9aecc3ff38116757e11133}{readLine}}();}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00124\ \ \ \textcolor{keywordtype}{int}*\ \mbox{\hyperlink{class_bnr_one_a_plus_a4949a79b1073d37269920b9eb657ba6d}{readLineSensor}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00132\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_acf1bf25655c9e048feba1eb65440cb97}{readAndResetEncoders}}(\textcolor{keywordtype}{int}\&\ out\_left\_encoder,}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\&\ out\_right\_encoder)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00140\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_bnr_one_a_plus_a8b6e5a776dcc955c131b22494234ace8}{readAndResetLeftEncoder}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00147\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_bnr_one_a_plus_a932ce0cbc6765515e1a3a4cef383a44a}{readAndResetRightEncoder}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00155\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_bnr_one_a_plus_a7f1cd81305c1c29c749bb4a9dc12f523}{readIncrementalLeftEncoder}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00163\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_bnr_one_a_plus_acf3a1c3917de3f84e50b748e636c64e1}{readIncrementalRightEncoder}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00170\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_bnr_one_a_plus_ab65505720aeae7b42ad44ea07caf4b48}{readDBG}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ register\_index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00171\ }
+\DoxyCodeLine{00177\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_bnr_one_a_plus_aadb5998fc5d6eca078b4f809c6f538ee}{readDBGf}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00183\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_acaf56f5cc3ca422bc46538f8657f2eb5}{readFirmware}}(\textcolor{keywordtype}{byte}*,\ \textcolor{keywordtype}{byte}*,\ \textcolor{keywordtype}{byte}*)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \textcolor{comment}{\ \ /********************************}}
+\DoxyCodeLine{00186\ \textcolor{comment}{\ \ \ *\ @brief\ \ writing\ routines\ \ \ \ \ \ *}}
+\DoxyCodeLine{00187\ \textcolor{comment}{\ \ \ *********************************/}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00194\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a8053cb4b3b6daea9bf9db0f2497bb563}{setLed}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ state)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00202\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_ad644a5d59a0574dce919914ea58be15b}{move}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ left\_speed,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ right\_speed)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00212\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af37d31fa9ed5a69e711d29f8314aed2d}{sendMoveRpm}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ command,}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ left\_rpm,}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ right\_rpm)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00222\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_ac95f2d050f2a4613ab3ddfb651dc249f}{moveRpm}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ left\_rpm,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ right\_rpm)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00233\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_ab4557cbb251f9237bc16e65e5a396f67}{moveRpmGetEncoders}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ left\_rpm,}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ right\_rpm,}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\&\ out\_left\_encoder,}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\&\ out\_right\_encoder)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00244\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_ac228d34d644e70f0cbe752f8ffab2e72}{moveRAW}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ left\_duty\_cycle,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ right\_duty\_cycle)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00252\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_adf155bd2c905869c73a6f9a9d0d36bcc}{move1m}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ motor\_id,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ speed)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00258\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a12d075bf0fba7958832f358bd45d0a5b}{stop}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00264\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a12fe44a87dc486424bef7195fc7e6b34}{brake}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00272\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a12fe44a87dc486424bef7195fc7e6b34}{brake}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ left\_torque,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ right\_torque)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00279\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a467a17d259ea6cfbb9cf16c3c80ad152}{stop1m}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ motor\_id)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00287\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a0ab66127163cfcb8e0c7ae199d0988ae}{brake1m}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ motor\_id,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ torque)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00293\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_abd1f678b67e2fb88373c86284ba7bd29}{resetLeftEncoder}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00294\ }
+\DoxyCodeLine{00299\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af099c1db4b1b5cb9e1ca2c93561f2f96}{resetRightEncoder}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \ \ \textcolor{comment}{//\ LCD\ Line\ 1\ write\ routines}}
+\DoxyCodeLine{00302\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ String\&\ \textcolor{keywordtype}{string})\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ to\ the\ LCD}}
+\DoxyCodeLine{00303\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ \textcolor{keywordtype}{string}[])\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ to\ the\ LCD}}
+\DoxyCodeLine{00304\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \textcolor{keywordtype}{string}[])\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ to\ the\ LCD}}
+\DoxyCodeLine{00305\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ number)\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00306\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ number)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00307\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{int}\ number)\ \textcolor{keyword}{const};\ \ \ \ \ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00308\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ number)\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00309\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \textcolor{keywordtype}{string}[],}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ number)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ and\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00312\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \textcolor{keywordtype}{string}[],}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ number)}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ and\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00315\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \textcolor{keywordtype}{string}[],}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{int}\ number)}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ and\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00318\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \textcolor{keywordtype}{string}[],}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ number)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ and\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00321\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ string\_a[8],}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ string\_b[8])}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ two\ strings\ to\ the\ LCD}}
+\DoxyCodeLine{00324\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num1,}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num2)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ two\ numbers\ to\ the\ LCD}}
+\DoxyCodeLine{00326\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num1,}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num2)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ two\ numbers\ to\ the\ LCD}}
+\DoxyCodeLine{00328\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num1,}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num2,}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num3)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ three\ numbers\ to\ the\ LCD}}
+\DoxyCodeLine{00331\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num1,}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num2,}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num3,}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num4)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ four\ numbers\ to\ the\ LCD}}
+\DoxyCodeLine{00335\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num1,}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num2,}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num3)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ three\ numbers\ to\ the\ LCD}}
+\DoxyCodeLine{00339\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}}(}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num1,}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num2,}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num3,}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num4)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ four\ numbers\ to\ the\ LCD}}
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00345\ \ \ \textcolor{comment}{//\ LCD\ Line\ 2\ write\ routines}}
+\DoxyCodeLine{00346\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ String\&\ \textcolor{keywordtype}{string})\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ to\ the\ LCD}}
+\DoxyCodeLine{00347\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ \textcolor{keywordtype}{string}[])\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ to\ the\ LCD}}
+\DoxyCodeLine{00348\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \textcolor{keywordtype}{string}[])\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ to\ the\ LCD}}
+\DoxyCodeLine{00349\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ number)\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00350\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ number)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00351\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{int}\ number)\ \textcolor{keyword}{const};\ \ \ \ \ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00352\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ number)\ \textcolor{keyword}{const};\ \ \ \ \ \ \ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00353\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \textcolor{keywordtype}{string}[],}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ number)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ and\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00355\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \textcolor{keywordtype}{string}[],}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ number)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ and\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00358\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \textcolor{keywordtype}{string}[],}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{int}\ number)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ and\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00361\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \textcolor{keywordtype}{string}[],}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ number)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ a\ string\ and\ a\ number\ to\ the\ LCD}}
+\DoxyCodeLine{00363\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a101c7da738d5c9aa5ea4a8669c2b1b54}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ string\_a[8],}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ string\_b[8])}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ two\ strings\ to\ the\ LCD}}
+\DoxyCodeLine{00366\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num1,}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num2)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ two\ numbers\ to\ the\ LCD}}
+\DoxyCodeLine{00368\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num1,}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num2)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ two\ numbers\ to\ the\ LCD}}
+\DoxyCodeLine{00370\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num1,}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num2,}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num3)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ three\ numbers\ to\ the\ LCD}}
+\DoxyCodeLine{00373\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num1,}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num2,}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num3,}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ num4)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ four\ numbers\ to\ the\ LCD}}
+\DoxyCodeLine{00377\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num1,}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num2,}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num3)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ three\ numbers\ to\ the\ LCD}}
+\DoxyCodeLine{00381\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}}(}
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num1,}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num2,}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num3,}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ num4)\ \textcolor{keyword}{const};\ \ \textcolor{comment}{//<-\/-\/\ writes\ four\ numbers\ to\ the\ LCD}}
+\DoxyCodeLine{00386\ }
+\DoxyCodeLine{00387\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00388\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_bnr_one_a_plus_a8310e41f0d7c84ac4e7b9469c9111e77}{spiRequestByte}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ command)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00389\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_bnr_one_a_plus_ae447e57521f55f371620f735f3ddb9f7}{spiRequestWord}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ command)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00390\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a6b3d117c0cfedd39dd0175165adfd633}{spiRequestTwoWords}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ command,}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\&\ out\_int1,}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\&\ out\_int2)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00393\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_bnr_one_a_plus_af56dfb412725083b498cf83b4f911448}{spiRequestFloat}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ command)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00394\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_a97ca2b5823d4a5a6fbdbc15853d5fbe3}{spiSendDataOnly}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ command,}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ buffer[],}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ num\_bytes)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00397\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_bnr_one_a_plus_aa809f44827ffb8c631b599f30a952a64}{spiSendData}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ command,}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ buffer[],}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ num\_bytes)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00400\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_bnr_one_a_plus_a9bdaa6fba9b3b94836214b5edb0f8382}{sspin\_}};}
+\DoxyCodeLine{00401\ \ \ \mbox{\hyperlink{class_line_detector}{LineDetector}}\ \mbox{\hyperlink{class_bnr_one_a_plus_a4f2ce5117c962a2c9c354af486fd9a7a}{line\_detector\_}};}
+\DoxyCodeLine{00402\ \};}
+
+\end{DoxyCode}

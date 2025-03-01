@@ -1,0 +1,118 @@
+\doxysection{src/\+Bnr\+Color\+Sensor.h File Reference}
+\hypertarget{_bnr_color_sensor_8h}{}\label{_bnr_color_sensor_8h}\index{src/BnrColorSensor.h@{src/BnrColorSensor.h}}
+{\ttfamily \#include "{}Arduino.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_bnr_color_sensor}{Bnr\+Color\+Sensor}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_af709a8c6c00929607ff2bb1f35e14754}{KEY1}}~0x\+AA
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_a28139a703782c6706c0c53bda00572d3}{KEY2}}~0x55
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_a29e413f6725b2ba32d165ffaa35b01e5}{OFF}}~0
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_ad76d1750a6cdeebd506bfcd6752554d2}{ON}}~1
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_a99496f7308834e8b220f7894efa0b6ab}{DISABLE}}~0
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_a514ad415fb6125ba296793df7d1a468a}{ENABLE}}~1
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_ad2b14deb249241ef160eab4c74de5d5c}{COMMAND\+\_\+\+FIRMWARE}}~0x\+FE
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_a9702af821e1e489b47bf084ef2b3f9e6}{COMMAND\+\_\+\+RGBL}}~0x\+CF
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_a385d29f5e4d3184e819e033ce9029be2}{COMMAND\+\_\+\+RGBR}}~0x\+CE
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_adcb5be2f9242a70900f6ec34053dffd3}{COMMAND\+\_\+\+SONARS}}~0x\+CC
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_ad94e086858e762d960af45a5a291f170}{COMMAND\+\_\+\+ADDRESS\+\_\+\+CFG}}~0x\+F0
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_a19e75304371b7ad7b324c60d1c544027}{COMMAND\+\_\+\+SONAR\+\_\+\+CFG}}~0x\+EF
+\item 
+\#define \mbox{\hyperlink{_bnr_color_sensor_8h_ae12577b38512989610ca95eb35ca942c}{COMMAND\+\_\+\+RGB\+\_\+\+CFG}}~0x\+EE
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_bnr_color_sensor_8h_ad94e086858e762d960af45a5a291f170}\index{BnrColorSensor.h@{BnrColorSensor.h}!COMMAND\_ADDRESS\_CFG@{COMMAND\_ADDRESS\_CFG}}
+\index{COMMAND\_ADDRESS\_CFG@{COMMAND\_ADDRESS\_CFG}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_ADDRESS\_CFG}{COMMAND\_ADDRESS\_CFG}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_ad94e086858e762d960af45a5a291f170} 
+\#define COMMAND\+\_\+\+ADDRESS\+\_\+\+CFG~0x\+F0}
+
+\Hypertarget{_bnr_color_sensor_8h_ad2b14deb249241ef160eab4c74de5d5c}\index{BnrColorSensor.h@{BnrColorSensor.h}!COMMAND\_FIRMWARE@{COMMAND\_FIRMWARE}}
+\index{COMMAND\_FIRMWARE@{COMMAND\_FIRMWARE}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_FIRMWARE}{COMMAND\_FIRMWARE}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_ad2b14deb249241ef160eab4c74de5d5c} 
+\#define COMMAND\+\_\+\+FIRMWARE~0x\+FE}
+
+\Hypertarget{_bnr_color_sensor_8h_ae12577b38512989610ca95eb35ca942c}\index{BnrColorSensor.h@{BnrColorSensor.h}!COMMAND\_RGB\_CFG@{COMMAND\_RGB\_CFG}}
+\index{COMMAND\_RGB\_CFG@{COMMAND\_RGB\_CFG}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_RGB\_CFG}{COMMAND\_RGB\_CFG}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_ae12577b38512989610ca95eb35ca942c} 
+\#define COMMAND\+\_\+\+RGB\+\_\+\+CFG~0x\+EE}
+
+\Hypertarget{_bnr_color_sensor_8h_a9702af821e1e489b47bf084ef2b3f9e6}\index{BnrColorSensor.h@{BnrColorSensor.h}!COMMAND\_RGBL@{COMMAND\_RGBL}}
+\index{COMMAND\_RGBL@{COMMAND\_RGBL}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_RGBL}{COMMAND\_RGBL}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_a9702af821e1e489b47bf084ef2b3f9e6} 
+\#define COMMAND\+\_\+\+RGBL~0x\+CF}
+
+\Hypertarget{_bnr_color_sensor_8h_a385d29f5e4d3184e819e033ce9029be2}\index{BnrColorSensor.h@{BnrColorSensor.h}!COMMAND\_RGBR@{COMMAND\_RGBR}}
+\index{COMMAND\_RGBR@{COMMAND\_RGBR}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_RGBR}{COMMAND\_RGBR}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_a385d29f5e4d3184e819e033ce9029be2} 
+\#define COMMAND\+\_\+\+RGBR~0x\+CE}
+
+\Hypertarget{_bnr_color_sensor_8h_a19e75304371b7ad7b324c60d1c544027}\index{BnrColorSensor.h@{BnrColorSensor.h}!COMMAND\_SONAR\_CFG@{COMMAND\_SONAR\_CFG}}
+\index{COMMAND\_SONAR\_CFG@{COMMAND\_SONAR\_CFG}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_SONAR\_CFG}{COMMAND\_SONAR\_CFG}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_a19e75304371b7ad7b324c60d1c544027} 
+\#define COMMAND\+\_\+\+SONAR\+\_\+\+CFG~0x\+EF}
+
+\Hypertarget{_bnr_color_sensor_8h_adcb5be2f9242a70900f6ec34053dffd3}\index{BnrColorSensor.h@{BnrColorSensor.h}!COMMAND\_SONARS@{COMMAND\_SONARS}}
+\index{COMMAND\_SONARS@{COMMAND\_SONARS}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{COMMAND\_SONARS}{COMMAND\_SONARS}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_adcb5be2f9242a70900f6ec34053dffd3} 
+\#define COMMAND\+\_\+\+SONARS~0x\+CC}
+
+\Hypertarget{_bnr_color_sensor_8h_a99496f7308834e8b220f7894efa0b6ab}\index{BnrColorSensor.h@{BnrColorSensor.h}!DISABLE@{DISABLE}}
+\index{DISABLE@{DISABLE}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{DISABLE}{DISABLE}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_a99496f7308834e8b220f7894efa0b6ab} 
+\#define DISABLE~0}
+
+\Hypertarget{_bnr_color_sensor_8h_a514ad415fb6125ba296793df7d1a468a}\index{BnrColorSensor.h@{BnrColorSensor.h}!ENABLE@{ENABLE}}
+\index{ENABLE@{ENABLE}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{ENABLE}{ENABLE}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_a514ad415fb6125ba296793df7d1a468a} 
+\#define ENABLE~1}
+
+\Hypertarget{_bnr_color_sensor_8h_af709a8c6c00929607ff2bb1f35e14754}\index{BnrColorSensor.h@{BnrColorSensor.h}!KEY1@{KEY1}}
+\index{KEY1@{KEY1}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{KEY1}{KEY1}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_af709a8c6c00929607ff2bb1f35e14754} 
+\#define KEY1~0x\+AA}
+
+\Hypertarget{_bnr_color_sensor_8h_a28139a703782c6706c0c53bda00572d3}\index{BnrColorSensor.h@{BnrColorSensor.h}!KEY2@{KEY2}}
+\index{KEY2@{KEY2}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{KEY2}{KEY2}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_a28139a703782c6706c0c53bda00572d3} 
+\#define KEY2~0x55}
+
+\Hypertarget{_bnr_color_sensor_8h_a29e413f6725b2ba32d165ffaa35b01e5}\index{BnrColorSensor.h@{BnrColorSensor.h}!OFF@{OFF}}
+\index{OFF@{OFF}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{OFF}{OFF}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_a29e413f6725b2ba32d165ffaa35b01e5} 
+\#define OFF~0}
+
+\Hypertarget{_bnr_color_sensor_8h_ad76d1750a6cdeebd506bfcd6752554d2}\index{BnrColorSensor.h@{BnrColorSensor.h}!ON@{ON}}
+\index{ON@{ON}!BnrColorSensor.h@{BnrColorSensor.h}}
+\doxysubsubsection{\texorpdfstring{ON}{ON}}
+{\footnotesize\ttfamily \label{_bnr_color_sensor_8h_ad76d1750a6cdeebd506bfcd6752554d2} 
+\#define ON~1}
+
