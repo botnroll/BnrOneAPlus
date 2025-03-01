@@ -1,0 +1,242 @@
+\doxysection{Bnr\+Color\+Sensor Class Reference}
+\hypertarget{class_bnr_color_sensor}{}\label{class_bnr_color_sensor}\index{BnrColorSensor@{BnrColorSensor}}
+
+
+{\ttfamily \#include $<$Bnr\+Color\+Sensor.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_bnr_color_sensor_ad660eb0d908f52737001586860497d9f}{Bnr\+Color\+Sensor}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} sensor\+Address)
+\begin{DoxyCompactList}\small\item\em Initializes the I2C communication given an Address. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_color_sensor_ab3dc8f29550f2b02fa9dbe6ab7c5e7a0}{set\+Sensor\+Address}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} new\+Address)
+\begin{DoxyCompactList}\small\item\em Sets a new I2C Address on the Color sensor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_color_sensor_a512c01e05b84fd650011641b0990938a}{set\+Rgb\+Status}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} status) const
+\begin{DoxyCompactList}\small\item\em Sets the status of the RGB Sensor enabling or disabling the RGB scanning. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_color_sensor_a56ba475f8a3967bc9757d438a19e76c3}{read\+Firmware}} (\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&) const
+\begin{DoxyCompactList}\small\item\em Reads the current Sensor Firmware and writes it on the bytes given as parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_color_sensor_aa75b274863a3d0bb92cd0c6e68458c60}{read\+RGBL}} (\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&)
+\begin{DoxyCompactList}\small\item\em Reads the current RGB values of the left Sensor and writes it on the bytes given as parameter. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_color_sensor_a580114606f9381dc7641875b66226477}{read\+RGBR}} (\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&)
+\begin{DoxyCompactList}\small\item\em Reads the current RGB values of the right Sensor and writes it on the bytes given as parameter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_bnr_color_sensor_a0be83cc30365c877f820f7cc2f51f786}{i2c\+Send\+Data}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} command, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} buffer\mbox{[}$\,$\mbox{]}, const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} num\+Bytes)
+\begin{DoxyCompactList}\small\item\em Sends the selected command to the Color Sensor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_color_sensor_a8c223e0df3835a2d5362d0fc78100577}{request2\+Bytes}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&)
+\begin{DoxyCompactList}\small\item\em Requests 2 bytes from the Color Sensor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_color_sensor_a261b616445e865e17173f3550e9c3334}{request3\+Bytes}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&)
+\begin{DoxyCompactList}\small\item\em Requests 2 bytes from the Color Sensor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_bnr_color_sensor_aade3ed08980a4ca3fc156584c8f10976}{sensor\+\_\+address\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_bnr_color_sensor_ad660eb0d908f52737001586860497d9f}\index{BnrColorSensor@{BnrColorSensor}!BnrColorSensor@{BnrColorSensor}}
+\index{BnrColorSensor@{BnrColorSensor}!BnrColorSensor@{BnrColorSensor}}
+\doxysubsubsection{\texorpdfstring{BnrColorSensor()}{BnrColorSensor()}}
+{\footnotesize\ttfamily \label{class_bnr_color_sensor_ad660eb0d908f52737001586860497d9f} 
+Bnr\+Color\+Sensor\+::\+Bnr\+Color\+Sensor (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{sensor\+Address}{}\end{DoxyParamCaption})}
+
+
+
+Initializes the I2C communication given an Address. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sensor\+Address} & -\/ Address of the Color Sensor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_bnr_color_sensor_a0be83cc30365c877f820f7cc2f51f786}\index{BnrColorSensor@{BnrColorSensor}!i2cSendData@{i2cSendData}}
+\index{i2cSendData@{i2cSendData}!BnrColorSensor@{BnrColorSensor}}
+\doxysubsubsection{\texorpdfstring{i2cSendData()}{i2cSendData()}}
+{\footnotesize\ttfamily \label{class_bnr_color_sensor_a0be83cc30365c877f820f7cc2f51f786} 
+void Bnr\+Color\+Sensor\+::i2c\+Send\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{command}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{buffer}{\mbox{[}$\,$\mbox{]}, }\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{num\+Bytes}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Sends the selected command to the Color Sensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em byte} & command -\/ Command to be sent \\
+\hline
+{\em byte\mbox{[}$\,$\mbox{]}} & buffer -\/ Buffer to be sent \\
+\hline
+{\em byte} & num\+Bytes -\/ Number of bytes to be sent \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_color_sensor_a56ba475f8a3967bc9757d438a19e76c3}\index{BnrColorSensor@{BnrColorSensor}!readFirmware@{readFirmware}}
+\index{readFirmware@{readFirmware}!BnrColorSensor@{BnrColorSensor}}
+\doxysubsubsection{\texorpdfstring{readFirmware()}{readFirmware()}}
+{\footnotesize\ttfamily \label{class_bnr_color_sensor_a56ba475f8a3967bc9757d438a19e76c3} 
+void Bnr\+Color\+Sensor\+::read\+Firmware (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{firm1}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{firm2}{}\end{DoxyParamCaption}) const}
+
+
+
+Reads the current Sensor Firmware and writes it on the bytes given as parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em byte\texorpdfstring{$\ast$}{*}} & major version \\
+\hline
+{\em byte\texorpdfstring{$\ast$}{*}} & minor version \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_color_sensor_aa75b274863a3d0bb92cd0c6e68458c60}\index{BnrColorSensor@{BnrColorSensor}!readRGBL@{readRGBL}}
+\index{readRGBL@{readRGBL}!BnrColorSensor@{BnrColorSensor}}
+\doxysubsubsection{\texorpdfstring{readRGBL()}{readRGBL()}}
+{\footnotesize\ttfamily \label{class_bnr_color_sensor_aa75b274863a3d0bb92cd0c6e68458c60} 
+void Bnr\+Color\+Sensor\+::read\+RGBL (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{red}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{green}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{blue}{}\end{DoxyParamCaption})}
+
+
+
+Reads the current RGB values of the left Sensor and writes it on the bytes given as parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em byte\texorpdfstring{$\ast$}{*}} & Red Value \\
+\hline
+{\em byte\texorpdfstring{$\ast$}{*}} & Green Value \\
+\hline
+{\em byte\texorpdfstring{$\ast$}{*}} & Blue Value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_color_sensor_a580114606f9381dc7641875b66226477}\index{BnrColorSensor@{BnrColorSensor}!readRGBR@{readRGBR}}
+\index{readRGBR@{readRGBR}!BnrColorSensor@{BnrColorSensor}}
+\doxysubsubsection{\texorpdfstring{readRGBR()}{readRGBR()}}
+{\footnotesize\ttfamily \label{class_bnr_color_sensor_a580114606f9381dc7641875b66226477} 
+void Bnr\+Color\+Sensor\+::read\+RGBR (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{red}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{green}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{blue}{}\end{DoxyParamCaption})}
+
+
+
+Reads the current RGB values of the right Sensor and writes it on the bytes given as parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em byte\texorpdfstring{$\ast$}{*}} & Red Value \\
+\hline
+{\em byte\texorpdfstring{$\ast$}{*}} & Green Value \\
+\hline
+{\em byte\texorpdfstring{$\ast$}{*}} & Blue Value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_color_sensor_a8c223e0df3835a2d5362d0fc78100577}\index{BnrColorSensor@{BnrColorSensor}!request2Bytes@{request2Bytes}}
+\index{request2Bytes@{request2Bytes}!BnrColorSensor@{BnrColorSensor}}
+\doxysubsubsection{\texorpdfstring{request2Bytes()}{request2Bytes()}}
+{\footnotesize\ttfamily \label{class_bnr_color_sensor_a8c223e0df3835a2d5362d0fc78100577} 
+void Bnr\+Color\+Sensor\+::request2\+Bytes (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{command}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{byte1}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{byte2}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Requests 2 bytes from the Color Sensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em byte} & -\/ Command to be sent \\
+\hline
+{\em byte\texorpdfstring{$\ast$}{*}} & -\/ byte to be written \\
+\hline
+{\em byte\texorpdfstring{$\ast$}{*}} & -\/ byte to be written \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_color_sensor_a261b616445e865e17173f3550e9c3334}\index{BnrColorSensor@{BnrColorSensor}!request3Bytes@{request3Bytes}}
+\index{request3Bytes@{request3Bytes}!BnrColorSensor@{BnrColorSensor}}
+\doxysubsubsection{\texorpdfstring{request3Bytes()}{request3Bytes()}}
+{\footnotesize\ttfamily \label{class_bnr_color_sensor_a261b616445e865e17173f3550e9c3334} 
+void Bnr\+Color\+Sensor\+::request3\+Bytes (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{command}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{byte1}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{byte2}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \&}]{byte3}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Requests 2 bytes from the Color Sensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em byte} & -\/ Command to be sent \\
+\hline
+{\em byte\texorpdfstring{$\ast$}{*}} & -\/ byte to be written \\
+\hline
+{\em byte\texorpdfstring{$\ast$}{*}} & -\/ byte to be written \\
+\hline
+{\em byte\texorpdfstring{$\ast$}{*}} & -\/ byte to be written \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_color_sensor_a512c01e05b84fd650011641b0990938a}\index{BnrColorSensor@{BnrColorSensor}!setRgbStatus@{setRgbStatus}}
+\index{setRgbStatus@{setRgbStatus}!BnrColorSensor@{BnrColorSensor}}
+\doxysubsubsection{\texorpdfstring{setRgbStatus()}{setRgbStatus()}}
+{\footnotesize\ttfamily \label{class_bnr_color_sensor_a512c01e05b84fd650011641b0990938a} 
+void Bnr\+Color\+Sensor\+::set\+Rgb\+Status (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{status}{}\end{DoxyParamCaption}) const}
+
+
+
+Sets the status of the RGB Sensor enabling or disabling the RGB scanning. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em status} & -\/ Enable/\+Disable RGB scanning \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_color_sensor_ab3dc8f29550f2b02fa9dbe6ab7c5e7a0}\index{BnrColorSensor@{BnrColorSensor}!setSensorAddress@{setSensorAddress}}
+\index{setSensorAddress@{setSensorAddress}!BnrColorSensor@{BnrColorSensor}}
+\doxysubsubsection{\texorpdfstring{setSensorAddress()}{setSensorAddress()}}
+{\footnotesize\ttfamily \label{class_bnr_color_sensor_ab3dc8f29550f2b02fa9dbe6ab7c5e7a0} 
+void Bnr\+Color\+Sensor\+::set\+Sensor\+Address (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{new\+Address}{}\end{DoxyParamCaption})}
+
+
+
+Sets a new I2C Address on the Color sensor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Address} & -\/ New Address to be set \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_bnr_color_sensor_aade3ed08980a4ca3fc156584c8f10976}\index{BnrColorSensor@{BnrColorSensor}!sensor\_address\_@{sensor\_address\_}}
+\index{sensor\_address\_@{sensor\_address\_}!BnrColorSensor@{BnrColorSensor}}
+\doxysubsubsection{\texorpdfstring{sensor\_address\_}{sensor\_address\_}}
+{\footnotesize\ttfamily \label{class_bnr_color_sensor_aade3ed08980a4ca3fc156584c8f10976} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Bnr\+Color\+Sensor\+::sensor\+\_\+address\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{_bnr_color_sensor_8h}{Bnr\+Color\+Sensor.\+h}}\item 
+src/\mbox{\hyperlink{_bnr_color_sensor_8cpp}{Bnr\+Color\+Sensor.\+cpp}}\end{DoxyCompactItemize}

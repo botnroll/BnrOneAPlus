@@ -1,0 +1,86 @@
+\doxysection{Config.\+h}
+\hypertarget{_config_8h_source}{}\label{_config_8h_source}\index{src/utility/Config.h@{src/utility/Config.h}}
+\mbox{\hyperlink{_config_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <Arduino.h>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{using\ }\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}\ =\ uint8\_t;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_config_ac30f811ef221bf1e8b1a889b84041952}{Config}}\ \{}
+\DoxyCodeLine{00016\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \mbox{\hyperlink{class_config_ac30f811ef221bf1e8b1a889b84041952}{Config}}(\textcolor{keywordtype}{byte}\ eeprom\_address\ =\ 100);}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_a99b19da81af9603ca95103b375d5bd90}{Load}}();}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_a5f33552d79e9cd96ad1a73fcb2e46ff1}{Print}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_a067fed7363bf3136a7add1e505fbb75a}{SaveSensorMin}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_a09bd8ec64faa75b008d8170e27377c8d}{SaveSensorMax}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_a74a766e89e446f07f67e2b2115095006}{SaveThreshold}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_a45573bfd9bd821eb6c462b247b03d686}{SaveCorrectionFactor}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00043\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_a4e2fd161d44d6d3987eed3375515c43f}{Save}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00050\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_a0b9df091c5dbb660da61dc4682735ffa}{SetSensorMax}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ max\_values[8]);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00057\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_ab1b48e70cd133099dd6a74fa7ab585a2}{SetSensorMin}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ min\_values[8]);}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00064\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_a8d2390b8d17753a6269654979facb284}{SetThreshold}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ threshold);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00071\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_a86f8621d683fc08ee3ce1dc2da81d6a6}{SetCorrectionFactor}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ correction\_factor);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}*\ \mbox{\hyperlink{class_config_a4a8ecb02fde8142e32356f44220ef329}{GetSensorMin}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_config_a3c1bda7679aea15fa42d3b00e3ca577a}{sensor\_min\_}};\ \};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}*\ \mbox{\hyperlink{class_config_a37b1a2a0da77143119a5bb3e1c419d72}{GetSensorMax}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_config_ac260940d2f993cf2d230658ef2c4baca}{sensor\_max\_}};\ \};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_config_a74f2c8a7974a6aa74c20d4315e06f18e}{GetThreshold}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_config_afc41127bc4d740573e992e2d1f78a251}{threshold\_}};\ \};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_config_accdc5b9736716580b638555400d21838}{GetCorrectionFactor}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_config_adaae01f3d1b53629cf52f48cb1780f66}{correction\_factor\_}};\ \};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00082\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_af858d2142fbaf95567c16b749c7297fe}{VerifyAndCorrectArray}}(\textcolor{keywordtype}{int}*\ array,}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ min,}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ max,}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ defaultValue);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00088\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_aa642cb38e2b3c0346a987379040b716d}{VeriyAndCorrectValue}}(T\&\ value,}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ min,}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ max,}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ T\ defaultValue);}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_config_a70971d7f579febde236c75f93841782b}{LoadArrayValues}}(\textcolor{keywordtype}{byte}\ eeprom\_address,\ \textcolor{keywordtype}{int}\ out\_array[8])\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_config_a6db7e3187a2f10bbcf77f70e75acc23f}{LoadWord}}(\textcolor{keywordtype}{byte}\ eeprom\_address,\ \textcolor{keywordtype}{int}\&\ out\_value)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_config_ad7fc8d2030586c1ad4df16b33f511054}{LoadByte}}(\textcolor{keywordtype}{byte}\ eeprom\_address,\ \textcolor{keywordtype}{int}\&\ out\_value)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_a5bef4983c50782860b78bd58272f1a52}{PrintArray}}(\textcolor{keyword}{const}\ String\&\ text,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ array[8])\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_config_a5c7183b506291db7b2e37f3b6aab6092}{PrintValue}}(\textcolor{keyword}{const}\ String\&\ text,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ value)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_config_a2e0d6b4d85656cd660154f997e55abbe}{SaveArrayValues}}(\textcolor{keywordtype}{byte}\ eeprom\_address,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ array[8])\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_config_ab8e543cfde4300cc5d42d356bccdc7d1}{SaveWord}}(\textcolor{keywordtype}{byte}\ eeprom\_address,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ value)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_config_a2061a2d6c3f8752bdf16030fbc5a7bab}{SaveByte}}(\textcolor{keywordtype}{byte}\ eeprom\_address,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ value)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_config_ac260940d2f993cf2d230658ef2c4baca}{sensor\_max\_}}[8]\ =\ \{1023,\ 1023,\ 1023,\ 1023,\ 1023,\ 1023,\ 1023,\ 1023\};}
+\DoxyCodeLine{00110\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_config_a3c1bda7679aea15fa42d3b00e3ca577a}{sensor\_min\_}}[8]\ =\ \{0,\ 0,\ 0,\ 0,\ 0,\ 0,\ 0,\ 0\};}
+\DoxyCodeLine{00111\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_config_afc41127bc4d740573e992e2d1f78a251}{threshold\_}}\ =\ 50;\ \ \textcolor{comment}{//\ Line\ follower\ limit\ between\ white\ and\ black}}
+\DoxyCodeLine{00112\ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{class_config_adaae01f3d1b53629cf52f48cb1780f66}{correction\_factor\_}}\ =\ 6;}
+\DoxyCodeLine{00113\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\_memory\_address\_}}\ =\ 100;}
+\DoxyCodeLine{00114\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_config_a1cb7941fea435fa8c7080bcecb9f2718}{sensor\_max\_mem\_add\_}}\ =\ \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\_memory\_address\_}};}
+\DoxyCodeLine{00115\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_config_abd2ce49c691724b5c0e1f09ea54d6f7d}{sensor\_min\_mem\_add\_}}\ =\ \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\_memory\_address\_}}\ +\ 16;}
+\DoxyCodeLine{00116\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_config_a7e9bf372258fbb3f7c31ec15dd74e4f2}{threshold\_mem\_add\_}}\ =\ \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\_memory\_address\_}}\ +\ 32;}
+\DoxyCodeLine{00117\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_config_a62b0dddbe1af7f12c1687aa71d5df474}{correction\_factor\_mem\_add\_}}\ =\ \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\_memory\_address\_}}\ +\ 34;}
+\DoxyCodeLine{00118\ \};}
+
+\end{DoxyCode}

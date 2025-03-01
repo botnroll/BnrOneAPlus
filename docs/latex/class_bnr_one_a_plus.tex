@@ -1,0 +1,959 @@
+\doxysection{Bnr\+One\+APlus Class Reference}
+\hypertarget{class_bnr_one_a_plus}{}\label{class_bnr_one_a_plus}\index{BnrOneAPlus@{BnrOneAPlus}}
+
+
+{\ttfamily \#include $<$Bnr\+One\+APlus.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a6c8f2030db8ef31b8b44c08a683f9015}{spi\+Connect}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} sspin)
+\begin{DoxyCompactList}\small\item\em establishes a connection with the Bot\textquotesingle{}n Roll ONE A+ board \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a0eb806ee4ec7de788ccc258823e1b0eb}{set\+Min\+BatteryV}} (const float min\+\_\+battery\+\_\+V) const
+\begin{DoxyCompactList}\small\item\em Set the minimum battery voltage for battery protection. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_aee7fa9b5a8a3ca481904caeaa8af21eb}{set\+Pid}} (const int kp, const int ki, const int kd) const
+\begin{DoxyCompactList}\small\item\em Set the PID parameters for PID control. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a8bf39632d2d195a7cbbc57d5fb37a007}{set\+Motors}} (const int moving\+\_\+power, const int max\+\_\+speed\+\_\+pulses) const
+\begin{DoxyCompactList}\small\item\em Set the Motors configuration params\+: \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a74c9545d18c0ed8bed54f8ad780b7417}{obstacle\+Sensors\+Emitters}} (const bool state) const
+\begin{DoxyCompactList}\small\item\em Turn on/off the obstacle sensors IR emitters. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_bnr_one_a_plus_aa82c70d127f9b2a69dcf601112a6f130}{read\+Obstacle\+Sensors}} () const
+\begin{DoxyCompactList}\small\item\em reads the value of the obstacle sensors \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_bnr_one_a_plus_a286d066dc4a038b005f06323a36b4738}{read\+Left\+Range\+Sensor}} () const
+\begin{DoxyCompactList}\small\item\em reads the value of the left range sensor \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_bnr_one_a_plus_a3474f8066e41ce613096308b853e6c0e}{read\+Right\+Range\+Sensor}} () const
+\begin{DoxyCompactList}\small\item\em reads the value of the right range sensor \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_bnr_one_a_plus_a09099b1aeec2afbb063f1cbf9bbe3942}{read\+Adc}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} adc\+\_\+channel) const
+\begin{DoxyCompactList}\small\item\em reads the value of the specified ADC channel \end{DoxyCompactList}\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_bnr_one_a_plus_a884b473b32d58176ab3b64cfb1188bdb}{read\+Button}} () const
+\begin{DoxyCompactList}\small\item\em reads the value of the button pressed \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_bnr_one_a_plus_a9bc7195954ea2cdb35e4c58699224d66}{read\+Battery}} () const
+\begin{DoxyCompactList}\small\item\em reads the battery voltage \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_bnr_one_a_plus_a0c8bd88aff9aecc3ff38116757e11133}{read\+Line}} ()
+\begin{DoxyCompactList}\small\item\em computes a line value in the range \mbox{[}-\/100, 100\mbox{]} \end{DoxyCompactList}\item 
+int \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_bnr_one_a_plus_a4949a79b1073d37269920b9eb657ba6d}{read\+Line\+Sensor}} () const
+\begin{DoxyCompactList}\small\item\em reads the line sensor and outputs a vector of 8 integers \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_acf1bf25655c9e048feba1eb65440cb97}{read\+And\+Reset\+Encoders}} (int \&out\+\_\+left\+\_\+encoder, int \&out\+\_\+right\+\_\+encoder) const
+\begin{DoxyCompactList}\small\item\em reads the values of the encoders and resets their values \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_bnr_one_a_plus_a8b6e5a776dcc955c131b22494234ace8}{read\+And\+Reset\+Left\+Encoder}} () const
+\begin{DoxyCompactList}\small\item\em reads the value of the left encoder and resets its value \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_bnr_one_a_plus_a932ce0cbc6765515e1a3a4cef383a44a}{read\+And\+Reset\+Right\+Encoder}} () const
+\begin{DoxyCompactList}\small\item\em reads the value of the right encoder and resets its value \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_bnr_one_a_plus_a7f1cd81305c1c29c749bb4a9dc12f523}{read\+Incremental\+Left\+Encoder}} () const
+\begin{DoxyCompactList}\small\item\em reads the value of the left encoder and keep it\textquotesingle{}s current value so that it increments over time \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_bnr_one_a_plus_acf3a1c3917de3f84e50b748e636c64e1}{read\+Incremental\+Right\+Encoder}} () const
+\begin{DoxyCompactList}\small\item\em reads the value of the right encoder and keep it\textquotesingle{}s current value so that it increments over time \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_bnr_one_a_plus_ab65505720aeae7b42ad44ea07caf4b48}{read\+DBG}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} register\+\_\+index) const
+\begin{DoxyCompactList}\small\item\em reads the value of the debug registers \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_bnr_one_a_plus_aadb5998fc5d6eca078b4f809c6f538ee}{read\+DBGf}} () const
+\begin{DoxyCompactList}\small\item\em reads the value of the debug registers \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_acaf56f5cc3ca422bc46538f8657f2eb5}{read\+Firmware}} (\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \texorpdfstring{$\ast$}{*}, \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \texorpdfstring{$\ast$}{*}) const
+\begin{DoxyCompactList}\small\item\em reads the firmware version of the board \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a8053cb4b3b6daea9bf9db0f2497bb563}{set\+Led}} (const bool state) const
+\begin{DoxyCompactList}\small\item\em Set the Led ON/\+OFF. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ad644a5d59a0574dce919914ea58be15b}{move}} (const int left\+\_\+speed, const int right\+\_\+speed) const
+\begin{DoxyCompactList}\small\item\em sets the speed of the motors \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_af37d31fa9ed5a69e711d29f8314aed2d}{send\+Move\+Rpm}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} command, const int left\+\_\+rpm, const int right\+\_\+rpm) const
+\begin{DoxyCompactList}\small\item\em Helper method to send the right move\+\_\+rpm command together with left and right rpm values. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ac95f2d050f2a4613ab3ddfb651dc249f}{move\+Rpm}} (const int left\+\_\+rpm, const int right\+\_\+rpm) const
+\begin{DoxyCompactList}\small\item\em sets the speed of the motors by specifying the rpm values \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ab4557cbb251f9237bc16e65e5a396f67}{move\+Rpm\+Get\+Encoders}} (const int left\+\_\+rpm, const int right\+\_\+rpm, int \&out\+\_\+left\+\_\+encoder, int \&out\+\_\+right\+\_\+encoder) const
+\begin{DoxyCompactList}\small\item\em sets the speed of the motors by specifying the rpm values and waits for the encoders readings \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ac228d34d644e70f0cbe752f8ffab2e72}{move\+RAW}} (const int left\+\_\+duty\+\_\+cycle, const int right\+\_\+duty\+\_\+cycle) const
+\begin{DoxyCompactList}\small\item\em sets the speed of the motors by specifying the pwm values \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_adf155bd2c905869c73a6f9a9d0d36bcc}{move1m}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} motor\+\_\+id, const int speed) const
+\begin{DoxyCompactList}\small\item\em sets the speed of a single motor \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a12d075bf0fba7958832f358bd45d0a5b}{stop}} () const
+\begin{DoxyCompactList}\small\item\em stops the motors \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a12fe44a87dc486424bef7195fc7e6b34}{brake}} () const
+\begin{DoxyCompactList}\small\item\em stops the motors by applying the maximum torque \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a72e31e65c749682dd7f361c0cc5c7596}{brake}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} left\+\_\+torque, const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} right\+\_\+torque) const
+\begin{DoxyCompactList}\small\item\em stops the motors by applying the specified torque \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a467a17d259ea6cfbb9cf16c3c80ad152}{stop1m}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} motor\+\_\+id) const
+\begin{DoxyCompactList}\small\item\em stops a single motor by applying the maximum torque \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a0ab66127163cfcb8e0c7ae199d0988ae}{brake1m}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} motor\+\_\+id, const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} torque) const
+\begin{DoxyCompactList}\small\item\em stops a single motor by applying the specified torque \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_abd1f678b67e2fb88373c86284ba7bd29}{reset\+Left\+Encoder}} () const
+\begin{DoxyCompactList}\small\item\em resets the left encoder \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_af099c1db4b1b5cb9e1ca2c93561f2f96}{reset\+Right\+Encoder}} () const
+\begin{DoxyCompactList}\small\item\em resets the right encoder \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}{lcd1}} (const String \&string) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_aa7f6e392636146d970754adf5d612273}{lcd1}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} string\mbox{[}$\,$\mbox{]}) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ab6d30400e2bd2d3b38eeb679af0c0d12}{lcd1}} (const char string\mbox{[}$\,$\mbox{]}) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a1c6d23da29509a8d829691b3b708e414}{lcd1}} (const int number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a7086f26f326f8e1e4545e7e9b82c6cd6}{lcd1}} (const unsigned int number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_acbb1a28600c7cb69684592c832a9ea5d}{lcd1}} (const long int number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_afd392aff9a556f398bfbd5133c4100a7}{lcd1}} (const double number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a4ab2dae9c711b7bd083537fa4099f80c}{lcd1}} (const char string\mbox{[}$\,$\mbox{]}, const int number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a144d26ae1d2e165e5aacf19673a11eda}{lcd1}} (const char string\mbox{[}$\,$\mbox{]}, const unsigned int number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_aa03b163399c090ab7ab27b45af1bc867}{lcd1}} (const char string\mbox{[}$\,$\mbox{]}, const long int number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a7338328bb82e5abbe379364f6a907a97}{lcd1}} (const char string\mbox{[}$\,$\mbox{]}, const double number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ab1c4d764bc602a19909f6c411f7fd033}{lcd1}} (const unsigned char string\+\_\+a\mbox{[}8\mbox{]}, const unsigned char string\+\_\+b\mbox{[}8\mbox{]}) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_aea63c40e353ddc5653d0789b996836e3}{lcd1}} (const int num1, const int num2) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a0b1a31654426ca997a4136a69767e893}{lcd1}} (const unsigned int num1, const unsigned int num2) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ae44ac0b27d049bf7b43a231b1c347296}{lcd1}} (const int num1, const int num2, const int num3) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ae5c7458cfddd2e3cbcf30003719c5964}{lcd1}} (const int num1, const int num2, const int num3, const int num4) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_aecec98962a4ab57403a9fd3be0d4308c}{lcd1}} (const unsigned int num1, const unsigned int num2, const unsigned int num3) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a1cd88b558944a8bc2bcdccb38efabea9}{lcd1}} (const unsigned int num1, const unsigned int num2, const unsigned int num3, const unsigned int num4) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}{lcd2}} (const String \&string) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_af8076104376384b0ee07a7a834e8e4c1}{lcd2}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} string\mbox{[}$\,$\mbox{]}) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ad324d90ac46ad8252eeea9569a7a4693}{lcd2}} (const char string\mbox{[}$\,$\mbox{]}) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a2c59b6286344ccc84ecffb2ae0e958bb}{lcd2}} (const int number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a7e97adc1ddda7729739db26c4b044efd}{lcd2}} (const unsigned int number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a2dff21e86378f851dfc92eda69a656fd}{lcd2}} (const long int number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ab1fe4c0a6478fc9a04432afc62c73ce1}{lcd2}} (const double number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ae00da13ede7fb562e045965b4d54c0f0}{lcd2}} (const char string\mbox{[}$\,$\mbox{]}, int number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ae9a43f9541c21fb9b0d73f52a7dc5103}{lcd2}} (const char string\mbox{[}$\,$\mbox{]}, unsigned int number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a109e5b315991e6ba70962d07a9d93d8f}{lcd2}} (const char string\mbox{[}$\,$\mbox{]}, long int number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a18a4c2f77d054835a43da1c1c111c38f}{lcd2}} (const char string\mbox{[}$\,$\mbox{]}, double number) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a101c7da738d5c9aa5ea4a8669c2b1b54}{lcd2}} (const unsigned char string\+\_\+a\mbox{[}8\mbox{]}, const unsigned char string\+\_\+b\mbox{[}8\mbox{]}) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ad8a51516cb0c32001ee7792df1075239}{lcd2}} (const int num1, const int num2) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a5d5f0cca8c3ea7be368506426f46351a}{lcd2}} (const unsigned int num1, const unsigned int num2) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_ab3ff8c1053d6b4749ca6dbf93f187095}{lcd2}} (const int num1, const int num2, const int num3) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a21617ccc5f7d053244f6dec906bd25dc}{lcd2}} (const int num1, const int num2, const int num3, const int num4) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_aaa6d42d8b362e031a4dd7bf0825a4b59}{lcd2}} (const unsigned int num1, const unsigned int num2, const unsigned int num3) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a854e50e6d06ce197dafde81938f2a874}{lcd2}} (const unsigned int num1, const unsigned int num2, const unsigned int num3, const unsigned int num4) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_bnr_one_a_plus_a8310e41f0d7c84ac4e7b9469c9111e77}{spi\+Request\+Byte}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} command) const
+\item 
+int \mbox{\hyperlink{class_bnr_one_a_plus_ae447e57521f55f371620f735f3ddb9f7}{spi\+Request\+Word}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} command) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a6b3d117c0cfedd39dd0175165adfd633}{spi\+Request\+Two\+Words}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} command, int \&out\+\_\+int1, int \&out\+\_\+int2) const
+\item 
+float \mbox{\hyperlink{class_bnr_one_a_plus_af56dfb412725083b498cf83b4f911448}{spi\+Request\+Float}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} command) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_a97ca2b5823d4a5a6fbdbc15853d5fbe3}{spi\+Send\+Data\+Only}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} command, const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} buffer\mbox{[}$\,$\mbox{]}, const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} num\+\_\+bytes) const
+\item 
+void \mbox{\hyperlink{class_bnr_one_a_plus_aa809f44827ffb8c631b599f30a952a64}{spi\+Send\+Data}} (const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} command, const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} buffer\mbox{[}$\,$\mbox{]}, const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} num\+\_\+bytes) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_bnr_one_a_plus_a9bdaa6fba9b3b94836214b5edb0f8382}{sspin\+\_\+}}
+\item 
+\mbox{\hyperlink{class_line_detector}{Line\+Detector}} \mbox{\hyperlink{class_bnr_one_a_plus_a4f2ce5117c962a2c9c354af486fd9a7a}{line\+\_\+detector\+\_\+}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{_bnr_one_a_plus_8h}{Bnr\+One\+APlus.\+h} -\/ Library for interfacing with Bot\textquotesingle{}n Roll ONE A+ Arduino Compatible Released into public domain www.\+botnroll.\+com 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_bnr_one_a_plus_a12fe44a87dc486424bef7195fc7e6b34}\index{BnrOneAPlus@{BnrOneAPlus}!brake@{brake}}
+\index{brake@{brake}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{brake()}{brake()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a12fe44a87dc486424bef7195fc7e6b34} 
+void Bnr\+One\+APlus\+::brake (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+stops the motors by applying the maximum torque 
+
+\Hypertarget{class_bnr_one_a_plus_a72e31e65c749682dd7f361c0cc5c7596}\index{BnrOneAPlus@{BnrOneAPlus}!brake@{brake}}
+\index{brake@{brake}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{brake()}{brake()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a72e31e65c749682dd7f361c0cc5c7596} 
+void Bnr\+One\+APlus\+::brake (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{left\+\_\+torque}{, }\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{right\+\_\+torque}{}\end{DoxyParamCaption}) const}
+
+
+
+stops the motors by applying the specified torque 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left\+\_\+torque} & \\
+\hline
+{\em right\+\_\+torque} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_a0ab66127163cfcb8e0c7ae199d0988ae}\index{BnrOneAPlus@{BnrOneAPlus}!brake1m@{brake1m}}
+\index{brake1m@{brake1m}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{brake1m()}{brake1m()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a0ab66127163cfcb8e0c7ae199d0988ae} 
+void Bnr\+One\+APlus\+::brake1m (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{motor\+\_\+id}{, }\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{torque}{}\end{DoxyParamCaption}) const}
+
+
+
+stops a single motor by applying the specified torque 
+
+
+\begin{DoxyParams}{Parameters}
+{\em motor\+\_\+id} & \\
+\hline
+{\em torque} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_aa7f6e392636146d970754adf5d612273}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [1/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_aa7f6e392636146d970754adf5d612273} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{string}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_ab6d30400e2bd2d3b38eeb679af0c0d12}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [2/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ab6d30400e2bd2d3b38eeb679af0c0d12} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const char}]{string}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a7338328bb82e5abbe379364f6a907a97}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [3/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a7338328bb82e5abbe379364f6a907a97} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const char}]{string}{\mbox{[}$\,$\mbox{]}, }\item[{const double}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a4ab2dae9c711b7bd083537fa4099f80c}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [4/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a4ab2dae9c711b7bd083537fa4099f80c} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const char}]{string}{\mbox{[}$\,$\mbox{]}, }\item[{const int}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_aa03b163399c090ab7ab27b45af1bc867}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [5/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_aa03b163399c090ab7ab27b45af1bc867} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const char}]{string}{\mbox{[}$\,$\mbox{]}, }\item[{const long int}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a144d26ae1d2e165e5aacf19673a11eda}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [6/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a144d26ae1d2e165e5aacf19673a11eda} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const char}]{string}{\mbox{[}$\,$\mbox{]}, }\item[{const unsigned int}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_afd392aff9a556f398bfbd5133c4100a7}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [7/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_afd392aff9a556f398bfbd5133c4100a7} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const double}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_aea63c40e353ddc5653d0789b996836e3}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [8/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_aea63c40e353ddc5653d0789b996836e3} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const int}]{num1}{, }\item[{const int}]{num2}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_ae44ac0b27d049bf7b43a231b1c347296}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [9/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ae44ac0b27d049bf7b43a231b1c347296} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const int}]{num1}{, }\item[{const int}]{num2}{, }\item[{const int}]{num3}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_ae5c7458cfddd2e3cbcf30003719c5964}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [10/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ae5c7458cfddd2e3cbcf30003719c5964} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const int}]{num1}{, }\item[{const int}]{num2}{, }\item[{const int}]{num3}{, }\item[{const int}]{num4}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a1c6d23da29509a8d829691b3b708e414}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [11/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a1c6d23da29509a8d829691b3b708e414} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const int}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_acbb1a28600c7cb69684592c832a9ea5d}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [12/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_acbb1a28600c7cb69684592c832a9ea5d} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const long int}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [13/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_aef07757b7f60450a603328b1bb13d9ec} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const String \&}]{string}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_ab1c4d764bc602a19909f6c411f7fd033}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [14/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ab1c4d764bc602a19909f6c411f7fd033} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const unsigned char}]{string\+\_\+a}{\mbox{[}8\mbox{]}, }\item[{const unsigned char}]{string\+\_\+b}{\mbox{[}8\mbox{]}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a0b1a31654426ca997a4136a69767e893}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [15/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a0b1a31654426ca997a4136a69767e893} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const unsigned int}]{num1}{, }\item[{const unsigned int}]{num2}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_aecec98962a4ab57403a9fd3be0d4308c}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [16/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_aecec98962a4ab57403a9fd3be0d4308c} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const unsigned int}]{num1}{, }\item[{const unsigned int}]{num2}{, }\item[{const unsigned int}]{num3}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a1cd88b558944a8bc2bcdccb38efabea9}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [17/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a1cd88b558944a8bc2bcdccb38efabea9} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const unsigned int}]{num1}{, }\item[{const unsigned int}]{num2}{, }\item[{const unsigned int}]{num3}{, }\item[{const unsigned int}]{num4}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a7086f26f326f8e1e4545e7e9b82c6cd6}\index{BnrOneAPlus@{BnrOneAPlus}!lcd1@{lcd1}}
+\index{lcd1@{lcd1}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd1()}{lcd1()}\hspace{0.1cm}{\footnotesize\ttfamily [18/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a7086f26f326f8e1e4545e7e9b82c6cd6} 
+void Bnr\+One\+APlus\+::lcd1 (\begin{DoxyParamCaption}\item[{const unsigned int}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_af8076104376384b0ee07a7a834e8e4c1}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [1/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_af8076104376384b0ee07a7a834e8e4c1} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{string}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_ad324d90ac46ad8252eeea9569a7a4693}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [2/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ad324d90ac46ad8252eeea9569a7a4693} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const char}]{string}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a18a4c2f77d054835a43da1c1c111c38f}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [3/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a18a4c2f77d054835a43da1c1c111c38f} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const char}]{string}{\mbox{[}$\,$\mbox{]}, }\item[{double}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_ae00da13ede7fb562e045965b4d54c0f0}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [4/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ae00da13ede7fb562e045965b4d54c0f0} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const char}]{string}{\mbox{[}$\,$\mbox{]}, }\item[{int}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a109e5b315991e6ba70962d07a9d93d8f}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [5/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a109e5b315991e6ba70962d07a9d93d8f} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const char}]{string}{\mbox{[}$\,$\mbox{]}, }\item[{long int}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_ae9a43f9541c21fb9b0d73f52a7dc5103}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [6/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ae9a43f9541c21fb9b0d73f52a7dc5103} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const char}]{string}{\mbox{[}$\,$\mbox{]}, }\item[{unsigned int}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_ab1fe4c0a6478fc9a04432afc62c73ce1}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [7/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ab1fe4c0a6478fc9a04432afc62c73ce1} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const double}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_ad8a51516cb0c32001ee7792df1075239}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [8/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ad8a51516cb0c32001ee7792df1075239} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const int}]{num1}{, }\item[{const int}]{num2}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_ab3ff8c1053d6b4749ca6dbf93f187095}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [9/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ab3ff8c1053d6b4749ca6dbf93f187095} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const int}]{num1}{, }\item[{const int}]{num2}{, }\item[{const int}]{num3}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a21617ccc5f7d053244f6dec906bd25dc}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [10/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a21617ccc5f7d053244f6dec906bd25dc} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const int}]{num1}{, }\item[{const int}]{num2}{, }\item[{const int}]{num3}{, }\item[{const int}]{num4}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a2c59b6286344ccc84ecffb2ae0e958bb}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [11/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a2c59b6286344ccc84ecffb2ae0e958bb} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const int}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a2dff21e86378f851dfc92eda69a656fd}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [12/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a2dff21e86378f851dfc92eda69a656fd} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const long int}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [13/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_af4d12c3530220459b94857dedefa9d06} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const String \&}]{string}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a101c7da738d5c9aa5ea4a8669c2b1b54}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [14/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a101c7da738d5c9aa5ea4a8669c2b1b54} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const unsigned char}]{string\+\_\+a}{\mbox{[}8\mbox{]}, }\item[{const unsigned char}]{string\+\_\+b}{\mbox{[}8\mbox{]}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a5d5f0cca8c3ea7be368506426f46351a}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [15/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a5d5f0cca8c3ea7be368506426f46351a} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const unsigned int}]{num1}{, }\item[{const unsigned int}]{num2}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_aaa6d42d8b362e031a4dd7bf0825a4b59}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [16/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_aaa6d42d8b362e031a4dd7bf0825a4b59} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const unsigned int}]{num1}{, }\item[{const unsigned int}]{num2}{, }\item[{const unsigned int}]{num3}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a854e50e6d06ce197dafde81938f2a874}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [17/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a854e50e6d06ce197dafde81938f2a874} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const unsigned int}]{num1}{, }\item[{const unsigned int}]{num2}{, }\item[{const unsigned int}]{num3}{, }\item[{const unsigned int}]{num4}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_a7e97adc1ddda7729739db26c4b044efd}\index{BnrOneAPlus@{BnrOneAPlus}!lcd2@{lcd2}}
+\index{lcd2@{lcd2}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{lcd2()}{lcd2()}\hspace{0.1cm}{\footnotesize\ttfamily [18/18]}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a7e97adc1ddda7729739db26c4b044efd} 
+void Bnr\+One\+APlus\+::lcd2 (\begin{DoxyParamCaption}\item[{const unsigned int}]{number}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_bnr_one_a_plus_ad644a5d59a0574dce919914ea58be15b}\index{BnrOneAPlus@{BnrOneAPlus}!move@{move}}
+\index{move@{move}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ad644a5d59a0574dce919914ea58be15b} 
+void Bnr\+One\+APlus\+::move (\begin{DoxyParamCaption}\item[{const int}]{left\+\_\+speed}{, }\item[{const int}]{right\+\_\+speed}{}\end{DoxyParamCaption}) const}
+
+
+
+sets the speed of the motors 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left\+\_\+speed} & speed of the left motor \\
+\hline
+{\em right\+\_\+speed} & speed of the right motor \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_adf155bd2c905869c73a6f9a9d0d36bcc}\index{BnrOneAPlus@{BnrOneAPlus}!move1m@{move1m}}
+\index{move1m@{move1m}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{move1m()}{move1m()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_adf155bd2c905869c73a6f9a9d0d36bcc} 
+void Bnr\+One\+APlus\+::move1m (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{motor\+\_\+id}{, }\item[{const int}]{speed}{}\end{DoxyParamCaption}) const}
+
+
+
+sets the speed of a single motor 
+
+
+\begin{DoxyParams}{Parameters}
+{\em motor\+\_\+id} & motor id (0 for left, 1 for right) \\
+\hline
+{\em speed} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_ac228d34d644e70f0cbe752f8ffab2e72}\index{BnrOneAPlus@{BnrOneAPlus}!moveRAW@{moveRAW}}
+\index{moveRAW@{moveRAW}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{moveRAW()}{moveRAW()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ac228d34d644e70f0cbe752f8ffab2e72} 
+void Bnr\+One\+APlus\+::move\+RAW (\begin{DoxyParamCaption}\item[{const int}]{left\+\_\+duty\+\_\+cycle}{, }\item[{const int}]{right\+\_\+duty\+\_\+cycle}{}\end{DoxyParamCaption}) const}
+
+
+
+sets the speed of the motors by specifying the pwm values 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left\+\_\+duty\+\_\+cycle} & \\
+\hline
+{\em right\+\_\+duty\+\_\+cycle} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_ac95f2d050f2a4613ab3ddfb651dc249f}\index{BnrOneAPlus@{BnrOneAPlus}!moveRpm@{moveRpm}}
+\index{moveRpm@{moveRpm}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{moveRpm()}{moveRpm()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ac95f2d050f2a4613ab3ddfb651dc249f} 
+void Bnr\+One\+APlus\+::move\+Rpm (\begin{DoxyParamCaption}\item[{const int}]{left\+\_\+rpm}{, }\item[{const int}]{right\+\_\+rpm}{}\end{DoxyParamCaption}) const}
+
+
+
+sets the speed of the motors by specifying the rpm values 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left\+\_\+rpm} & \\
+\hline
+{\em right\+\_\+rpm} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_ab4557cbb251f9237bc16e65e5a396f67}\index{BnrOneAPlus@{BnrOneAPlus}!moveRpmGetEncoders@{moveRpmGetEncoders}}
+\index{moveRpmGetEncoders@{moveRpmGetEncoders}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{moveRpmGetEncoders()}{moveRpmGetEncoders()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ab4557cbb251f9237bc16e65e5a396f67} 
+void Bnr\+One\+APlus\+::move\+Rpm\+Get\+Encoders (\begin{DoxyParamCaption}\item[{const int}]{left\+\_\+rpm}{, }\item[{const int}]{right\+\_\+rpm}{, }\item[{int \&}]{out\+\_\+left\+\_\+encoder}{, }\item[{int \&}]{out\+\_\+right\+\_\+encoder}{}\end{DoxyParamCaption}) const}
+
+
+
+sets the speed of the motors by specifying the rpm values and waits for the encoders readings 
+
+
+\begin{DoxyParams}{Parameters}
+{\em left\+\_\+rpm} & speed of the left motor \\
+\hline
+{\em right\+\_\+rpm} & speed of the right motor \\
+\hline
+{\em out\+\_\+left\+\_\+encoder} & variable to store the left encoder reading \\
+\hline
+{\em out\+\_\+ight\+\_\+encoder} & variable to store the right encoder reading \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_a74c9545d18c0ed8bed54f8ad780b7417}\index{BnrOneAPlus@{BnrOneAPlus}!obstacleSensorsEmitters@{obstacleSensorsEmitters}}
+\index{obstacleSensorsEmitters@{obstacleSensorsEmitters}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{obstacleSensorsEmitters()}{obstacleSensorsEmitters()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a74c9545d18c0ed8bed54f8ad780b7417} 
+void Bnr\+One\+APlus\+::obstacle\+Sensors\+Emitters (\begin{DoxyParamCaption}\item[{const bool}]{state}{}\end{DoxyParamCaption}) const}
+
+
+
+Turn on/off the obstacle sensors IR emitters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_a09099b1aeec2afbb063f1cbf9bbe3942}\index{BnrOneAPlus@{BnrOneAPlus}!readAdc@{readAdc}}
+\index{readAdc@{readAdc}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readAdc()}{readAdc()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a09099b1aeec2afbb063f1cbf9bbe3942} 
+int Bnr\+One\+APlus\+::read\+Adc (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{adc\+\_\+channel}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the value of the specified ADC channel 
+
+
+\begin{DoxyParams}{Parameters}
+{\em adc\+\_\+channel} & id of the Adc channel to read \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_one_a_plus_acf1bf25655c9e048feba1eb65440cb97}\index{BnrOneAPlus@{BnrOneAPlus}!readAndResetEncoders@{readAndResetEncoders}}
+\index{readAndResetEncoders@{readAndResetEncoders}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readAndResetEncoders()}{readAndResetEncoders()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_acf1bf25655c9e048feba1eb65440cb97} 
+void Bnr\+One\+APlus\+::read\+And\+Reset\+Encoders (\begin{DoxyParamCaption}\item[{int \&}]{out\+\_\+left\+\_\+encoder}{, }\item[{int \&}]{out\+\_\+right\+\_\+encoder}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the values of the encoders and resets their values 
+
+
+\begin{DoxyParams}{Parameters}
+{\em out\+\_\+left\+\_\+encoder} & variable to store the left encoder reading \\
+\hline
+{\em out\+\_\+right\+\_\+encoder} & variable to store the right encoder reading \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_a8b6e5a776dcc955c131b22494234ace8}\index{BnrOneAPlus@{BnrOneAPlus}!readAndResetLeftEncoder@{readAndResetLeftEncoder}}
+\index{readAndResetLeftEncoder@{readAndResetLeftEncoder}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readAndResetLeftEncoder()}{readAndResetLeftEncoder()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a8b6e5a776dcc955c131b22494234ace8} 
+int Bnr\+One\+APlus\+::read\+And\+Reset\+Left\+Encoder (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the value of the left encoder and resets its value 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_one_a_plus_a932ce0cbc6765515e1a3a4cef383a44a}\index{BnrOneAPlus@{BnrOneAPlus}!readAndResetRightEncoder@{readAndResetRightEncoder}}
+\index{readAndResetRightEncoder@{readAndResetRightEncoder}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readAndResetRightEncoder()}{readAndResetRightEncoder()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a932ce0cbc6765515e1a3a4cef383a44a} 
+int Bnr\+One\+APlus\+::read\+And\+Reset\+Right\+Encoder (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the value of the right encoder and resets its value 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_one_a_plus_a9bc7195954ea2cdb35e4c58699224d66}\index{BnrOneAPlus@{BnrOneAPlus}!readBattery@{readBattery}}
+\index{readBattery@{readBattery}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readBattery()}{readBattery()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a9bc7195954ea2cdb35e4c58699224d66} 
+float Bnr\+One\+APlus\+::read\+Battery (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the battery voltage 
+
+\begin{DoxyReturn}{Returns}
+float 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_one_a_plus_a884b473b32d58176ab3b64cfb1188bdb}\index{BnrOneAPlus@{BnrOneAPlus}!readButton@{readButton}}
+\index{readButton@{readButton}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readButton()}{readButton()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a884b473b32d58176ab3b64cfb1188bdb} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Bnr\+One\+APlus\+::read\+Button (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the value of the button pressed 
+
+\begin{DoxyReturn}{Returns}
+byte 0 if no button is pressed 1 if button 1 is pressed 2 if button 2 is pressed 3 if button 3 is pressed 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_one_a_plus_ab65505720aeae7b42ad44ea07caf4b48}\index{BnrOneAPlus@{BnrOneAPlus}!readDBG@{readDBG}}
+\index{readDBG@{readDBG}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readDBG()}{readDBG()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ab65505720aeae7b42ad44ea07caf4b48} 
+int Bnr\+One\+APlus\+::read\+DBG (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{register\+\_\+index}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the value of the debug registers 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_one_a_plus_aadb5998fc5d6eca078b4f809c6f538ee}\index{BnrOneAPlus@{BnrOneAPlus}!readDBGf@{readDBGf}}
+\index{readDBGf@{readDBGf}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readDBGf()}{readDBGf()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_aadb5998fc5d6eca078b4f809c6f538ee} 
+float Bnr\+One\+APlus\+::read\+DBGf (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the value of the debug registers 
+
+\begin{DoxyReturn}{Returns}
+float 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_one_a_plus_acaf56f5cc3ca422bc46538f8657f2eb5}\index{BnrOneAPlus@{BnrOneAPlus}!readFirmware@{readFirmware}}
+\index{readFirmware@{readFirmware}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readFirmware()}{readFirmware()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_acaf56f5cc3ca422bc46538f8657f2eb5} 
+void Bnr\+One\+APlus\+::read\+Firmware (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \texorpdfstring{$\ast$}{*}}]{firm1}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \texorpdfstring{$\ast$}{*}}]{firm2}{, }\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \texorpdfstring{$\ast$}{*}}]{firm3}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the firmware version of the board 
+
+\Hypertarget{class_bnr_one_a_plus_a7f1cd81305c1c29c749bb4a9dc12f523}\index{BnrOneAPlus@{BnrOneAPlus}!readIncrementalLeftEncoder@{readIncrementalLeftEncoder}}
+\index{readIncrementalLeftEncoder@{readIncrementalLeftEncoder}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readIncrementalLeftEncoder()}{readIncrementalLeftEncoder()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a7f1cd81305c1c29c749bb4a9dc12f523} 
+int Bnr\+One\+APlus\+::read\+Incremental\+Left\+Encoder (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the value of the left encoder and keep it\textquotesingle{}s current value so that it increments over time 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_one_a_plus_acf3a1c3917de3f84e50b748e636c64e1}\index{BnrOneAPlus@{BnrOneAPlus}!readIncrementalRightEncoder@{readIncrementalRightEncoder}}
+\index{readIncrementalRightEncoder@{readIncrementalRightEncoder}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readIncrementalRightEncoder()}{readIncrementalRightEncoder()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_acf3a1c3917de3f84e50b748e636c64e1} 
+int Bnr\+One\+APlus\+::read\+Incremental\+Right\+Encoder (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the value of the right encoder and keep it\textquotesingle{}s current value so that it increments over time 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_one_a_plus_a286d066dc4a038b005f06323a36b4738}\index{BnrOneAPlus@{BnrOneAPlus}!readLeftRangeSensor@{readLeftRangeSensor}}
+\index{readLeftRangeSensor@{readLeftRangeSensor}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readLeftRangeSensor()}{readLeftRangeSensor()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a286d066dc4a038b005f06323a36b4738} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Bnr\+One\+APlus\+::read\+Left\+Range\+Sensor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the value of the left range sensor 
+
+\begin{DoxyReturn}{Returns}
+byte 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_one_a_plus_a0c8bd88aff9aecc3ff38116757e11133}\index{BnrOneAPlus@{BnrOneAPlus}!readLine@{readLine}}
+\index{readLine@{readLine}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readLine()}{readLine()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a0c8bd88aff9aecc3ff38116757e11133} 
+int Bnr\+One\+APlus\+::read\+Line (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+computes a line value in the range \mbox{[}-\/100, 100\mbox{]} 
+
+\Hypertarget{class_bnr_one_a_plus_a4949a79b1073d37269920b9eb657ba6d}\index{BnrOneAPlus@{BnrOneAPlus}!readLineSensor@{readLineSensor}}
+\index{readLineSensor@{readLineSensor}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readLineSensor()}{readLineSensor()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a4949a79b1073d37269920b9eb657ba6d} 
+int \texorpdfstring{$\ast$}{*} Bnr\+One\+APlus\+::read\+Line\+Sensor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the line sensor and outputs a vector of 8 integers 
+
+\Hypertarget{class_bnr_one_a_plus_aa82c70d127f9b2a69dcf601112a6f130}\index{BnrOneAPlus@{BnrOneAPlus}!readObstacleSensors@{readObstacleSensors}}
+\index{readObstacleSensors@{readObstacleSensors}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readObstacleSensors()}{readObstacleSensors()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_aa82c70d127f9b2a69dcf601112a6f130} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Bnr\+One\+APlus\+::read\+Obstacle\+Sensors (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the value of the obstacle sensors 
+
+\begin{DoxyReturn}{Returns}
+float 0 if no obstacles are detected 1 if obstacle on the left side only 2 if obstacle on the right side only 3 if obstacles on both sides 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_one_a_plus_a3474f8066e41ce613096308b853e6c0e}\index{BnrOneAPlus@{BnrOneAPlus}!readRightRangeSensor@{readRightRangeSensor}}
+\index{readRightRangeSensor@{readRightRangeSensor}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{readRightRangeSensor()}{readRightRangeSensor()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a3474f8066e41ce613096308b853e6c0e} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Bnr\+One\+APlus\+::read\+Right\+Range\+Sensor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+reads the value of the right range sensor 
+
+\begin{DoxyReturn}{Returns}
+byte 
+\end{DoxyReturn}
+\Hypertarget{class_bnr_one_a_plus_abd1f678b67e2fb88373c86284ba7bd29}\index{BnrOneAPlus@{BnrOneAPlus}!resetLeftEncoder@{resetLeftEncoder}}
+\index{resetLeftEncoder@{resetLeftEncoder}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{resetLeftEncoder()}{resetLeftEncoder()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_abd1f678b67e2fb88373c86284ba7bd29} 
+void Bnr\+One\+APlus\+::reset\+Left\+Encoder (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+resets the left encoder 
+
+\Hypertarget{class_bnr_one_a_plus_af099c1db4b1b5cb9e1ca2c93561f2f96}\index{BnrOneAPlus@{BnrOneAPlus}!resetRightEncoder@{resetRightEncoder}}
+\index{resetRightEncoder@{resetRightEncoder}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{resetRightEncoder()}{resetRightEncoder()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_af099c1db4b1b5cb9e1ca2c93561f2f96} 
+void Bnr\+One\+APlus\+::reset\+Right\+Encoder (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+resets the right encoder 
+
+\Hypertarget{class_bnr_one_a_plus_af37d31fa9ed5a69e711d29f8314aed2d}\index{BnrOneAPlus@{BnrOneAPlus}!sendMoveRpm@{sendMoveRpm}}
+\index{sendMoveRpm@{sendMoveRpm}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{sendMoveRpm()}{sendMoveRpm()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_af37d31fa9ed5a69e711d29f8314aed2d} 
+void Bnr\+One\+APlus\+::send\+Move\+Rpm (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{command}{, }\item[{const int}]{left\+\_\+rpm}{, }\item[{const int}]{right\+\_\+rpm}{}\end{DoxyParamCaption}) const}
+
+
+
+Helper method to send the right move\+\_\+rpm command together with left and right rpm values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em command} & one of the available move rpm commands \\
+\hline
+{\em left\+\_\+rpm} & \\
+\hline
+{\em right\+\_\+rpm} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_a8053cb4b3b6daea9bf9db0f2497bb563}\index{BnrOneAPlus@{BnrOneAPlus}!setLed@{setLed}}
+\index{setLed@{setLed}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{setLed()}{setLed()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a8053cb4b3b6daea9bf9db0f2497bb563} 
+void Bnr\+One\+APlus\+::set\+Led (\begin{DoxyParamCaption}\item[{const bool}]{state}{}\end{DoxyParamCaption}) const}
+
+
+
+Set the Led ON/\+OFF. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_a0eb806ee4ec7de788ccc258823e1b0eb}\index{BnrOneAPlus@{BnrOneAPlus}!setMinBatteryV@{setMinBatteryV}}
+\index{setMinBatteryV@{setMinBatteryV}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{setMinBatteryV()}{setMinBatteryV()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a0eb806ee4ec7de788ccc258823e1b0eb} 
+void Bnr\+One\+APlus\+::set\+Min\+BatteryV (\begin{DoxyParamCaption}\item[{const float}]{min\+\_\+battery\+\_\+V}{}\end{DoxyParamCaption}) const}
+
+
+
+Set the minimum battery voltage for battery protection. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em min\+\_\+battery\+\_\+V} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_a8bf39632d2d195a7cbbc57d5fb37a007}\index{BnrOneAPlus@{BnrOneAPlus}!setMotors@{setMotors}}
+\index{setMotors@{setMotors}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{setMotors()}{setMotors()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a8bf39632d2d195a7cbbc57d5fb37a007} 
+void Bnr\+One\+APlus\+::set\+Motors (\begin{DoxyParamCaption}\item[{const int}]{moving\+\_\+power}{, }\item[{const int}]{max\+\_\+speed\+\_\+pulses}{}\end{DoxyParamCaption}) const}
+
+
+
+Set the Motors configuration params\+: 
+
+
+\begin{DoxyItemize}
+\item moving power
+\item number of pulses per iteration at max speed
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em moving\+\_\+power} & \\
+\hline
+{\em max\+\_\+speed\+\_\+pulses} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_aee7fa9b5a8a3ca481904caeaa8af21eb}\index{BnrOneAPlus@{BnrOneAPlus}!setPid@{setPid}}
+\index{setPid@{setPid}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{setPid()}{setPid()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_aee7fa9b5a8a3ca481904caeaa8af21eb} 
+void Bnr\+One\+APlus\+::set\+Pid (\begin{DoxyParamCaption}\item[{const int}]{kp}{, }\item[{const int}]{ki}{, }\item[{const int}]{kd}{}\end{DoxyParamCaption}) const}
+
+
+
+Set the PID parameters for PID control. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em kp} & proportional gain \\
+\hline
+{\em ki} & integral gain \\
+\hline
+{\em kd} & differential gain \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_a6c8f2030db8ef31b8b44c08a683f9015}\index{BnrOneAPlus@{BnrOneAPlus}!spiConnect@{spiConnect}}
+\index{spiConnect@{spiConnect}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{spiConnect()}{spiConnect()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a6c8f2030db8ef31b8b44c08a683f9015} 
+void Bnr\+One\+APlus\+::spi\+Connect (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{sspin}{}\end{DoxyParamCaption})}
+
+
+
+establishes a connection with the Bot\textquotesingle{}n Roll ONE A+ board 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sspin} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_bnr_one_a_plus_a8310e41f0d7c84ac4e7b9469c9111e77}\index{BnrOneAPlus@{BnrOneAPlus}!spiRequestByte@{spiRequestByte}}
+\index{spiRequestByte@{spiRequestByte}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{spiRequestByte()}{spiRequestByte()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a8310e41f0d7c84ac4e7b9469c9111e77} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Bnr\+One\+APlus\+::spi\+Request\+Byte (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{command}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_bnr_one_a_plus_af56dfb412725083b498cf83b4f911448}\index{BnrOneAPlus@{BnrOneAPlus}!spiRequestFloat@{spiRequestFloat}}
+\index{spiRequestFloat@{spiRequestFloat}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{spiRequestFloat()}{spiRequestFloat()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_af56dfb412725083b498cf83b4f911448} 
+float Bnr\+One\+APlus\+::spi\+Request\+Float (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{command}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_bnr_one_a_plus_a6b3d117c0cfedd39dd0175165adfd633}\index{BnrOneAPlus@{BnrOneAPlus}!spiRequestTwoWords@{spiRequestTwoWords}}
+\index{spiRequestTwoWords@{spiRequestTwoWords}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{spiRequestTwoWords()}{spiRequestTwoWords()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a6b3d117c0cfedd39dd0175165adfd633} 
+void Bnr\+One\+APlus\+::spi\+Request\+Two\+Words (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{command}{, }\item[{int \&}]{out\+\_\+int1}{, }\item[{int \&}]{out\+\_\+int2}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_bnr_one_a_plus_ae447e57521f55f371620f735f3ddb9f7}\index{BnrOneAPlus@{BnrOneAPlus}!spiRequestWord@{spiRequestWord}}
+\index{spiRequestWord@{spiRequestWord}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{spiRequestWord()}{spiRequestWord()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_ae447e57521f55f371620f735f3ddb9f7} 
+int Bnr\+One\+APlus\+::spi\+Request\+Word (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{command}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_bnr_one_a_plus_aa809f44827ffb8c631b599f30a952a64}\index{BnrOneAPlus@{BnrOneAPlus}!spiSendData@{spiSendData}}
+\index{spiSendData@{spiSendData}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{spiSendData()}{spiSendData()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_aa809f44827ffb8c631b599f30a952a64} 
+void Bnr\+One\+APlus\+::spi\+Send\+Data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{command}{, }\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{buffer}{\mbox{[}$\,$\mbox{]}, }\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{num\+\_\+bytes}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_bnr_one_a_plus_a97ca2b5823d4a5a6fbdbc15853d5fbe3}\index{BnrOneAPlus@{BnrOneAPlus}!spiSendDataOnly@{spiSendDataOnly}}
+\index{spiSendDataOnly@{spiSendDataOnly}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{spiSendDataOnly()}{spiSendDataOnly()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a97ca2b5823d4a5a6fbdbc15853d5fbe3} 
+void Bnr\+One\+APlus\+::spi\+Send\+Data\+Only (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{command}{, }\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{buffer}{\mbox{[}$\,$\mbox{]}, }\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{num\+\_\+bytes}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_bnr_one_a_plus_a12d075bf0fba7958832f358bd45d0a5b}\index{BnrOneAPlus@{BnrOneAPlus}!stop@{stop}}
+\index{stop@{stop}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a12d075bf0fba7958832f358bd45d0a5b} 
+void Bnr\+One\+APlus\+::stop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+stops the motors 
+
+\Hypertarget{class_bnr_one_a_plus_a467a17d259ea6cfbb9cf16c3c80ad152}\index{BnrOneAPlus@{BnrOneAPlus}!stop1m@{stop1m}}
+\index{stop1m@{stop1m}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{stop1m()}{stop1m()}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a467a17d259ea6cfbb9cf16c3c80ad152} 
+void Bnr\+One\+APlus\+::stop1m (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{motor\+\_\+id}{}\end{DoxyParamCaption}) const}
+
+
+
+stops a single motor by applying the maximum torque 
+
+
+\begin{DoxyParams}{Parameters}
+{\em motor\+\_\+id} & motor id (0 for left, 1 for right) \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_bnr_one_a_plus_a4f2ce5117c962a2c9c354af486fd9a7a}\index{BnrOneAPlus@{BnrOneAPlus}!line\_detector\_@{line\_detector\_}}
+\index{line\_detector\_@{line\_detector\_}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{line\_detector\_}{line\_detector\_}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a4f2ce5117c962a2c9c354af486fd9a7a} 
+\mbox{\hyperlink{class_line_detector}{Line\+Detector}} Bnr\+One\+APlus\+::line\+\_\+detector\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_bnr_one_a_plus_a9bdaa6fba9b3b94836214b5edb0f8382}\index{BnrOneAPlus@{BnrOneAPlus}!sspin\_@{sspin\_}}
+\index{sspin\_@{sspin\_}!BnrOneAPlus@{BnrOneAPlus}}
+\doxysubsubsection{\texorpdfstring{sspin\_}{sspin\_}}
+{\footnotesize\ttfamily \label{class_bnr_one_a_plus_a9bdaa6fba9b3b94836214b5edb0f8382} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Bnr\+One\+APlus\+::sspin\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{_bnr_one_a_plus_8h}{Bnr\+One\+APlus.\+h}}\item 
+src/\mbox{\hyperlink{_bnr_one_a_plus_8cpp}{Bnr\+One\+APlus.\+cpp}}\end{DoxyCompactItemize}

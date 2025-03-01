@@ -1,0 +1,363 @@
+\doxysection{Config Class Reference}
+\hypertarget{class_config}{}\label{class_config}\index{Config@{Config}}
+
+
+{\ttfamily \#include $<$Config.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_config_ac30f811ef221bf1e8b1a889b84041952}{Config}} (\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} eeprom\+\_\+address=100)
+\begin{DoxyCompactList}\small\item\em \doxylink{class_config}{Config} class to store variables for the operation of Botn\+Roll One A. Some variables are read from config. Other variables are computed from values read from config. You can read, modify them in the code and then Save the relevant ones for next time. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_config_a99b19da81af9603ca95103b375d5bd90}{Load}} ()
+\begin{DoxyCompactList}\small\item\em Read EEPROM values \texorpdfstring{$<$}{<}\texorpdfstring{$>$}{>} Ler valores da EEPROM Do not change this order \texorpdfstring{$<$}{<}\texorpdfstring{$>$}{>} Nao alterar a ordem. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_config_a5f33552d79e9cd96ad1a73fcb2e46ff1}{Print}} () const
+\begin{DoxyCompactList}\small\item\em Prints the config values in the serial terminal Note\+: You need to open a terminal serial connection to the Bot\textquotesingle{}n Roll One A with baudrate 115200. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_config_a067fed7363bf3136a7add1e505fbb75a}{Save\+Sensor\+Min}} () const
+\item 
+void \mbox{\hyperlink{class_config_a09bd8ec64faa75b008d8170e27377c8d}{Save\+Sensor\+Max}} () const
+\item 
+void \mbox{\hyperlink{class_config_a74a766e89e446f07f67e2b2115095006}{Save\+Threshold}} () const
+\item 
+void \mbox{\hyperlink{class_config_a45573bfd9bd821eb6c462b247b03d686}{Save\+Correction\+Factor}} () const
+\item 
+void \mbox{\hyperlink{class_config_a4e2fd161d44d6d3987eed3375515c43f}{Save}} () const
+\begin{DoxyCompactList}\small\item\em saves the config values into EEPROM \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_config_a0b9df091c5dbb660da61dc4682735ffa}{Set\+Sensor\+Max}} (const int max\+\_\+values\mbox{[}8\mbox{]})
+\begin{DoxyCompactList}\small\item\em Set the Max Values. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_config_ab1b48e70cd133099dd6a74fa7ab585a2}{Set\+Sensor\+Min}} (const int min\+\_\+values\mbox{[}8\mbox{]})
+\begin{DoxyCompactList}\small\item\em Set the Min Values. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_config_a8d2390b8d17753a6269654979facb284}{Set\+Threshold}} (const int threshold)
+\begin{DoxyCompactList}\small\item\em Set the Threshold. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_config_a86f8621d683fc08ee3ce1dc2da81d6a6}{Set\+Correction\+Factor}} (const int correction\+\_\+factor)
+\begin{DoxyCompactList}\small\item\em Set the Correction Factor. \end{DoxyCompactList}\item 
+const int \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_config_a4a8ecb02fde8142e32356f44220ef329}{Get\+Sensor\+Min}} () const
+\item 
+const int \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{class_config_a37b1a2a0da77143119a5bb3e1c419d72}{Get\+Sensor\+Max}} () const
+\item 
+int \mbox{\hyperlink{class_config_a74f2c8a7974a6aa74c20d4315e06f18e}{Get\+Threshold}} () const
+\item 
+int \mbox{\hyperlink{class_config_accdc5b9736716580b638555400d21838}{Get\+Correction\+Factor}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_config_af858d2142fbaf95567c16b749c7297fe}{Verify\+And\+Correct\+Array}} (int \texorpdfstring{$\ast$}{*}array, const int min, const int max, const int default\+Value)
+\item 
+{\footnotesize template$<$class T$>$ }\\void \mbox{\hyperlink{class_config_aa642cb38e2b3c0346a987379040b716d}{Veriy\+And\+Correct\+Value}} (T \&value, const T min, const T max, const T default\+Value)
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_config_a70971d7f579febde236c75f93841782b}{Load\+Array\+Values}} (\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} eeprom\+\_\+address, int out\+\_\+array\mbox{[}8\mbox{]}) const
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_config_a6db7e3187a2f10bbcf77f70e75acc23f}{Load\+Word}} (\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} eeprom\+\_\+address, int \&out\+\_\+value) const
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_config_ad7fc8d2030586c1ad4df16b33f511054}{Load\+Byte}} (\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} eeprom\+\_\+address, int \&out\+\_\+value) const
+\item 
+void \mbox{\hyperlink{class_config_a5bef4983c50782860b78bd58272f1a52}{Print\+Array}} (const String \&text, const int array\mbox{[}8\mbox{]}) const
+\item 
+void \mbox{\hyperlink{class_config_a5c7183b506291db7b2e37f3b6aab6092}{Print\+Value}} (const String \&text, const int value) const
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_config_a2e0d6b4d85656cd660154f997e55abbe}{Save\+Array\+Values}} (\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} eeprom\+\_\+address, const int array\mbox{[}8\mbox{]}) const
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_config_ab8e543cfde4300cc5d42d356bccdc7d1}{Save\+Word}} (\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} eeprom\+\_\+address, const int value) const
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_config_a2061a2d6c3f8752bdf16030fbc5a7bab}{Save\+Byte}} (\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} eeprom\+\_\+address, const int value) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_config_ac260940d2f993cf2d230658ef2c4baca}{sensor\+\_\+max\+\_\+}} \mbox{[}8\mbox{]} = \{1023, 1023, 1023, 1023, 1023, 1023, 1023, 1023\}
+\item 
+int \mbox{\hyperlink{class_config_a3c1bda7679aea15fa42d3b00e3ca577a}{sensor\+\_\+min\+\_\+}} \mbox{[}8\mbox{]} = \{0, 0, 0, 0, 0, 0, 0, 0\}
+\item 
+int \mbox{\hyperlink{class_config_afc41127bc4d740573e992e2d1f78a251}{threshold\+\_\+}} = 50
+\item 
+int \mbox{\hyperlink{class_config_adaae01f3d1b53629cf52f48cb1780f66}{correction\+\_\+factor\+\_\+}} = 6
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\+\_\+memory\+\_\+address\+\_\+}} = 100
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_config_a1cb7941fea435fa8c7080bcecb9f2718}{sensor\+\_\+max\+\_\+mem\+\_\+add\+\_\+}} = \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\+\_\+memory\+\_\+address\+\_\+}}
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_config_abd2ce49c691724b5c0e1f09ea54d6f7d}{sensor\+\_\+min\+\_\+mem\+\_\+add\+\_\+}} = \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\+\_\+memory\+\_\+address\+\_\+}} + 16
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_config_a7e9bf372258fbb3f7c31ec15dd74e4f2}{threshold\+\_\+mem\+\_\+add\+\_\+}} = \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\+\_\+memory\+\_\+address\+\_\+}} + 32
+\item 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} \mbox{\hyperlink{class_config_a62b0dddbe1af7f12c1687aa71d5df474}{correction\+\_\+factor\+\_\+mem\+\_\+add\+\_\+}} = \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\+\_\+memory\+\_\+address\+\_\+}} + 34
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_config_ac30f811ef221bf1e8b1a889b84041952}\index{Config@{Config}!Config@{Config}}
+\index{Config@{Config}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{Config()}{Config()}}
+{\footnotesize\ttfamily \label{class_config_ac30f811ef221bf1e8b1a889b84041952} 
+Config\+::\+Config (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{eeprom\+\_\+address}{ = {\ttfamily 100}}\end{DoxyParamCaption})}
+
+
+
+\doxylink{class_config}{Config} class to store variables for the operation of Botn\+Roll One A. Some variables are read from config. Other variables are computed from values read from config. You can read, modify them in the code and then Save the relevant ones for next time. 
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_config_accdc5b9736716580b638555400d21838}\index{Config@{Config}!GetCorrectionFactor@{GetCorrectionFactor}}
+\index{GetCorrectionFactor@{GetCorrectionFactor}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{GetCorrectionFactor()}{GetCorrectionFactor()}}
+{\footnotesize\ttfamily \label{class_config_accdc5b9736716580b638555400d21838} 
+int Config\+::\+Get\+Correction\+Factor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_config_a37b1a2a0da77143119a5bb3e1c419d72}\index{Config@{Config}!GetSensorMax@{GetSensorMax}}
+\index{GetSensorMax@{GetSensorMax}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{GetSensorMax()}{GetSensorMax()}}
+{\footnotesize\ttfamily \label{class_config_a37b1a2a0da77143119a5bb3e1c419d72} 
+const int \texorpdfstring{$\ast$}{*} Config\+::\+Get\+Sensor\+Max (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_config_a4a8ecb02fde8142e32356f44220ef329}\index{Config@{Config}!GetSensorMin@{GetSensorMin}}
+\index{GetSensorMin@{GetSensorMin}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{GetSensorMin()}{GetSensorMin()}}
+{\footnotesize\ttfamily \label{class_config_a4a8ecb02fde8142e32356f44220ef329} 
+const int \texorpdfstring{$\ast$}{*} Config\+::\+Get\+Sensor\+Min (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_config_a74f2c8a7974a6aa74c20d4315e06f18e}\index{Config@{Config}!GetThreshold@{GetThreshold}}
+\index{GetThreshold@{GetThreshold}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{GetThreshold()}{GetThreshold()}}
+{\footnotesize\ttfamily \label{class_config_a74f2c8a7974a6aa74c20d4315e06f18e} 
+int Config\+::\+Get\+Threshold (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_config_a99b19da81af9603ca95103b375d5bd90}\index{Config@{Config}!Load@{Load}}
+\index{Load@{Load}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{Load()}{Load()}}
+{\footnotesize\ttfamily \label{class_config_a99b19da81af9603ca95103b375d5bd90} 
+void Config\+::\+Load (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Read EEPROM values \texorpdfstring{$<$}{<}\texorpdfstring{$>$}{>} Ler valores da EEPROM Do not change this order \texorpdfstring{$<$}{<}\texorpdfstring{$>$}{>} Nao alterar a ordem. 
+
+\Hypertarget{class_config_a70971d7f579febde236c75f93841782b}\index{Config@{Config}!LoadArrayValues@{LoadArrayValues}}
+\index{LoadArrayValues@{LoadArrayValues}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{LoadArrayValues()}{LoadArrayValues()}}
+{\footnotesize\ttfamily \label{class_config_a70971d7f579febde236c75f93841782b} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Config\+::\+Load\+Array\+Values (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{eeprom\+\_\+address}{, }\item[{int}]{out\+\_\+array}{\mbox{[}8\mbox{]}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_ad7fc8d2030586c1ad4df16b33f511054}\index{Config@{Config}!LoadByte@{LoadByte}}
+\index{LoadByte@{LoadByte}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{LoadByte()}{LoadByte()}}
+{\footnotesize\ttfamily \label{class_config_ad7fc8d2030586c1ad4df16b33f511054} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Config\+::\+Load\+Byte (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{eeprom\+\_\+address}{, }\item[{int \&}]{out\+\_\+value}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_a6db7e3187a2f10bbcf77f70e75acc23f}\index{Config@{Config}!LoadWord@{LoadWord}}
+\index{LoadWord@{LoadWord}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{LoadWord()}{LoadWord()}}
+{\footnotesize\ttfamily \label{class_config_a6db7e3187a2f10bbcf77f70e75acc23f} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Config\+::\+Load\+Word (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{eeprom\+\_\+address}{, }\item[{int \&}]{out\+\_\+value}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_a5f33552d79e9cd96ad1a73fcb2e46ff1}\index{Config@{Config}!Print@{Print}}
+\index{Print@{Print}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{Print()}{Print()}}
+{\footnotesize\ttfamily \label{class_config_a5f33552d79e9cd96ad1a73fcb2e46ff1} 
+void Config\+::\+Print (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Prints the config values in the serial terminal Note\+: You need to open a terminal serial connection to the Bot\textquotesingle{}n Roll One A with baudrate 115200. 
+
+\Hypertarget{class_config_a5bef4983c50782860b78bd58272f1a52}\index{Config@{Config}!PrintArray@{PrintArray}}
+\index{PrintArray@{PrintArray}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{PrintArray()}{PrintArray()}}
+{\footnotesize\ttfamily \label{class_config_a5bef4983c50782860b78bd58272f1a52} 
+void Config\+::\+Print\+Array (\begin{DoxyParamCaption}\item[{const String \&}]{text}{, }\item[{const int}]{array}{\mbox{[}8\mbox{]}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_a5c7183b506291db7b2e37f3b6aab6092}\index{Config@{Config}!PrintValue@{PrintValue}}
+\index{PrintValue@{PrintValue}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{PrintValue()}{PrintValue()}}
+{\footnotesize\ttfamily \label{class_config_a5c7183b506291db7b2e37f3b6aab6092} 
+void Config\+::\+Print\+Value (\begin{DoxyParamCaption}\item[{const String \&}]{text}{, }\item[{const int}]{value}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_a4e2fd161d44d6d3987eed3375515c43f}\index{Config@{Config}!Save@{Save}}
+\index{Save@{Save}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{Save()}{Save()}}
+{\footnotesize\ttfamily \label{class_config_a4e2fd161d44d6d3987eed3375515c43f} 
+void Config\+::\+Save (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+saves the config values into EEPROM 
+
+\Hypertarget{class_config_a2e0d6b4d85656cd660154f997e55abbe}\index{Config@{Config}!SaveArrayValues@{SaveArrayValues}}
+\index{SaveArrayValues@{SaveArrayValues}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{SaveArrayValues()}{SaveArrayValues()}}
+{\footnotesize\ttfamily \label{class_config_a2e0d6b4d85656cd660154f997e55abbe} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Config\+::\+Save\+Array\+Values (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{eeprom\+\_\+address}{, }\item[{const int}]{array}{\mbox{[}8\mbox{]}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_a2061a2d6c3f8752bdf16030fbc5a7bab}\index{Config@{Config}!SaveByte@{SaveByte}}
+\index{SaveByte@{SaveByte}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{SaveByte()}{SaveByte()}}
+{\footnotesize\ttfamily \label{class_config_a2061a2d6c3f8752bdf16030fbc5a7bab} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Config\+::\+Save\+Byte (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{eeprom\+\_\+address}{, }\item[{const int}]{value}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_a45573bfd9bd821eb6c462b247b03d686}\index{Config@{Config}!SaveCorrectionFactor@{SaveCorrectionFactor}}
+\index{SaveCorrectionFactor@{SaveCorrectionFactor}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{SaveCorrectionFactor()}{SaveCorrectionFactor()}}
+{\footnotesize\ttfamily \label{class_config_a45573bfd9bd821eb6c462b247b03d686} 
+void Config\+::\+Save\+Correction\+Factor (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_config_a09bd8ec64faa75b008d8170e27377c8d}\index{Config@{Config}!SaveSensorMax@{SaveSensorMax}}
+\index{SaveSensorMax@{SaveSensorMax}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{SaveSensorMax()}{SaveSensorMax()}}
+{\footnotesize\ttfamily \label{class_config_a09bd8ec64faa75b008d8170e27377c8d} 
+void Config\+::\+Save\+Sensor\+Max (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_config_a067fed7363bf3136a7add1e505fbb75a}\index{Config@{Config}!SaveSensorMin@{SaveSensorMin}}
+\index{SaveSensorMin@{SaveSensorMin}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{SaveSensorMin()}{SaveSensorMin()}}
+{\footnotesize\ttfamily \label{class_config_a067fed7363bf3136a7add1e505fbb75a} 
+void Config\+::\+Save\+Sensor\+Min (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_config_a74a766e89e446f07f67e2b2115095006}\index{Config@{Config}!SaveThreshold@{SaveThreshold}}
+\index{SaveThreshold@{SaveThreshold}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{SaveThreshold()}{SaveThreshold()}}
+{\footnotesize\ttfamily \label{class_config_a74a766e89e446f07f67e2b2115095006} 
+void Config\+::\+Save\+Threshold (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_config_ab8e543cfde4300cc5d42d356bccdc7d1}\index{Config@{Config}!SaveWord@{SaveWord}}
+\index{SaveWord@{SaveWord}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{SaveWord()}{SaveWord()}}
+{\footnotesize\ttfamily \label{class_config_ab8e543cfde4300cc5d42d356bccdc7d1} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Config\+::\+Save\+Word (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}}}]{eeprom\+\_\+address}{, }\item[{const int}]{value}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_a86f8621d683fc08ee3ce1dc2da81d6a6}\index{Config@{Config}!SetCorrectionFactor@{SetCorrectionFactor}}
+\index{SetCorrectionFactor@{SetCorrectionFactor}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{SetCorrectionFactor()}{SetCorrectionFactor()}}
+{\footnotesize\ttfamily \label{class_config_a86f8621d683fc08ee3ce1dc2da81d6a6} 
+void Config\+::\+Set\+Correction\+Factor (\begin{DoxyParamCaption}\item[{const int}]{correction\+\_\+factor}{}\end{DoxyParamCaption})}
+
+
+
+Set the Correction Factor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em correction\+\_\+factor} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_config_a0b9df091c5dbb660da61dc4682735ffa}\index{Config@{Config}!SetSensorMax@{SetSensorMax}}
+\index{SetSensorMax@{SetSensorMax}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{SetSensorMax()}{SetSensorMax()}}
+{\footnotesize\ttfamily \label{class_config_a0b9df091c5dbb660da61dc4682735ffa} 
+void Config\+::\+Set\+Sensor\+Max (\begin{DoxyParamCaption}\item[{const int}]{max\+\_\+values}{\mbox{[}8\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+Set the Max Values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\+\_\+values} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_config_ab1b48e70cd133099dd6a74fa7ab585a2}\index{Config@{Config}!SetSensorMin@{SetSensorMin}}
+\index{SetSensorMin@{SetSensorMin}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{SetSensorMin()}{SetSensorMin()}}
+{\footnotesize\ttfamily \label{class_config_ab1b48e70cd133099dd6a74fa7ab585a2} 
+void Config\+::\+Set\+Sensor\+Min (\begin{DoxyParamCaption}\item[{const int}]{min\+\_\+values}{\mbox{[}8\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+Set the Min Values. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em min\+\_\+values} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_config_a8d2390b8d17753a6269654979facb284}\index{Config@{Config}!SetThreshold@{SetThreshold}}
+\index{SetThreshold@{SetThreshold}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{SetThreshold()}{SetThreshold()}}
+{\footnotesize\ttfamily \label{class_config_a8d2390b8d17753a6269654979facb284} 
+void Config\+::\+Set\+Threshold (\begin{DoxyParamCaption}\item[{const int}]{threshold}{}\end{DoxyParamCaption})}
+
+
+
+Set the Threshold. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em threshold} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_config_af858d2142fbaf95567c16b749c7297fe}\index{Config@{Config}!VerifyAndCorrectArray@{VerifyAndCorrectArray}}
+\index{VerifyAndCorrectArray@{VerifyAndCorrectArray}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{VerifyAndCorrectArray()}{VerifyAndCorrectArray()}}
+{\footnotesize\ttfamily \label{class_config_af858d2142fbaf95567c16b749c7297fe} 
+void Config\+::\+Verify\+And\+Correct\+Array (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{array}{, }\item[{const int}]{min}{, }\item[{const int}]{max}{, }\item[{const int}]{default\+Value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_aa642cb38e2b3c0346a987379040b716d}\index{Config@{Config}!VeriyAndCorrectValue@{VeriyAndCorrectValue}}
+\index{VeriyAndCorrectValue@{VeriyAndCorrectValue}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{VeriyAndCorrectValue()}{VeriyAndCorrectValue()}}
+{\footnotesize\ttfamily \label{class_config_aa642cb38e2b3c0346a987379040b716d} 
+template$<$class T$>$ \\
+void Config\+::\+Veriy\+And\+Correct\+Value (\begin{DoxyParamCaption}\item[{T \&}]{value}{, }\item[{const T}]{min}{, }\item[{const T}]{max}{, }\item[{const T}]{default\+Value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_config_adaae01f3d1b53629cf52f48cb1780f66}\index{Config@{Config}!correction\_factor\_@{correction\_factor\_}}
+\index{correction\_factor\_@{correction\_factor\_}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{correction\_factor\_}{correction\_factor\_}}
+{\footnotesize\ttfamily \label{class_config_adaae01f3d1b53629cf52f48cb1780f66} 
+int Config\+::correction\+\_\+factor\+\_\+ = 6\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_a62b0dddbe1af7f12c1687aa71d5df474}\index{Config@{Config}!correction\_factor\_mem\_add\_@{correction\_factor\_mem\_add\_}}
+\index{correction\_factor\_mem\_add\_@{correction\_factor\_mem\_add\_}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{correction\_factor\_mem\_add\_}{correction\_factor\_mem\_add\_}}
+{\footnotesize\ttfamily \label{class_config_a62b0dddbe1af7f12c1687aa71d5df474} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Config\+::correction\+\_\+factor\+\_\+mem\+\_\+add\+\_\+ = \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\+\_\+memory\+\_\+address\+\_\+}} + 34\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_a0c7ba9896b1e31a503fa7156cf223a20}\index{Config@{Config}!init\_memory\_address\_@{init\_memory\_address\_}}
+\index{init\_memory\_address\_@{init\_memory\_address\_}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{init\_memory\_address\_}{init\_memory\_address\_}}
+{\footnotesize\ttfamily \label{class_config_a0c7ba9896b1e31a503fa7156cf223a20} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Config\+::init\+\_\+memory\+\_\+address\+\_\+ = 100\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_ac260940d2f993cf2d230658ef2c4baca}\index{Config@{Config}!sensor\_max\_@{sensor\_max\_}}
+\index{sensor\_max\_@{sensor\_max\_}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{sensor\_max\_}{sensor\_max\_}}
+{\footnotesize\ttfamily \label{class_config_ac260940d2f993cf2d230658ef2c4baca} 
+int Config\+::sensor\+\_\+max\+\_\+\mbox{[}8\mbox{]} = \{1023, 1023, 1023, 1023, 1023, 1023, 1023, 1023\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_a1cb7941fea435fa8c7080bcecb9f2718}\index{Config@{Config}!sensor\_max\_mem\_add\_@{sensor\_max\_mem\_add\_}}
+\index{sensor\_max\_mem\_add\_@{sensor\_max\_mem\_add\_}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{sensor\_max\_mem\_add\_}{sensor\_max\_mem\_add\_}}
+{\footnotesize\ttfamily \label{class_config_a1cb7941fea435fa8c7080bcecb9f2718} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Config\+::sensor\+\_\+max\+\_\+mem\+\_\+add\+\_\+ = \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\+\_\+memory\+\_\+address\+\_\+}}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_a3c1bda7679aea15fa42d3b00e3ca577a}\index{Config@{Config}!sensor\_min\_@{sensor\_min\_}}
+\index{sensor\_min\_@{sensor\_min\_}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{sensor\_min\_}{sensor\_min\_}}
+{\footnotesize\ttfamily \label{class_config_a3c1bda7679aea15fa42d3b00e3ca577a} 
+int Config\+::sensor\+\_\+min\+\_\+\mbox{[}8\mbox{]} = \{0, 0, 0, 0, 0, 0, 0, 0\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_abd2ce49c691724b5c0e1f09ea54d6f7d}\index{Config@{Config}!sensor\_min\_mem\_add\_@{sensor\_min\_mem\_add\_}}
+\index{sensor\_min\_mem\_add\_@{sensor\_min\_mem\_add\_}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{sensor\_min\_mem\_add\_}{sensor\_min\_mem\_add\_}}
+{\footnotesize\ttfamily \label{class_config_abd2ce49c691724b5c0e1f09ea54d6f7d} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Config\+::sensor\+\_\+min\+\_\+mem\+\_\+add\+\_\+ = \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\+\_\+memory\+\_\+address\+\_\+}} + 16\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_afc41127bc4d740573e992e2d1f78a251}\index{Config@{Config}!threshold\_@{threshold\_}}
+\index{threshold\_@{threshold\_}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{threshold\_}{threshold\_}}
+{\footnotesize\ttfamily \label{class_config_afc41127bc4d740573e992e2d1f78a251} 
+int Config\+::threshold\+\_\+ = 50\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_config_a7e9bf372258fbb3f7c31ec15dd74e4f2}\index{Config@{Config}!threshold\_mem\_add\_@{threshold\_mem\_add\_}}
+\index{threshold\_mem\_add\_@{threshold\_mem\_add\_}!Config@{Config}}
+\doxysubsubsection{\texorpdfstring{threshold\_mem\_add\_}{threshold\_mem\_add\_}}
+{\footnotesize\ttfamily \label{class_config_a7e9bf372258fbb3f7c31ec15dd74e4f2} 
+\mbox{\hyperlink{_config_8h_a3eca60932ee4119828944ccd69a6272b}{byte}} Config\+::threshold\+\_\+mem\+\_\+add\+\_\+ = \mbox{\hyperlink{class_config_a0c7ba9896b1e31a503fa7156cf223a20}{init\+\_\+memory\+\_\+address\+\_\+}} + 32\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/utility/\mbox{\hyperlink{_config_8h}{Config.\+h}}\item 
+src/utility/\mbox{\hyperlink{_config_8cpp}{Config.\+cpp}}\end{DoxyCompactItemize}

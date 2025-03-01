@@ -1,0 +1,33 @@
+\doxysection{Bnr\+Compass.\+h}
+\hypertarget{_bnr_compass_8h_source}{}\label{_bnr_compass_8h_source}\index{src/BnrCompass.h@{src/BnrCompass.h}}
+\mbox{\hyperlink{_bnr_compass_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ BnrCompass.h\ -\/\ Library\ for\ interfacing\ with\ the\ Compass\ for\ Bot'n\ Roll\ ONE\ A}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ \ Plus\ (www.botnroll.com)\ Created\ by\ José\ \ Cruz,\ February\ 20,\ 2025.\ v\_1.0.0}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ Released\ into\ the\ public\ domain.}}
+\DoxyCodeLine{00005\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}Arduino.h"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_bnr_compass_ae9c5e8d231f3d34c0b84fab7cfc1f9a1}{BnrCompass}}\ \{}
+\DoxyCodeLine{00012\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ /********************************}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ *\ @brief\ \ setup\ routines\ \ \ \ \ \ \ \ *}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ *********************************/}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00023\ \ \ \mbox{\hyperlink{class_bnr_compass_ae9c5e8d231f3d34c0b84fab7cfc1f9a1}{BnrCompass}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{byte}\ sensor\_address);\ \ \textcolor{comment}{//\ Enable\ I2C\ communication}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{class_bnr_compass_a20cda727a56aca558c04f1298ee7fcd0}{readBearing}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{class_bnr_compass_afad57310996da178f75ae22d82d771bd}{readRoll}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00044\ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{class_bnr_compass_a18beb4ddb98c0179bade3f3259707b91}{readPitch}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{byte}\ \mbox{\hyperlink{class_bnr_compass_ad12b891f44e46c1eacf214bc27d53b2c}{sensor\_address\_}};}
+\DoxyCodeLine{00048\ \};}
+
+\end{DoxyCode}
