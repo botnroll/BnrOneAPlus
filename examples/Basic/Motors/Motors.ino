@@ -63,7 +63,7 @@ void stop(const int time) {
 
 void brake(const int torque, const int time) {
   one.lcd2("     Brake    ");
-  one.brake();  // Stop motors with torque
+  one.brake(torque, torque);  // Stop motors with torque
   delay(time);
 }
 
