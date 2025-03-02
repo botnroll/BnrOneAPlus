@@ -111,7 +111,7 @@ class WheelSpeeds {
 
 /**
  * @class ControlUtils
- * @brief Collection of utility methods to compute speeds, distances, and
+ * @brief Collection of utils methods to compute speeds, distances, and
  * pulses.
  */
 class ControlUtils {

@@ -22,8 +22,8 @@
 #include <Arduino.h>  // Include Arduino library for Serial
 #include <BnrOneAPlus.h>
 
-#include "utility/ControlUtils.h"
-#include "utility/RobotParams.h"
+#include "utils/ControlUtils.h"
+#include "utils/RobotParams.h"
 
 #define STRAIGHT_MOTION 32767
 #define TICKS_LEFT_LOW_SPEED 4000

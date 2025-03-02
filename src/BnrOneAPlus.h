@@ -10,7 +10,7 @@
 #include <string.h>
 
 #include "Arduino.h"
-#include "utility/LineDetector.h"
+#include "utils/LineDetector.h"
 
 class BnrOneAPlus {
  public:

@@ -11,7 +11,7 @@
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
 
-#include "utility/ShapeGenerator.h"
+#include "utils/ShapeGenerator.h"
 
 // Constants definition
 #define SSPIN 2                 // Slave Select (SS) pin for SPI communication
