@@ -163,7 +163,7 @@ class MotionGeneratorTest {
 
 MotionGeneratorTest one_mg(one, SLIP_FACTOR);
 
-void moveStraight() { one_mg.moveStraightAtSpeed(500); }
+void moveStraight() { one_mg.moveStraightAtSpeed(300); }
 
 void setup() {
   Serial.begin(115200);   // Set baud rate to 115200bps for printing values at
@@ -177,7 +177,7 @@ void setup() {
   delay(3000);
   Serial.println("Go");
   moveStraight();
-  one.stop();
+  one.brake(100, 100);
   Serial.end();
 }
 
