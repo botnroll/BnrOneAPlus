@@ -89,7 +89,7 @@ class MotionGenerator {
    * @param radius_of_curvature_mm Radius of curvature.
    * @param slow_down_thresh Threshold for slowing down.
    */
-  void moveAndSlowDown(const float total_pulses,
+  void moveAndSlowDown(const long int total_pulses,
                        const float speed = 50,
                        const int direction = 1,
                        const float radius_of_curvature_mm = 0,

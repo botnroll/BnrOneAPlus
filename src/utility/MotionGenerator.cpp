@@ -9,10 +9,9 @@
 #define TICKS_LEFT_LOW_SPEED 4000
 #define MIN_SPEED_MMPS 100
 
-MotionGenerator::MotionGenerator(
-    const BnrOneAPlus& one,
-    const float slip_factor,
-    const RobotParams& robot_params = RobotParams())
+MotionGenerator::MotionGenerator(const BnrOneAPlus& one,
+                                 const float slip_factor,
+                                 const RobotParams& robot_params)
     : one_(one),
       slip_factor_(slip_factor),
       axis_length_mm_(robot_params.axis_length_mm),
@@ -97,8 +96,8 @@ float MotionGenerator::applySlip(const float value) const {
 
 void MotionGenerator::moveStraightAtSpeed(
     const float distance,
-    const float speed = 200,
-    const float slow_down_distance = 0) const {
+    const float speed,
+    const float slow_down_distance) const {
   float abs_distance = abs(distance);
   auto total_pulses = cut_.computePulsesFromDistance(abs_distance);
   total_pulses = applySlip(total_pulses);

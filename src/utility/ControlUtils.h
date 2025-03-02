@@ -282,10 +282,10 @@ class ControlUtils {
   WheelSpeeds computeSpeedsRpm(const WheelSpeeds& wheel_speeds_mmps) const;
 
  private:
-  float axis_length_mm;       ///< Axis length in millimeters.
-  float wheel_diameter_mm;    ///< Wheel diameter in millimeters.
-  int pulses_per_rev;         ///< Number of pulses per revolution.
-  float max_speed_mmps;       ///< Maximum speed in millimeters per second.
-  float min_speed_mmps;       ///< Minimum speed in millimeters per second.
+  float axis_length_mm_;      ///< Axis length in millimeters.
+  float wheel_diameter_mm_;   ///< Wheel diameter in millimeters.
+  int pulses_per_rev_;        ///< Number of pulses per revolution.
+  float max_speed_mmps_;      ///< Maximum speed in millimeters per second.
+  float min_speed_mmps_;      ///< Minimum speed in millimeters per second.
   float spot_rotation_delta;  ///< Correction for spot rotations.
 };

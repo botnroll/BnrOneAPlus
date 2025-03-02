@@ -34,14 +34,14 @@ float WheelSpeeds::getRight() const { return right; }
 // ControlUtils class implementation
 ControlUtils::ControlUtils(const RobotParams& params,
                            const float min_speed_mmps)
-    : axis_length_mm(params.axis_length_mm),
-      wheel_diameter_mm(params.wheel_diameter_mm),
-      pulses_per_rev(params.pulses_per_rev),
-      max_speed_mmps(params.max_speed_rpm * PI * wheel_diameter_mm / 60),
-      min_speed_mmps(min_speed_mmps),
+    : axis_length_mm_(params.axis_length_mm),
+      wheel_diameter_mm_(params.wheel_diameter_mm),
+      pulses_per_rev_(params.pulses_per_rev),
+      max_speed_mmps_(params.max_speed_rpm * PI * wheel_diameter_mm_ / 60),
+      min_speed_mmps_(min_speed_mmps),
       spot_rotation_delta(0) {}
 
-float ControlUtils::getAxisLengthMm() const { return axis_length_mm; }
+float ControlUtils::getAxisLengthMm() const { return axis_length_mm_; }
 
 float ControlUtils::convertRange(const float x_value,
                                  const float x_min,
@@ -62,11 +62,11 @@ float ControlUtils::convertRange(const float x_value,
 }
 
 float ControlUtils::computeRevFromPulses(const int pulses) const {
-  return static_cast<float>(pulses) / pulses_per_rev;
+  return static_cast<float>(pulses) / pulses_per_rev_;
 }
 
 float ControlUtils::computeDistanceFromRev(const float revolutions) const {
-  return PI * wheel_diameter_mm * revolutions;
+  return PI * wheel_diameter_mm_ * revolutions;
 }
 
 float ControlUtils::computeDistanceFromPulses(const int pulses) const {
@@ -93,21 +93,23 @@ float ControlUtils::computeDistanceFromSpeed(const float speed_mmps,
 
 float ControlUtils::computeRevolutionsFromDistance(
     const float distance_mm) const {
-  const float perimeter_of_circle = PI * wheel_diameter_mm;
+  const float perimeter_of_circle = PI * wheel_diameter_mm_;
   return distance_mm / perimeter_of_circle;
 }
 
 float ControlUtils::computeArcLength(const float angle_rad,
                                      const float radius_of_curvature_mm) const {
+  float arc_length_mm = 0.0;
   if (abs(radius_of_curvature_mm) > 0.1) {
-    return angle_rad * radius_of_curvature_mm;
+    arc_length_mm = angle_rad * radius_of_curvature_mm;
   } else {
-    return 0.0;
+    arc_length_mm = (angle_rad * (float)axis_length_mm_) / 2.0;
   }
+  return arc_length_mm;
 }
 
 int ControlUtils::computePulsesFromRev(const float revolutions) const {
-  return static_cast<int>(round(pulses_per_rev * revolutions));
+  return static_cast<int>(round(pulses_per_rev_ * revolutions));
 }
 
 int ControlUtils::computePulsesFromSpeed(const float speed_mmps,
@@ -130,34 +132,34 @@ int ControlUtils::computePulsesFromAngleAndCurvature(
 }
 
 float ControlUtils::convertToMmps(const float desired_speed_percentage) const {
-  return (desired_speed_percentage / 100.0) * max_speed_mmps;
+  return (desired_speed_percentage / 100.0) * max_speed_mmps_;
 }
 
 float ControlUtils::convertToPercentage(const float desired_speed_mmps) const {
-  return (desired_speed_mmps / max_speed_mmps) * 100.0;
+  return (desired_speed_mmps / max_speed_mmps_) * 100.0;
 }
 
 PoseSpeeds ControlUtils::computePoseSpeeds(const float left_speed,
                                            const float right_speed) const {
   const float linear_speed = (left_speed + right_speed) / 2.0;
-  const float angular_speed = (right_speed - left_speed) / axis_length_mm;
+  const float angular_speed = (right_speed - left_speed) / axis_length_mm_;
   return PoseSpeeds(linear_speed, angular_speed);
 }
 
 WheelSpeeds ControlUtils::computeWheelSpeeds(
     const float linear_speed, const float angular_speed_rad) const {
   const float left_speed =
-      linear_speed - (angular_speed_rad * axis_length_mm / 2.0);
+      linear_speed - (angular_speed_rad * axis_length_mm_ / 2.0);
   const float right_speed =
-      linear_speed + (angular_speed_rad * axis_length_mm / 2.0);
+      linear_speed + (angular_speed_rad * axis_length_mm_ / 2.0);
   return WheelSpeeds(left_speed, right_speed);
 }
 
 WheelSpeeds ControlUtils::computeSpeedsRpm(
     const WheelSpeeds& wheel_speeds_mmps) const {
   const auto left_rpm =
-      (wheel_speeds_mmps.getLeft() * 60) / (wheel_diameter_mm * PI);
+      (wheel_speeds_mmps.getLeft() * 60) / (wheel_diameter_mm_ * PI);
   const auto right_rpm =
-      (wheel_speeds_mmps.getRight() * 60) / (wheel_diameter_mm * PI);
+      (wheel_speeds_mmps.getRight() * 60) / (wheel_diameter_mm_ * PI);
   return WheelSpeeds(left_rpm, right_rpm);
 }
