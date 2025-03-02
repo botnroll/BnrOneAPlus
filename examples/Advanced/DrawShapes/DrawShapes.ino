@@ -10,7 +10,7 @@
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
 #include <SPI.h>  // SPI communication library required by BnrOneAPlus.cpp
 
-#include "ShapeGenerator.h"
+#include "utility/ShapeGenerator.h"
 
 // Constants definition
 #define SSPIN 2                 // Slave Select (SS) pin for SPI communication
@@ -34,7 +34,8 @@ void setup() {
   one.stop();             // Stop motors
   one.setMinBatteryV(MINIMUM_BATTERY_V);  // Battery discharge protection
   one.setPid(2200, 245, 60);  // Set PID parameters for robot movement
-
+  one.lcd1("  Draw Shapes   ");
+  one.lcd2("www.botnroll.com");
   Serial.println("Get ready");
   delay(3000);
   Serial.println("Go");
