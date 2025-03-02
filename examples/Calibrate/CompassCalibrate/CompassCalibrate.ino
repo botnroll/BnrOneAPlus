@@ -20,8 +20,8 @@
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
-#define SSPIN 2  // Slave Select (SS) pin for SPI communication
-#define CMPS_ADDRESS 0x60  // Define CMPS_ADDRESS of CMPS11
+#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
+#define CMPS_ADDRESS 0x60       // Define CMPS_ADDRESS of CMPS11
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 void setup() {
@@ -43,9 +43,8 @@ float readBearing() {
   Wire.write(2);  // Send the register we wish to start reading from
   Wire.endTransmission();
 
-  Wire.requestFrom(CMPS_ADDRESS, 2);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 2)
-    ;  // Wait for bytes to become available
+  Wire.requestFrom((int)CMPS_ADDRESS, (int)2);  // Request 4 bytes from CMPS11
+  while (Wire.available() < 2);  // Wait for bytes to become available
   high_byte = Wire.read();
   low_byte = Wire.read();
 
@@ -60,9 +59,8 @@ char readRoll() {
   Wire.write(5);  // Send the register we wish to start reading from
   Wire.endTransmission();
 
-  Wire.requestFrom(CMPS_ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1)
-    ;  // Wait for bytes to become available
+  Wire.requestFrom((int)CMPS_ADDRESS, (int)1);  // Request 4 bytes from CMPS11
+  while (Wire.available() < 1);  // Wait for bytes to become available
   roll = Wire.read();
   return roll;
 }
@@ -75,9 +73,8 @@ char readPitch() {
   Wire.write(4);  // Send the register we wish to start reading from
   Wire.endTransmission();
 
-  Wire.requestFrom(CMPS_ADDRESS, 1);  // Request 4 bytes from CMPS11
-  while (Wire.available() < 1)
-    ;  // Wait for bytes to become available
+  Wire.requestFrom((int)CMPS_ADDRESS, (int)1);  // Request 4 bytes from CMPS11
+  while (Wire.available() < 1);  // Wait for bytes to become available
   pitch = Wire.read();
 
   return pitch;

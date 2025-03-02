@@ -14,8 +14,8 @@ BnrColorSensor::BnrColorSensor(const byte sensor_address) {
 }
 
 void BnrColorSensor::i2cSendData(const byte command,
-                                 byte buffer[],
-                                 const byte num_bytes) {
+                                 const byte buffer[],
+                                 const byte num_bytes) const {
   Wire.beginTransmission(sensor_address_);  // transmit to device #0x10
   Wire.write(command);                      // sends one byte
   for (int k = 0; k < num_bytes; k++) {
@@ -26,7 +26,7 @@ void BnrColorSensor::i2cSendData(const byte command,
 
 void BnrColorSensor::request2Bytes(const byte command,
                                    byte& byte1,
-                                   byte& byte2) {
+                                   byte& byte2) const {
   byte data[2] = {0, 0};
   int i = 0;
   Wire.beginTransmission(sensor_address_);  // transmit to device
@@ -45,7 +45,7 @@ void BnrColorSensor::request2Bytes(const byte command,
 void BnrColorSensor::request3Bytes(const byte command,
                                    byte& byte1,
                                    byte& byte2,
-                                   byte& byte3) {
+                                   byte& byte3) const {
   byte data[3] = {0, 0, 0};
   int i = 0;
   Wire.beginTransmission(sensor_address_);  // transmit to device
@@ -66,13 +66,13 @@ void BnrColorSensor::request3Bytes(const byte command,
 // setup routines
 ///////////////////////////////////////////////////////////////////////
 void BnrColorSensor::setSensorAddress(const byte new_address) {
-  byte buffer[] = {new_address, KEY1, new_address, KEY2};
+  const byte buffer[] = {new_address, KEY1, new_address, KEY2};
   i2cSendData(COMMAND_ADDRESS_CFG, buffer, sizeof(buffer));
   sensor_address_ = new_address;
   delay(2);
 }
 void BnrColorSensor::setRgbStatus(const byte status) const {
-  byte buffer[] = {status, KEY1, status, KEY2};
+  const byte buffer[] = {status, KEY1, status, KEY2};
   i2cSendData(COMMAND_RGB_CFG, buffer, sizeof(buffer));
   delay(2);
 }
@@ -87,7 +87,7 @@ void BnrColorSensor::readFirmware(byte& firm1, byte& firm2) const {
   firm2 = value[1];
 }
 
-void BnrColorSensor::readRGBL(byte& red, byte& green, byte& blue) {
+void BnrColorSensor::readRGBL(byte& red, byte& green, byte& blue) const {
   byte value[3] = {0};
   request3Bytes(COMMAND_RGBL, value[0], value[1], value[2]);
   red = value[0];
@@ -95,7 +95,7 @@ void BnrColorSensor::readRGBL(byte& red, byte& green, byte& blue) {
   blue = value[2];
 }
 
-void BnrColorSensor::readRGBR(byte& red, byte& green, byte& blue) {
+void BnrColorSensor::readRGBR(byte& red, byte& green, byte& blue) const {
   byte value[3] = {0};
   request3Bytes(COMMAND_RGBR, value[0], value[1], value[2]);
   red = value[0];

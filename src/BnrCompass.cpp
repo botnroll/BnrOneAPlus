@@ -24,7 +24,8 @@ float BnrCompass::readBearing() const {
   Wire.write(2);  // Send the register we wish to start reading from
   Wire.endTransmission();
 
-  Wire.requestFrom(sensor_address_, 2);  // Request 4 bytes from CMPS11
+  Wire.requestFrom((int)sensor_address_,
+                   (int)2);  // Request 2 bytes from CMPS11
 
   unsigned long startTime = millis();
   while (Wire.available() < 2) {
@@ -46,7 +47,7 @@ char BnrCompass::readRoll() const {
   Wire.write(5);  // Send the register we wish to start reading from
   Wire.endTransmission();
 
-  Wire.requestFrom(sensor_address_, 1);  // Request 4 bytes from CMPS11
+  Wire.requestFrom((int)sensor_address_, (int)1);  // Request 1 byte from CMPS11
   unsigned long startTime = millis();
   while (Wire.available() < 1) {
     if (millis() - startTime > 100) {  // Timeout after 100ms
@@ -66,7 +67,7 @@ char BnrCompass::readPitch() const {
   Wire.write(4);  // Send the register we wish to start reading from
   Wire.endTransmission();
 
-  Wire.requestFrom(sensor_address_, 1);  // Request 4 bytes from CMPS11
+  Wire.requestFrom((int)sensor_address_, (int)1);  // Request 1 byte from CMPS11
   unsigned long startTime = millis();
   while (Wire.available() < 1) {
     if (millis() - startTime > 100) {  // Timeout after 100ms

@@ -76,7 +76,7 @@ class BnrColorSensor {
    * @param byte* Blue Value
    * @return void
    */
-  void readRGBL(byte &, byte &, byte &);
+  void readRGBL(byte &, byte &, byte &) const;
 
   /**
    * @brief Reads the current RGB values of the right Sensor and writes it on
@@ -87,7 +87,7 @@ class BnrColorSensor {
    * @param byte* Blue Value
    * @return void
    */
-  void readRGBR(byte &, byte &, byte &);
+  void readRGBR(byte &, byte &, byte &) const;
 
  private:
   /**
@@ -98,7 +98,9 @@ class BnrColorSensor {
    * @param byte numBytes - Number of bytes to be sent
    * @return void
    */
-  void i2cSendData(const byte command, byte buffer[], const byte numBytes);
+  void i2cSendData(const byte command,
+                   const byte buffer[],
+                   const byte numBytes) const;
 
   /**
    * @brief Requests 2 bytes from the Color Sensor
@@ -108,7 +110,7 @@ class BnrColorSensor {
    * @param byte* - byte to be written
    * @return void
    */
-  void request2Bytes(const byte, byte &, byte &);
+  void request2Bytes(const byte, byte &, byte &) const;
 
   /**
    * @brief Requests 2 bytes from the Color Sensor
@@ -119,7 +121,7 @@ class BnrColorSensor {
    * @param byte* - byte to be written
    * @return void
    */
-  void request3Bytes(const byte, byte &, byte &, byte &);
+  void request3Bytes(const byte, byte &, byte &, byte &) const;
 
   byte sensor_address_;
 };
