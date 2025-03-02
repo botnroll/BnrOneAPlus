@@ -63,17 +63,6 @@ class ShapeGenerator {
                const float speed = 200) const;
 
   /**
-   * @brief Describes a rounded polygon shaped motion given the side length and
-   * the number of sides.
-   * @param side_mm Length of each side in millimeters.
-   * @param num_sides Number of sides of the polygon.
-   * @param speed Speed to move at.
-   */
-  void roundedPolygon(const float side_mm,
-                      const int num_sides,
-                      const float speed = 200) const;
-
-  /**
    * @brief Moves by describing a triangular motion with the given side length.
    * @param side_mm Length of each side in millimeters.
    * @param speed Speed to move at.

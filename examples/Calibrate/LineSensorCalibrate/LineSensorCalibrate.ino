@@ -92,7 +92,6 @@
  */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A library
-#include <EEPROM.h>       // EEPROM reading and writing
 #include <SPI.h>          // SPI communication library required by BnrOne.cpp
 
 // constants definitions
@@ -420,7 +419,7 @@ void calibrateCorrectionFactor() {
         waitButtonRelease();
         break;
     }
-    int reading = one.readLineSensor();
+    const auto reading = one.readLineSensor();
     int lineValue = lineDetector.ComputeLine(reading);
     one.lcd1("   Line: ", lineValue);
     one.lcd2(" Factor: ", factor);
@@ -544,7 +543,7 @@ void setup() {
 
 void loop() {
   const int line = one.readLine();  // Read line <> Ler a linha
-  while (True) {
+  while (true) {
     printValue(" Line: ", line);
     // printMsg values on the LCD <> Apresenta valores no LCD
     one.lcd1("     Line:");

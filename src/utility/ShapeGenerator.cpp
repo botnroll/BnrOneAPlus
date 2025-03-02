@@ -35,16 +35,6 @@ void ShapeGenerator::polygon(const float side_mm,
   }
 }
 
-void ShapeGenerator::roundedPolygon(const float side_mm,
-                                    const int num_sides,
-                                    const float speed) const {
-  float angle_deg = 180 - ((num_sides - 2) * 180.0) / num_sides;
-  for (int i = 0; i < num_sides; ++i) {
-    mg_.moveStraightAtSpeed(side_mm, speed);
-    mg_.rotateAngleDegAtSpeed(90, speed, 80, 0);
-  }
-}
-
 void ShapeGenerator::triangle(const float side_mm, const float speed) const {
   polygon(side_mm, 3, speed);
 }
