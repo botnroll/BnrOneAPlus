@@ -50,7 +50,6 @@ PoseSpeeds MotionGenerator::maybeSlowDown(const PoseSpeeds& pose_speeds,
     float ratio = pulses_remaining / TICKS_LEFT_LOW_SPEED;
     float slow_speed = speed * ratio;
     slow_speed = max(MIN_SPEED_MMPS, slow_speed);  // Cap to min speed
-    linear_speed = slow_speed;
     return computePoseSpeeds(slow_speed, radius_of_curvature_mm, direction);
   }
   return pose_speeds;
