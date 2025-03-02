@@ -1,6 +1,6 @@
 #include "ControlUtils.h"
 
-#include <cmath>
+#include <Arduino.h>  // Include Arduino library for math functions
 
 // Pose class implementation
 Pose::Pose(const float x_mm_in, const float y_mm_in, const float theta_rad_in)
@@ -8,8 +8,8 @@ Pose::Pose(const float x_mm_in, const float y_mm_in, const float theta_rad_in)
 
 void Pose::updatePose(const float delta_distance_mm,
                       const float delta_theta_rad) {
-  x_mm += delta_distance_mm * std::cos(theta_rad + delta_theta_rad / 2.0);
-  y_mm += delta_distance_mm * std::sin(theta_rad + delta_theta_rad / 2.0);
+  x_mm += delta_distance_mm * cos(theta_rad + delta_theta_rad / 2.0);
+  y_mm += delta_distance_mm * sin(theta_rad + delta_theta_rad / 2.0);
   theta_rad += delta_theta_rad;
 }
 
@@ -37,7 +37,7 @@ ControlUtils::ControlUtils(const RobotParams& params,
     : axis_length_mm(params.axis_length_mm),
       wheel_diameter_mm(params.wheel_diameter_mm),
       pulses_per_rev(params.pulses_per_rev),
-      max_speed_mmps(params.max_speed_rpm * M_PI * wheel_diameter_mm / 60),
+      max_speed_mmps(params.max_speed_rpm * PI * wheel_diameter_mm / 60),
       min_speed_mmps(min_speed_mmps),
       spot_rotation_delta(0) {}
 
@@ -66,7 +66,7 @@ float ControlUtils::computeRevFromPulses(const int pulses) const {
 }
 
 float ControlUtils::computeDistanceFromRev(const float revolutions) const {
-  return M_PI * wheel_diameter_mm * revolutions;
+  return PI * wheel_diameter_mm * revolutions;
 }
 
 float ControlUtils::computeDistanceFromPulses(const int pulses) const {
@@ -93,13 +93,13 @@ float ControlUtils::computeDistanceFromSpeed(const float speed_mmps,
 
 float ControlUtils::computeRevolutionsFromDistance(
     const float distance_mm) const {
-  const float perimeter_of_circle = M_PI * wheel_diameter_mm;
+  const float perimeter_of_circle = PI * wheel_diameter_mm;
   return distance_mm / perimeter_of_circle;
 }
 
 float ControlUtils::computeArcLength(const float angle_rad,
                                      const float radius_of_curvature_mm) const {
-  if (std::abs(radius_of_curvature_mm) > 0.1) {
+  if (abs(radius_of_curvature_mm) > 0.1) {
     return angle_rad * radius_of_curvature_mm;
   } else {
     return 0.0;
@@ -107,7 +107,7 @@ float ControlUtils::computeArcLength(const float angle_rad,
 }
 
 int ControlUtils::computePulsesFromRev(const float revolutions) const {
-  return static_cast<int>(std::round(pulses_per_rev * revolutions));
+  return static_cast<int>(round(pulses_per_rev * revolutions));
 }
 
 int ControlUtils::computePulsesFromSpeed(const float speed_mmps,
@@ -156,5 +156,5 @@ WheelSpeeds ControlUtils::computeWheelSpeeds(
 float ControlUtils::computeSpeedsRpm(
     const WheelSpeeds& wheel_speeds_mmps) const {
   return (wheel_speeds_mmps.getLeft() + wheel_speeds_mmps.getRight()) /
-         (2.0 * M_PI * wheel_diameter_mm) * 60.0;
+         (2.0 * PI * wheel_diameter_mm) * 60.0;
 }
