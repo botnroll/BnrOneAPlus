@@ -9,10 +9,7 @@ MotionGenerator::MotionGenerator(BnrOneAPlus& one, const float slip_factor)
       axis_length_mm_(160.0) {  // Adjust axis length as needed
 }
 
-void MotionGenerator::resetEncoders() const {
-  one_.resetLeftEncoder();
-  one_.resetRightEncoder();
-}
+void MotionGenerator::resetEncoders() const { one_.resetEncoders(); }
 
 float MotionGenerator::computeAngularSpeed(const float speed,
                                            const float radius_of_curvature_mm,
