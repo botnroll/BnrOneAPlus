@@ -109,8 +109,8 @@ class MotionGenerator {
    */
   float applySlip(const float value) const;
 
-  float slip_factor_;     ///< Slip factor for the robot.
-  float axis_length_mm_;  ///< Axis length of the robot in millimeters.
-  ControlUtils cut_;      ///< Control utils object
-  BnrOneAPlus& one_;      ///< Reference to BnrOneAPlus object.
+  float slip_factor_;       ///< Slip factor for the robot.
+  float axis_length_mm_;    ///< Axis length of the robot in millimeters.
+  ControlUtils cut_;        ///< Control utils object
+  const BnrOneAPlus& one_;  ///< Reference to BnrOneAPlus object.
 };
