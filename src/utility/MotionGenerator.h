@@ -50,34 +50,34 @@ class MotionGenerator {
   void resetEncoders() const;
 
   /**
-   * @brief Computes the angular speed given the linear speed, radius of
-   * curvature, and direction.
+   * @brief Computes the pose speeds (linear and angular in radians)
+   * given the linear speed, radius of curvature, and direction.
    * @param speed Linear speed.
    * @param radius_of_curvature_mm Radius of curvature.
    * @param direction Direction of motion.
-   * @return Angular speed.
+   * @return Pose speeds.
    */
-  float computeAngularSpeed(const float speed,
-                            const float radius_of_curvature_mm,
-                            const int direction = 1) const;
+  PoseSpeeds computePoseSpeeds(const float speed,
+                               const float radius_of_curvature_mm,
+                               const int direction = 1) const;
 
   /**
    * @brief Adjusts the speed if the robot needs to slow down.
-   * @param linear_speed Reference to linear speed.
-   * @param angular_speed_rad Reference to angular speed.
+   * @param pose_speeds linear and angular speeds
    * @param speed Current speed.
    * @param pulses_remaining Pulses remaining to complete the motion.
    * @param slow_down_thresh Threshold for slowing down.
    * @param radius_of_curvature_mm Radius of curvature.
    * @param direction Direction of motion.
+   *
+   * @return Pose speeds.
    */
-  void maybeSlowDown(float& linear_speed,
-                     float& angular_speed_rad,
-                     const float speed,
-                     const float pulses_remaining,
-                     const float slow_down_thresh,
-                     const float radius_of_curvature_mm,
-                     const int direction) const;
+  PoseSpeeds maybeSlowDown(const PoseSpeeds& pose_speeds,
+                           const float speed,
+                           const float pulses_remaining,
+                           const float slow_down_thresh,
+                           const float radius_of_curvature_mm,
+                           const int direction) const;
 
   /**
    * @brief Moves the robot and slows down when pulses remaining are less than

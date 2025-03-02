@@ -3,6 +3,8 @@
 #include <Arduino.h>  // Include Arduino library for Serial
 #include <BnrOneAPlus.h>
 
+#include "ControlUtils.h"
+
 #define STRAIGHT_MOTION = 32767
 #define TICKS_LEFT_LOW_SPEED = 4000
 #define MIN_SPEED_MMPS = 100
@@ -17,36 +19,41 @@ MotionGenerator::MotionGenerator(BnrOneAPlus& one,
 
 void MotionGenerator::resetEncoders() const { one_.resetEncoders(); }
 
-float MotionGenerator::computeAngularSpeed(const float speed,
-                                           const float radius_of_curvature_mm,
-                                           const int direction) const {
+PoseSpeeds MotionGenerator::computePoseSpeeds(
+    const float speed,
+    const float radius_of_curvature_mm,
+    const int direction) const {
+  float linear_speed = speed;
+  float angular_speed_rad = 0;
   if (radius_of_curvature_mm != 0) {
-    if (radius_of_curvature_mm == STRAIGHT_MOTION) {  // Straight motion
-      return 0;
+    if (radius_of_curvature_mm == STRAIGHT_MOTION) {
+      angular_speed_rad = 0;
+      linear_speed = speed;
     } else {
-      return direction * (speed / radius_of_curvature_mm);
+      angular_speed_rad = direction * (speed / radius_of_curvature_mm);
     }
   } else {
-    return direction * (speed / (axis_length_mm_ / 2));
+    angular_speed_rad = direction * (speed / (axis_length_mm_ / 2));
+    linear_speed = 0;
   }
+  return PoseSpeeds(linear_speed, angular_speed_rad);
 }
 
-void MotionGenerator::maybeSlowDown(float& linear_speed,
-                                    float& angular_speed_rad,
-                                    const float speed,
-                                    const float pulses_remaining,
-                                    const float slow_down_thresh,
-                                    const float radius_of_curvature_mm,
-                                    const int direction) const {
+PoseSpeeds MotionGenerator::maybeSlowDown(const PoseSpeeds& pose_speeds,
+                                          const float speed,
+                                          const float pulses_remaining,
+                                          const float slow_down_thresh,
+                                          const float radius_of_curvature_mm,
+                                          const int direction) const {
   if (pulses_remaining < TICKS_LEFT_LOW_SPEED &&
       pulses_remaining < slow_down_thresh && pulses_remaining > 0) {
     float ratio = pulses_remaining / TICKS_LEFT_LOW_SPEED;
     float slow_speed = speed * ratio;
     slow_speed = max(MIN_SPEED_MMPS, slow_speed);  // Cap to min speed
     linear_speed = slow_speed;
-    angular_speed_rad =
-        computeAngularSpeed(slow_speed, radius_of_curvature_mm, direction);
+    return computePoseSpeeds(slow_speed, radius_of_curvature_mm, direction);
   }
+  return pose_speeds;
 }
 
 void MotionGenerator::moveAndSlowDown(const float total_pulses,
@@ -55,8 +62,8 @@ void MotionGenerator::moveAndSlowDown(const float total_pulses,
                                       const float radius_of_curvature_mm,
                                       const float slow_down_thresh) const {
   float linear_speed = speed;
-  float angular_speed_rad =
-      computeAngularSpeed(speed, radius_of_curvature_mm, direction);
+  const auto pose_speeds =
+      computePoseSpeeds(speed, radius_of_curvature_mm, direction);
 
   float encoder_count = 0;
   while (encoder_count < total_pulses) {
@@ -65,14 +72,16 @@ void MotionGenerator::moveAndSlowDown(const float total_pulses,
     encoder_count += (left_encoder + right_encoder) / 2.0;
     float pulses_remaining = round(total_pulses - encoder_count);
     if (pulses_remaining < 0) break;
-    maybeSlowDown(linear_speed,
-                  angular_speed_rad,
+    maybeSlowDown(pose_speeds,
                   speed,
                   pulses_remaining,
                   slow_down_thresh,
                   radius_of_curvature_mm,
                   direction);
-    one_.moveRpm(linear_speed, angular_speed_rad);
+    auto wheel_speeds = cut_.computeWheelSpeeds(pose_speeds.getLinearMmps(),
+                                                pose_speeds.getAngularRad());
+
+    one_.moveRpm(wheel_speeds.getLeft(), wheel_speeds.getRight());
   }
   one_.brake(100, 100);
 }
