@@ -38,11 +38,11 @@ void MotionGenerator::maybeSlowDown(float& linear_speed,
                                     const float slow_down_thresh,
                                     const float radius_of_curvature_mm,
                                     const int direction) const {
-  if (pulses_remaining < 4000 && pulses_remaining < slow_down_thresh &&
-      pulses_remaining > 0) {
-    float ratio = pulses_remaining / 4000;
+  if (pulses_remaining < TICKS_LEFT_LOW_SPEED &&
+      pulses_remaining < slow_down_thresh && pulses_remaining > 0) {
+    float ratio = pulses_remaining / TICKS_LEFT_LOW_SPEED;
     float slow_speed = speed * ratio;
-    slow_speed = max(100.0f, slow_speed);  // Cap to min speed
+    slow_speed = max(MIN_SPEED_MMPS, slow_speed);  // Cap to min speed
     linear_speed = slow_speed;
     angular_speed_rad =
         computeAngularSpeed(slow_speed, radius_of_curvature_mm, direction);
@@ -79,21 +79,6 @@ void MotionGenerator::moveAndSlowDown(const float total_pulses,
 
 int MotionGenerator::getSign(const float value) const {
   return (value >= 0) ? 1 : -1;
-}
-
-void MotionGenerator::checkWheelSpeedLimit(const float speed) const {
-  if (speed > 100 || speed < -100) {
-    Serial.println("******** ERROR ******** speed out of limits: " +
-                   String(speed));
-  }
-}
-
-void MotionGenerator::checkSpeedLimits(const float linear_speed,
-                                       const float angular_speed_rad) const {
-  float left_speed = linear_speed - (angular_speed_rad * axis_length_mm_ / 2);
-  float right_speed = linear_speed + (angular_speed_rad * axis_length_mm_ / 2);
-  checkWheelSpeedLimit(left_speed);
-  checkWheelSpeedLimit(right_speed);
 }
 
 float MotionGenerator::applySlip(const float value) const {
