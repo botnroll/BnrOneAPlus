@@ -3,11 +3,13 @@
 #include <Arduino.h>  // Include Arduino library for Serial
 #include <BnrOneAPlus.h>
 
-MotionGenerator::MotionGenerator(BnrOneAPlus& one, const float slip_factor)
+MotionGenerator::MotionGenerator(BnrOneAPlus& one,
+                                 const float slip_factor,
+                                 const RobotParams& robot_params)
     : one_(one),
       slip_factor_(slip_factor),
-      axis_length_mm_(160.0) {  // Adjust axis length as needed
-}
+      axis_length_mm_(robot_params.axis_length_mm),
+      cut_(ControlUtils(robot_params)) {}
 
 void MotionGenerator::resetEncoders() const { one_.resetEncoders(); }
 

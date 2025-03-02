@@ -2,6 +2,9 @@
 
 #include <BnrOneAPlus.h>
 
+#include "ControlUtils.h"
+#include "RobotParams.h"
+
 /**
  * @class MotionGenerator
  * @brief Class that enables moving in curved or straight lines by specifying
@@ -14,7 +17,9 @@ class MotionGenerator {
    * @param one Reference to BnrOneAPlus object.
    * @param slip_factor Slip factor for the robot.
    */
-  MotionGenerator(BnrOneAPlus& one, const float slip_factor = 1.0);
+  MotionGenerator(BnrOneAPlus& one,
+                  const float slip_factor = 1.0,
+                  const RobotParams robot_params = RobotParams());
 
   /**
    * @brief Moves the robot for the given distance at the given speed.
@@ -117,7 +122,8 @@ class MotionGenerator {
    */
   float applySlip(const float value) const;
 
-  BnrOneAPlus& one_;      ///< Reference to BnrOneAPlus object.
   float slip_factor_;     ///< Slip factor for the robot.
   float axis_length_mm_;  ///< Axis length of the robot in millimeters.
+  ControlUtils cut_;      ///< Control utils object
+  BnrOneAPlus& one_;      ///< Reference to BnrOneAPlus object.
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <BnrOneAPlus.h>
+#include <RobotParams.h>
 
 #include "MotionGenerator.h"
 
@@ -16,7 +17,9 @@ class ShapeGenerator {
    * @param one Reference to BnrOneAPlus object.
    * @param slip_factor Slip factor for the robot.
    */
-  ShapeGenerator(BnrOneAPlus& one, const float slip_factor = 1.0);
+  ShapeGenerator(BnrOneAPlus& one,
+                 const float slip_factor = 1.0,
+                 const RobotParams robot_params = RobotParams());
 
   /**
    * @brief Rotates the robot the specified angle at the given speed.
@@ -138,8 +141,6 @@ class ShapeGenerator {
   void heart() const;
 
  private:
-  MotionGenerator mg_;  ///< MotionGenerator object.
-
   /**
    * @brief Computes a Fibonacci sequence with a predetermined number of
    * elements.
@@ -148,4 +149,6 @@ class ShapeGenerator {
    */
   void computeFibonacciSequence(const int number_of_elements,
                                 int* fibonacci_sequence) const;
+
+  MotionGenerator mg_;  ///< MotionGenerator object.
 };

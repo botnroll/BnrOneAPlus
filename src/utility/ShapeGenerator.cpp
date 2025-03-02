@@ -2,8 +2,10 @@
 
 #include <Arduino.h>  // Include Arduino library for Serial
 
-ShapeGenerator::ShapeGenerator(BnrOneAPlus& one, const float slip_factor)
-    : mg_(one, slip_factor) {}
+ShapeGenerator::ShapeGenerator(BnrOneAPlus& one,
+                               const float slip_factor,
+                               const RobotParams& robot_params)
+    : mg_(one, slip_factor, robot_params) {}
 
 void ShapeGenerator::rotateAngleDegAtSpeed(
     const float angle_deg,
