@@ -165,6 +165,8 @@ MotionGeneratorTest one_mg(one, SLIP_FACTOR);
 
 void moveStraight() { one_mg.moveStraightAtSpeed(300); }
 
+void drawCircle() { one_mg.rotateAngleDegAtSpeed(90, 200, 100, 30); }
+
 void setup() {
   Serial.begin(115200);   // Set baud rate to 115200bps for printing values at
                           // serial monitor.
