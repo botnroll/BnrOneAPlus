@@ -39,7 +39,6 @@ void setup() {
   one.spiConnect(SSPIN);  // start SPI communication module
   one.stop();             // stop motors
   one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
-  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
 
   one.lcd1(" Read Reset Enc ");
   one.lcd2(" Press a button ");
