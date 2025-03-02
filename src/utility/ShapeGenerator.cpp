@@ -92,8 +92,9 @@ void ShapeGenerator::archimedeanSpiral(const float spiral_factor,
 void ShapeGenerator::snake(const float length_mm,
                            const int num_elements,
                            const float speed,
-                           const float snaking_angle_deg,
+                           const float snaking_angle_deg_in,
                            const float turning_rate_deg) const {
+  float snaking_angle_deg = snaking_angle_deg_in;
   float secant_length = length_mm / num_elements;
   float theta_rad = radians(snaking_angle_deg);
   float radius_of_curvature_mm = secant_length / (2 * sin(theta_rad / 2));
