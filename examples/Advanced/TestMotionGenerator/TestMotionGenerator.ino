@@ -174,7 +174,7 @@ void setup() {
   one.spiConnect(SSPIN);  // Start SPI communication module
   one.stop();             // Stop motors
   one.setMinBatteryV(MINIMUM_BATTERY_V);  // Battery discharge protection
-  one.lcd1("  Draw Shapes   ");
+  one.lcd1("  Draw Square   ");
   one.lcd2("www.botnroll.com");
   Serial.println("Get ready");
   delay(3000);

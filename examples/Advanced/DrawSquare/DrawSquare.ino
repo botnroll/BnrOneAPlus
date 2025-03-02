@@ -3,8 +3,9 @@
  * http://www.botnroll.com
  *
  * Description:
- * The robot draws shapes by taking in speed values in rpm (rotations per
+ * The robot draws a square by taking in speed values in rpm (rotations per
  * minute) and using the ShapeGenerator class.
+ * Explore other shapes and methods from the ShapeGenerator class
  */
 
 #include <BnrOneAPlus.h>  // Bot'n Roll ONE A+ library
@@ -33,9 +34,7 @@ void setup() {
   one.setMinBatteryV(MINIMUM_BATTERY_V);  // Battery discharge protection
   one.lcd1("  Draw Square   ");
   one.lcd2("www.botnroll.com");
-  Serial.println("Get ready");
   delay(3000);
-  Serial.println("Go");
   one_draw.square(300);
 }
 

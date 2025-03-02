@@ -1,6 +1,5 @@
 #include "MotionGenerator.h"
 
-#include <Arduino.h>  // Include Arduino library for Serial
 #include <BnrOneAPlus.h>
 
 #include "ControlUtils.h"
@@ -70,7 +69,6 @@ void MotionGenerator::moveAndSlowDown(const long int total_pulses,
     int right_encoder = one_.readAndResetRightEncoder();
     encoder_count += (long int)((abs(left_encoder) + abs(right_encoder)) / 2);
     long int pulses_remaining = round(total_pulses - encoder_count);
-    Serial.println(pulses_remaining);
     if (pulses_remaining < 0) break;
     maybeSlowDown(pose_speeds,
                   speed,
@@ -101,17 +99,10 @@ void MotionGenerator::moveStraightAtSpeed(
   float abs_distance = abs(distance);
   auto total_pulses = cut_.computePulsesFromDistance(abs_distance);
   total_pulses = applySlip(total_pulses);
-  Serial.print("total_pulses: ");
-  Serial.println(total_pulses);
-
   float abs_slow_down_distance = abs(slow_down_distance);
   auto slow_down_pulses =
       cut_.computePulsesFromDistance(abs_slow_down_distance);
   slow_down_pulses = applySlip(slow_down_pulses);
-  Serial.print("slow_down_pulses: ");
-  Serial.println(slow_down_pulses);
-  delay(2000);
-
   resetEncoders();
   moveAndSlowDown(total_pulses, speed, 1, STRAIGHT_MOTION, slow_down_pulses);
 }
