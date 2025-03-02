@@ -24,7 +24,7 @@ class MotionGenerator {
    */
   void moveStraightAtSpeed(const float distance,
                            const float speed = 50,
-                           const float slow_down_distance = 0);
+                           const float slow_down_distance = 0) const;
 
   /**
    * @brief Rotates the robot the specified angle at the given speed.
@@ -36,7 +36,7 @@ class MotionGenerator {
   void rotateAngleDegAtSpeed(const float angle_deg,
                              const float speed = 50,
                              const float radius_of_curvature_mm = 0,
-                             const float slow_down_thresh_deg = 0);
+                             const float slow_down_thresh_deg = 0) const;
 
  private:
   /**

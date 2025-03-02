@@ -94,28 +94,31 @@ float MotionGenerator::applySlip(const float value) const {
   return round(value / slip_factor_);
 }
 
-void MotionGenerator::moveStraightAtSpeed(const float distance,
-                                          const float speed,
-                                          const float slow_down_distance) {
+void MotionGenerator::moveStraightAtSpeed(
+    const float distance,
+    const float speed,
+    const float slow_down_distance) const {
   float abs_distance = abs(distance);
   float abs_slow_down_distance = abs(slow_down_distance);
-  float total_pulses = abs_distance * 10;  // Adjust conversion factor as needed
+  // BUG: Adjust conversion factor as needed
+  float total_pulses = abs_distance * 10;
   total_pulses = applySlip(total_pulses);
-  float slow_down_pulses =
-      abs_slow_down_distance * 10;  // Adjust conversion factor as needed
+  // BUG: Adjust conversion factor as needed
+  float slow_down_pulses = abs_slow_down_distance * 10;
   resetEncoders();
   moveAndSlowDown(total_pulses, speed, 1, 32767, slow_down_pulses);
 }
 
-void MotionGenerator::rotateAngleDegAtSpeed(const float angle_deg,
-                                            const float speed,
-                                            const float radius_of_curvature_mm,
-                                            const float slow_down_thresh_deg) {
-  float total_pulses =
-      abs(angle_deg) * 10;  // Adjust conversion factor as needed
+void MotionGenerator::rotateAngleDegAtSpeed(
+    const float angle_deg,
+    const float speed,
+    const float radius_of_curvature_mm,
+    const float slow_down_thresh_deg) const {
+  // BUG: Adjust conversion factor as needed
+  float total_pulses = abs(angle_deg) * 10;
   total_pulses = applySlip(total_pulses);
-  float slow_down_pulses_thresh =
-      abs(slow_down_thresh_deg) * 10;  // Adjust conversion factor as needed
+  // BUG: Adjust conversion factor as needed
+  float slow_down_pulses_thresh = abs(slow_down_thresh_deg) * 10;
   resetEncoders();
   moveAndSlowDown(total_pulses,
                   abs(speed),
