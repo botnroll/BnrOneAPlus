@@ -20,7 +20,7 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
 #define OFF 0
 #define ON 1
-#define CHALLENGE_TIME 90  // challenge time in seconds
+#define CHALLENGE_TIME 90       // challenge time in seconds
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 int counter = 0;
@@ -79,8 +79,7 @@ ISR(TIMER1_COMPA_vect) {  // timer1 interrupt 1Hz
 void setup() {
   one.spiConnect(SSPIN);                  // start SPI communication module
   one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
-  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
-  one.stop();                 // stop motors
+  one.stop();                             // stop motors
   initializeTimer();  // configures the interrupt timer for the end of the
                       // challenge
   one.lcd1("FUN CHALLENGE");         // print on LCD line 1

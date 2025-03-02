@@ -22,10 +22,10 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definitions
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
-#define M1 1  // Motor1
-#define M2 2  // Motor2
+#define M1 1     // Motor1
+#define M2 2     // Motor2
 
-#define BW_THRESHOLD 300  // Line follower limit between white and black
+#define BW_THRESHOLD 300        // Line follower limit between white and black
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 int speed = 50;
@@ -38,13 +38,11 @@ void setup() {
   // safety voltage for discharging the battery
   one.stop();                             // stop motors
   one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
-  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
   one.lcd1(" Bot'n Roll ONE");
   one.lcd2("Press a button!");
   // Wait for a button to be pressed to move motors
   // Espera pressionar um botão para mover motores
-  while (one.readButton() == 0)
-    ;
+  while (one.readButton() == 0);
   one.lcd2("Line Following!");
 }
 

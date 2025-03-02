@@ -330,8 +330,7 @@ void setup() {
                           // serial monitor.
   one.spiConnect(SSPIN);  // starts the SPI communication module
   one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
-  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
-  one.stop();                 // stop motors
+  one.stop();                             // stop motors
   one.lcd1("Line Follow COS ");
   one.lcd2(" Press a button ");
   if (one.readButton() == 0)  // Skip read EEPROM is necessary

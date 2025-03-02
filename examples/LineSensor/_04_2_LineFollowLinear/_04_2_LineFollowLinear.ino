@@ -62,9 +62,8 @@ void setup() {
   one.spiConnect(SSPIN);  // starts the SPI communication module
   // safety voltage for discharging the battery
   one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
-  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
-  one.stop();                 // stop motors
-  if (one.readButton() == 0)  // Skip read EEPROM is necessary
+  one.stop();                             // stop motors
+  if (one.readButton() == 0)              // Skip read EEPROM is necessary
     readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
                        // controlo da EEPROM
   one.lcd1("Line Follow Lin.");

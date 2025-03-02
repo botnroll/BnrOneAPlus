@@ -170,7 +170,6 @@ void setup() {
   one.spiConnect(SSPIN);  // Start SPI communication module
   one.stop();             // Stop motors
   one.setMinBatteryV(MINIMUM_BATTERY_V);  // Battery discharge protection
-  one.setPid(2200, 245, 60);  // Set PID parameters for robot movement
   one.lcd1("  Draw Shapes   ");
   one.lcd2("www.botnroll.com");
   Serial.println("Get ready");

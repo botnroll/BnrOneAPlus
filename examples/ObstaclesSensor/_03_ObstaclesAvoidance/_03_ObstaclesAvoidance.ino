@@ -42,8 +42,7 @@ void setup() {
     readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
   // controlo da EEPROM
   one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
-  one.setPid(2200, 245, 60);        // set PID parameters for robot movement
-  one.obstacleSensorsEmitters(ON);  // activate IR emitters
+  one.obstacleSensorsEmitters(ON);        // activate IR emitters
   one.lcd1("Avoid Obstacles ");
   one.lcd2("Press a Button!!");
   // Wait a button to be pressed <> Espera que pressione um botão

@@ -525,7 +525,6 @@ void setup() {
   one.spiConnect(SSPIN);                  // starts the SPI communication module
   one.stop();                             // stop motors
   one.setMinBatteryV(MINIMUM_BATTERY_V);  // battery discharge protection
-  one.setPid(2200, 245, 60);  // set PID parameters for robot movement
   time.start();
   config.Load();
   config.Print();
