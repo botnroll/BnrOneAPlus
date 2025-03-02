@@ -17,9 +17,9 @@ class ShapeGenerator {
    * @param one Reference to BnrOneAPlus object.
    * @param slip_factor Slip factor for the robot.
    */
-  ShapeGenerator(BnrOneAPlus& one,
+  ShapeGenerator(const BnrOneAPlus& one,
                  const float slip_factor = 1.0,
-                 const RobotParams robot_params = RobotParams());
+                 const RobotParams& robot_params = RobotParams());
 
   /**
    * @brief Rotates the robot the specified angle at the given speed.

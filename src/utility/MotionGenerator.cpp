@@ -9,7 +9,7 @@
 #define TICKS_LEFT_LOW_SPEED 4000
 #define MIN_SPEED_MMPS 100
 
-MotionGenerator::MotionGenerator(BnrOneAPlus& one,
+MotionGenerator::MotionGenerator(const BnrOneAPlus& one,
                                  const float slip_factor,
                                  const RobotParams& robot_params)
     : one_(one),

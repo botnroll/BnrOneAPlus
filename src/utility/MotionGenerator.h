@@ -18,7 +18,7 @@ class MotionGenerator {
    * @param slip_factor Slip factor for the robot.
    * @param robot_params Robot params
    */
-  MotionGenerator(BnrOneAPlus& one,
+  MotionGenerator(const BnrOneAPlus& one,
                   const float slip_factor = 1.0,
                   const RobotParams& robot_params = RobotParams());
 
