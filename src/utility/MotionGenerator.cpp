@@ -3,6 +3,10 @@
 #include <Arduino.h>  // Include Arduino library for Serial
 #include <BnrOneAPlus.h>
 
+#define STRAIGHT_MOTION = 32767
+#define TICKS_LEFT_LOW_SPEED = 4000
+#define MIN_SPEED_MMPS = 100
+
 MotionGenerator::MotionGenerator(BnrOneAPlus& one,
                                  const float slip_factor,
                                  const RobotParams& robot_params)
@@ -17,7 +21,7 @@ float MotionGenerator::computeAngularSpeed(const float speed,
                                            const float radius_of_curvature_mm,
                                            const int direction) const {
   if (radius_of_curvature_mm != 0) {
-    if (radius_of_curvature_mm == 32767) {  // Straight motion
+    if (radius_of_curvature_mm == STRAIGHT_MOTION) {  // Straight motion
       return 0;
     } else {
       return direction * (speed / radius_of_curvature_mm);

@@ -102,20 +102,6 @@ class MotionGenerator {
   int getSign(const float value) const;
 
   /**
-   * @brief Checks if the wheel speed is within limits.
-   * @param speed Speed to check.
-   */
-  void checkWheelSpeedLimit(const float speed) const;
-
-  /**
-   * @brief Checks if the speed limits are within bounds.
-   * @param linear_speed Linear speed.
-   * @param angular_speed_rad Angular speed.
-   */
-  void checkSpeedLimits(const float linear_speed,
-                        const float angular_speed_rad) const;
-
-  /**
    * @brief Applies the slip factor to a value.
    * @param value Value to apply slip to.
    * @return Value after applying slip.
