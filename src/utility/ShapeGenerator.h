@@ -1,9 +1,9 @@
 #pragma once
 
 #include <BnrOneAPlus.h>
-#include <RobotParams.h>
 
 #include "MotionGenerator.h"
+#include "RobotParams.h"
 
 /**
  * @class ShapeGenerator

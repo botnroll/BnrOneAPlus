@@ -28,7 +28,7 @@ class MotionGenerator {
    * @param slow_down_distance Distance at which to start slowing down.
    */
   void moveStraightAtSpeed(const float distance,
-                           const float speed = 50,
+                           const float speed = 200,
                            const float slow_down_distance = 0) const;
 
   /**
@@ -39,7 +39,7 @@ class MotionGenerator {
    * @param slow_down_thresh_deg Angle at which to start slowing down.
    */
   void rotateAngleDegAtSpeed(const float angle_deg,
-                             const float speed = 50,
+                             const float speed = 200,
                              const float radius_of_curvature_mm = 0,
                              const float slow_down_thresh_deg = 0) const;
 
