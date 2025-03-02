@@ -279,7 +279,7 @@ class ControlUtils {
    * millimeters per second.
    * @return WheelSpeeds object containing the speeds in RPM.
    */
-  float computeSpeedsRpm(const WheelSpeeds& wheel_speeds_mmps) const;
+  WheelSpeeds computeSpeedsRpm(const WheelSpeeds& wheel_speeds_mmps) const;
 
  private:
   float axis_length_mm;       ///< Axis length in millimeters.

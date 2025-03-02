@@ -153,8 +153,11 @@ WheelSpeeds ControlUtils::computeWheelSpeeds(
   return WheelSpeeds(left_speed, right_speed);
 }
 
-float ControlUtils::computeSpeedsRpm(
+WheelSpeeds ControlUtils::computeSpeedsRpm(
     const WheelSpeeds& wheel_speeds_mmps) const {
-  return (wheel_speeds_mmps.getLeft() + wheel_speeds_mmps.getRight()) /
-         (2.0 * PI * wheel_diameter_mm) * 60.0;
+  const auto left_rpm =
+      (wheel_speeds_mmps.getLeft() * 60) / (wheel_diameter_mm * PI);
+  const auto right_rpm =
+      (wheel_speeds_mmps.getRight() * 60) / (wheel_diameter_mm * PI);
+  return WheelSpeeds(left_rpm, right_rpm);
 }
