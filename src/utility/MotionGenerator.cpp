@@ -5,9 +5,9 @@
 
 #include "ControlUtils.h"
 
-#define STRAIGHT_MOTION = 32767
-#define TICKS_LEFT_LOW_SPEED = 4000
-#define MIN_SPEED_MMPS = 100
+#define STRAIGHT_MOTION 32767
+#define TICKS_LEFT_LOW_SPEED 4000
+#define MIN_SPEED_MMPS 100
 
 MotionGenerator::MotionGenerator(BnrOneAPlus& one,
                                  const float slip_factor,
