@@ -102,9 +102,10 @@ class MotionGeneratorTest {
                     slow_down_thresh,
                     radius_of_curvature_mm,
                     direction);
-      auto wheel_speeds = cut_.computeWheelSpeeds(pose_speeds.getLinearMmps(),
-                                                  pose_speeds.getAngularRad());
-      // one_.moveRpm(wheel_speeds.getLeft(), wheel_speeds.getRight());
+      const auto wheel_speeds_mmps = cut_.computeWheelSpeeds(
+          pose_speeds.getLinearMmps(), pose_speeds.getAngularRad());
+      const auto wheel_speeds_rpm = cut_.computeSpeedsRpm(wheel_speeds_mmps);
+      one_.moveRpm(wheel_speeds_rpm.getLeft(), wheel_speeds_rpm.getRight());
     }
     one_.brake(100, 100);
   }
