@@ -57,8 +57,8 @@ void MotionGenerator::moveAndSlowDown(const float total_pulses,
 
   float encoder_count = 0;
   while (encoder_count < total_pulses) {
-    int left_encoder = abs(one_.readLeftEncoder());
-    int right_encoder = abs(one_.readRightEncoder());
+    int left_encoder = abs(one_.readAndResetLeftEncoder());
+    int right_encoder = abs(one_.readAndResetRightEncoder());
     encoder_count += (left_encoder + right_encoder) / 2.0;
     float pulses_remaining = round(total_pulses - encoder_count);
     if (pulses_remaining < 0) break;

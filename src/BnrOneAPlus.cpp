@@ -259,6 +259,11 @@ void BnrOneAPlus::resetRightEncoder() const {
   delay(2);  // Wait while command is processed
 }
 
+void BnrOneAPlus::resetEncoders() const {
+  resetLeftEncoder();
+  resetRightEncoder();
+}
+
 void BnrOneAPlus::setLed(const boolean state) const {
   byte buffer[] = {KEY1, KEY2, (byte)state};
   spiSendData(COMMAND_LED, buffer, sizeof(buffer));

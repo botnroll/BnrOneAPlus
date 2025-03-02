@@ -298,6 +298,12 @@ class BnrOneAPlus {
    */
   void resetRightEncoder() const;
 
+  /**
+   * @brief resets both encoders
+   *
+   */
+  void resetEncoders() const;
+
   // LCD Line 1 write routines
   void lcd1(const String& string) const;       //<-- writes a string to the LCD
   void lcd1(const byte string[]) const;        //<-- writes a string to the LCD
