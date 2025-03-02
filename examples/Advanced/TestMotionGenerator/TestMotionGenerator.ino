@@ -141,11 +141,12 @@ class MotionGeneratorTest {
                              const float speed,
                              const float radius_of_curvature_mm,
                              const float slow_down_thresh_deg) const {
-    // BUG: Adjust conversion factor as needed
-    float total_pulses = abs(angle_deg) * 10;
+    auto total_pulses = cut_.computePulsesFromAngleAndCurvature(
+        radians(angle_deg), radius_of_curvature_mm);
     total_pulses = applySlip(total_pulses);
-    // BUG: Adjust conversion factor as needed
-    float slow_down_pulses_thresh = abs(slow_down_thresh_deg) * 10;
+    auto slow_down_pulses_thresh = cut_.computePulsesFromAngleAndCurvature(
+        radians(slow_down_thresh_deg), radius_of_curvature_mm);
+    slow_down_pulses_thresh = applySlip(slow_down_pulses_thresh);
     resetEncoders();
     moveAndSlowDown(total_pulses,
                     abs(speed),
@@ -178,7 +179,8 @@ void setup() {
   Serial.println("Get ready");
   delay(3000);
   Serial.println("Go");
-  moveStraight();
+  // moveStraight();
+  drawCircle();
   one.brake(100, 100);
   Serial.end();
 }
