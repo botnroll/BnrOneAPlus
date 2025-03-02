@@ -124,103 +124,56 @@ void lineFollowCosine() {
   }
 }
 
-void menu() {
-  int temp_var = 0;
-  float temp = 0.0;
-  one.stop();
-  one.lcd1("  Menu Config:");
-  one.lcd2("PB1+ PB2-  PB3ok");
+void waitButton3Push() {
   // Wait PB3 to be released <> Espera que se largue o botão 3
   while (one.readButton() == 3);
   while (one.readButton() == 0);
   while (one.readButton() == 3);
+}
+
+int getUserInput(const char text[], const int value) {
+  int temp_var = value;
+  while (one.readButton() != 3) {
+    one.lcd2(text, temp_var);
+    delay(125);
+
+    if (one.readButton() == 1) {
+      ++temp_var;
+    }
+    if (one.readButton() == 2) {
+      --temp_var;
+    }
+  }
+  // Wait PB3 to be released <> Espera que se largue o botão 3
+  while (one.readButton() == 3);
+
+  return temp_var;
+}
+
+void menu() {
+  one.stop();
+  one.lcd1("  Menu Config:");
+  one.lcd2("PB1+ PB2-  PB3ok");
+  waitButton3Push();
 
   //***** Overall speed <> Velocidade para seguir a linha ******
-  temp_var = g_speed;
-  while (one.readButton() != 3) {
-    one.lcd2("   speed:", temp_var);
-    delay(125);
-
-    if (one.readButton() == 1) {
-      ++temp_var;
-    }
-    if (one.readButton() == 2) {
-      --temp_var;
-    }
-  }
-  // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3);
-  g_speed = temp_var;
+  g_speed = getUserInput("   speed:", g_speed);
 
   //**** Outside wheel maximum speed <> Velocidade maxima da roda exterior
-  temp_var = g_wheel_boost;
-  while (one.readButton() != 3) {
-    one.lcd2(" Wheel Boost:", temp_var);
-    delay(125);
-
-    if (one.readButton() == 1) {
-      ++temp_var;
-    }
-    if (one.readButton() == 2) {
-      --temp_var;
-    }
-  }
-  // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3);
-  g_wheel_boost = temp_var;
+  g_wheel_boost = getUserInput(" Wheel Boost:", g_wheel_boost);
 
   //**** Line gain <> Ganho da linha  ****
-  temp = (int)(g_wheel_boost_factor * 1000.0);
-  temp_var = (int)temp;
-  while (one.readButton() != 3) {
-    one.lcd2("BoostFactor:", temp_var);
-    delay(125);
-
-    if (one.readButton() == 1) {
-      temp_var += 100;
-    }
-    if (one.readButton() == 2) {
-      temp_var -= 100;
-    }
-  }
-  while (one.readButton() ==
-         3);  // Wait PB3 to be released <> Espera que se largue o botão 3
+  auto temp_var = (int)(g_wheel_boost_factor * 1000.0);
+  temp_var = getUserInput("BoostFactor:", temp_var);
   g_wheel_boost_factor = (float)temp_var / 1000.0;
 
   //**** Inside wheel minimum speed on a curve <> Velocidade minima da roda
   // interior numa curva
-  temp_var = g_min_speed_lim;
-  while (one.readButton() != 3) {
-    one.lcd2(" g_min_speed_lim:", temp_var);
-    delay(125);
-
-    if (one.readButton() == 1) {
-      ++temp_var;
-    }
-    if (one.readButton() == 2) {
-      --temp_var;
-    }
-  }
-  // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3);
-  g_min_speed_lim = temp_var;
+  g_min_speed_lim = getUserInput("g_min_speed_lim:", g_min_speed_lim);
 
   //**** Line gain <> Ganho da linha  ****
-  temp = (int)(g_line_gain * 1000.0);
-  temp_var = (int)temp;
-  while (one.readButton() != 3) {
-    one.lcd2(" Line Gain:", temp_var);
-    delay(125);
-
-    if (one.readButton() == 1) {
-      temp_var += 50;
-    }
-    if (one.readButton() == 2) {
-      temp_var -= 50;
-    }
-  }
-  while (one.readButton() ==
-         3);  // Wait PB3 to be released <> Espera que se largue o botão 3
+  temp_var = (int)(g_line_gain * 1000.0);
+  temp_var = getUserInput("BoostFactor:", temp_var);
   g_line_gain = (float)temp_var / 1000.0;
 
   //**** Configuration end <> Termina Configuração *****
