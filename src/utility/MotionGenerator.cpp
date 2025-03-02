@@ -61,7 +61,6 @@ void MotionGenerator::moveAndSlowDown(const float total_pulses,
                                       const int direction,
                                       const float radius_of_curvature_mm,
                                       const float slow_down_thresh) const {
-  float linear_speed = speed;
   const auto pose_speeds =
       computePoseSpeeds(speed, radius_of_curvature_mm, direction);
 

@@ -16,10 +16,11 @@ class MotionGenerator {
    * @brief Constructor for MotionGenerator.
    * @param one Reference to BnrOneAPlus object.
    * @param slip_factor Slip factor for the robot.
+   * @param robot_params Robot params
    */
   MotionGenerator(BnrOneAPlus& one,
                   const float slip_factor = 1.0,
-                  const RobotParams robot_params = RobotParams());
+                  const RobotParams& robot_params = RobotParams());
 
   /**
    * @brief Moves the robot for the given distance at the given speed.
