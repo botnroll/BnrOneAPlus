@@ -21,9 +21,9 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // Constants definitions
 // Definir constantes
-#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
-#define M1 1                    // Motor1
-#define M2 2                    // Motor2
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define M1 1  // Motor1
+#define M2 2  // Motor2
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 // Transition value between white and black
@@ -45,7 +45,8 @@ void setup() {
   one.lcd2("Press a button!");
   // Wait for a button to be pressed to move motors
   // Espera pressionar um botão para mover motores
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   one.lcd2("Line Following!");
 }
 
@@ -65,7 +66,7 @@ void loop() {
   // Lado esquerdo do exterior para o centro
   if (sensor0 > BW_THRESHOLD)  // 10000000
   {
-    one.move(-1, 40);
+    one.move(-7, 40);
   } else if (sensor1 > BW_THRESHOLD)  // 01000000
   {
     one.move(5, 40);
@@ -80,7 +81,7 @@ void loop() {
   // Lado direito do exterior para o centro
   else if (sensor7 > BW_THRESHOLD)  // 00000001
   {
-    one.move(40, -1);
+    one.move(40, -7);
   } else if (sensor6 > BW_THRESHOLD)  // 00000010
   {
     one.move(40, 5);

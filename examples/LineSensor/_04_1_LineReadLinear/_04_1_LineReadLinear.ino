@@ -35,10 +35,10 @@ BnrOneAPlus
 
 // constants definitions
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
-#define M1 1     // Motor1
-#define M2 2     // Motor2
+#define M1 1  // Motor1
+#define M2 2  // Motor2
 
-#define MAX_VALUE 1000      // maximum value for a sensor reading
+#define MAX_VALUE 1000  // maximum value for a sensor reading
 #define MIN_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 int max_value[8] = {1023, 1023, 1023, 1023, 1023, 1023, 1023, 1023};
@@ -47,36 +47,37 @@ double correction_factor[8];
 int bw_threshold = 50;  // Line follower limit between white and black
 
 byte writeByteToEEPROM(const byte eeprom_address, const int temp_var) {
-  EEPROM.write(eeprom_address, low_byte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
+  EEPROM.write(eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
 
-  return eeprom_address;
+  return eeprom_address + 1;
 }
 
 byte writeIntToEEPROM(const byte eeprom_address, const int temp_var) {
-  EEPROM.write(eeprom_address, high_byte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
-  EEPROM.write(eeprom_address, low_byte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
+  byte updated_eeprom_address = eeprom_address;
+  EEPROM.write(updated_eeprom_address,
+               highByte(temp_var));  // Guardar em EEPROM
+  ++updated_eeprom_address;
+  EEPROM.write(updated_eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
+  ++updated_eeprom_address;
 
-  return eeprom_address;
+  return updated_eeprom_address;
 }
 
 byte readByteFromEEPROM(const byte eeprom_address, int& temp_var) {
   temp_var = (int)EEPROM.read(eeprom_address);  // Guardar em EEPROM
-  ++eeprom_address;
 
-  return eeprom_address;
+  return eeprom_address + 1;
 }
 
 byte readIntFromEEPROM(const byte eeprom_address, int& temp_var) {
-  temp_var = (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
+  byte updated_eeprom_address = eeprom_address;
+  temp_var = (int)EEPROM.read(updated_eeprom_address);
+  ++updated_eeprom_address;
   temp_var = temp_var << 8;
-  temp_var += (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
+  temp_var += (int)EEPROM.read(updated_eeprom_address);
+  ++updated_eeprom_address;
 
-  return eeprom_address;
+  return updated_eeprom_address;
 }
 
 void setupLine() {

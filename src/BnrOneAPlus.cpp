@@ -331,7 +331,9 @@ byte BnrOneAPlus::readButton() const {
 }
 
 float BnrOneAPlus::readBattery() const {
-  return (float)((float)(spiRequestWord(COMMAND_BAT_READ)) / 50.7);
+  float battery = ((float)(spiRequestWord(COMMAND_BAT_READ)) / 50.7);
+  if (battery < 0.0) battery = 0.0;
+  return battery;
 }
 
 void BnrOneAPlus::readAndResetEncoders(int& out_left_encoder,

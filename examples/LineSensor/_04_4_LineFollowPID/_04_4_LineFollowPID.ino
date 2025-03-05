@@ -36,18 +36,18 @@
 BnrOneAPlus one;          // object to control the Bot'n Roll ONE A
 
 // constants definitions
-#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
-#define M1 1                    // Motor1
-#define M2 2                    // Motor2
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define M1 1  // Motor1
+#define M2 2  // Motor2
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
-#define LIMITS 100.0            // line value limit
+#define LIMITS 100.0  // line value limit
 
 // PID control gains <> Ganhos do controlo PID
 float g_kp = 1.3;
-float g_ki = 0.2;
-float g_kd = 0.3;
-int g_speed = 50;       // Max Speed <> Velocidade Máxima dos motores
-int g_extra_speed = 3;  // Curve outside wheel max speed limit <> Limite de
+float g_ki = 0.01;
+float g_kd = 0.35;
+int g_speed = 30;       // Max Speed <> Velocidade Máxima dos motores
+int g_extra_speed = 4;  // Curve outside wheel max speed limit <> Limite de
                         // velocidade da roda exterior na curva
 
 void menu() {
@@ -58,9 +58,12 @@ void menu() {
   one.lcd1("  Menu Config:");
   one.lcd2("PB1+ PB2-  PB3ok");
   // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3);
-  while (one.readButton() == 0);
-  while (one.readButton() == 3);
+  while (one.readButton() == 3)
+    ;
+  while (one.readButton() == 0)
+    ;
+  while (one.readButton() == 3)
+    ;
 
   //***** Maximum speed <> Velocidade Maxima ******
   temp_var = g_speed;
@@ -125,7 +128,7 @@ void menu() {
   g_kp = (double)temp_var / 1000;
 
   //**** Integral gain g_ki <> Ganho integral g_ki ****
-  temp = g_ki * 10000.0;
+  temp = g_ki * 1000.0;
   temp_var = (int)temp;
   while (button != 3) {
     one.lcd2("     g_ki:", temp_var);
@@ -143,7 +146,7 @@ void menu() {
   while (button != 0) {
     button = one.readButton();
   }
-  g_ki = (double)temp_var / 10000.0;
+  g_ki = (double)temp_var / 1000.0;
 
   //**** Differential gain g_kd <> Ganho diferencial g_kd ****
   temp = g_kd * 1000;
@@ -175,36 +178,37 @@ void menu() {
 }
 
 byte writeByteToEEPROM(const byte eeprom_address, const int temp_var) {
-  EEPROM.write(eeprom_address, low_byte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
+  EEPROM.write(eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
 
-  return eeprom_address;
+  return eeprom_address + 1;
 }
 
 byte writeIntToEEPROM(const byte eeprom_address, const int temp_var) {
-  EEPROM.write(eeprom_address, high_byte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
-  EEPROM.write(eeprom_address, low_byte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
+  byte updated_eeprom_address = eeprom_address;
+  EEPROM.write(updated_eeprom_address,
+               highByte(temp_var));  // Guardar em EEPROM
+  ++updated_eeprom_address;
+  EEPROM.write(updated_eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
+  ++updated_eeprom_address;
 
-  return eeprom_address;
+  return updated_eeprom_address;
 }
 
 byte readByteFromEEPROM(const byte eeprom_address, int& temp_var) {
   temp_var = (int)EEPROM.read(eeprom_address);  // Guardar em EEPROM
-  ++eeprom_address;
 
-  return eeprom_address;
+  return eeprom_address + 1;
 }
 
 byte readIntFromEEPROM(const byte eeprom_address, int& temp_var) {
-  temp_var = (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
+  byte updated_eeprom_address = eeprom_address;
+  temp_var = (int)EEPROM.read(updated_eeprom_address);
+  ++updated_eeprom_address;
   temp_var = temp_var << 8;
-  temp_var += (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
+  temp_var += (int)EEPROM.read(updated_eeprom_address);
+  ++updated_eeprom_address;
 
-  return eeprom_address;
+  return updated_eeprom_address;
 }
 
 // Write values on EEPROM <> Escrever valores na EEPROM
@@ -212,7 +216,7 @@ void writeMenuEEPROM() {
   byte eeprom_address = 10;
 
   eeprom_address = writeByteToEEPROM(eeprom_address, g_speed);
-  eeprom_address = writeByteToEEProm(eeprom_address, g_extra_speed);
+  eeprom_address = writeByteToEEPROM(eeprom_address, g_extra_speed);
 
   int temp_var = (int)(g_kp * 1000.0);
   eeprom_address = writeIntToEEPROM(eeprom_address, temp_var);
@@ -267,9 +271,11 @@ void setup() {
   one.lcd1("Line Follow PID");
   one.lcd2(" Press a button ");
   // Wait a button to be pressed <> Espera que pressione um botão
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   // Wait for button release <> Espera que largue o botão
-  while (one.readButton() != 0);
+  while (one.readButton() != 0)
+    ;
 }
 
 void loop() {
@@ -320,13 +326,11 @@ void loop() {
   // velocidade dos motores
   m1_speed = g_speed - (int)output;
   m2_speed = g_speed + (int)output;
-  if (m1_speed < -1) {
-    // Minimum speed -1 causes motor to brake <> Velocidade mínima -1 faz o
-    // motor travar
-    m1_speed = -1;
+  if (m1_speed < -5) {
+    m1_speed = -5;
   }
-  if (m2_speed < -1) {
-    m2_speed = -1;
+  if (m2_speed < -5) {
+    m2_speed = -5;
   }
   if (m1_speed > g_speed + g_extra_speed) {
     // Maximum speed limit <> Limite da velocidade máxima
