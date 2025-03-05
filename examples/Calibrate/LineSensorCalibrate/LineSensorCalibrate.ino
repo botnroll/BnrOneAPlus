@@ -543,11 +543,9 @@ void setup() {
 
 void loop() {
   const int line = one.readLine();  // Read line <> Ler a linha
-  while (true) {
-    printValue(" Line: ", line);
-    // printMsg values on the LCD <> Apresenta valores no LCD
-    one.lcd1("     Line:");
-    one.lcd2("      ", line);
-    delay(50);
-  }
+  printValue(" Line: ", line);
+  // printMsg values on the LCD <> Apresenta valores no LCD
+  one.lcd1("     Line:");
+  one.lcd2("      ", line);
+  delay(50);
 }

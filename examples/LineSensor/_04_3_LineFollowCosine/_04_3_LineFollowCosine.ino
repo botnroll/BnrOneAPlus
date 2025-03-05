@@ -31,20 +31,19 @@
  *
  */
 
-#include <AngleConvertor.h>  // Angle conversion functions
-#include <BnrOneAPlus.h>     // Bot'n Roll ONE A library
-#include <EEPROM.h>          // EEPROM reading and writing
-#include <SPI.h>             // SPI communication library required by BnrOne.cpp
+#include <BnrOneAPlus.h>  // Bot'n Roll ONE A library
+#include <EEPROM.h>       // EEPROM reading and writing
+#include <SPI.h>          // SPI communication library required by BnrOne.cpp
 
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A
 
 // constants definitions
-#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
-#define ML 1                    // Left Motor
-#define MR 2                    // Right Motor
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define ML 1  // Left Motor
+#define MR 2  // Right Motor
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
-int g_speed = 55;  // Robot overall speed <> Velocidade do robô para seguir a
+int g_speed = 30;  // Robot overall speed <> Velocidade do robô para seguir a
                    // linha
 int g_left_speed = 0;
 int g_right_speed = 0;
@@ -61,8 +60,20 @@ float g_line_gain = 2.0;  // Line gain <> Ganho da linha
 float g_wheel_boost_factor = 5.0;
 int g_wheel_boost = 4;     // Outside wheel maximum speed on a curve
                            // Velocidade máxima da roda exterior numa curva
-int g_min_speed_lim = -1;  // Inside wheel minimum speed on a curve
+int g_min_speed_lim = -5;  // Inside wheel minimum speed on a curve
                            // Velocidade minima da roda interior numa curva
+
+/****** Convert angle in degrees to radians ************
+******* Converter ângulo de graus para radianos ********
+********************************************************/
+float AngleConvertortoRadians(const float angle_degrees) {
+  // Conversion factor from degree to radians <> Factor de conversão de graus
+  // para radianos
+  const float convertDegreeToRadians = 3.1459 / 180.0;  // rad=degree*Pi/180
+
+  // Convert Degree to Radians <> Converter graus em radianos
+  return convertDegreeToRadians * angle_degrees;
+}
 
 /****** Line Following with Cosine Function ************
 ******* Seguimento de linha com função coseno **********
@@ -81,7 +92,7 @@ void lineFollowCosine() {
 
   // Conversion factor from degree to radians <> Factor de conversão de graus
   // para radianos
-  const float angle_radians = AngleConvertor::toRadians(angle_degrees);
+  const float angle_radians = AngleConvertortoRadians(angle_degrees);
 
   // If line is on the left side of the sensor <> Se a linha está do lado
   // esquerdo do sensor
@@ -126,9 +137,12 @@ void lineFollowCosine() {
 
 void waitButton3Push() {
   // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3);
-  while (one.readButton() == 0);
-  while (one.readButton() == 3);
+  while (one.readButton() == 3)
+    ;
+  while (one.readButton() == 0)
+    ;
+  while (one.readButton() == 3)
+    ;
 }
 
 int getUserInput(const char text[], const int value) {
@@ -145,7 +159,8 @@ int getUserInput(const char text[], const int value) {
     }
   }
   // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3);
+  while (one.readButton() == 3)
+    ;
 
   return temp_var;
 }
@@ -169,7 +184,7 @@ void menu() {
 
   //**** Inside wheel minimum speed on a curve <> Velocidade minima da roda
   // interior numa curva
-  g_min_speed_lim = getUserInput("g_min_speed_lim:", g_min_speed_lim);
+  g_min_speed_lim = getUserInput("backwardsLim:", g_min_speed_lim);
 
   //**** Line gain <> Ganho da linha  ****
   temp_var = (int)(g_line_gain * 1000.0);
@@ -185,44 +200,45 @@ void menu() {
 }
 
 byte writeByteToEEPROM(const byte eeprom_address, const int temp_var) {
-  EEPROM.write(eeprom_address, low_byte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
+  EEPROM.write(eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
 
-  return eeprom_address;
+  return eeprom_address + 1;
 }
 
 byte writeIntToEEPROM(const byte eeprom_address, const int temp_var) {
-  EEPROM.write(eeprom_address, high_byte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
-  EEPROM.write(eeprom_address, low_byte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
+  byte updated_eeprom_address = eeprom_address;
+  EEPROM.write(updated_eeprom_address,
+               highByte(temp_var));  // Guardar em EEPROM
+  ++updated_eeprom_address;
+  EEPROM.write(updated_eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
+  ++updated_eeprom_address;
 
-  return eeprom_address;
+  return updated_eeprom_address;
 }
 
 byte readByteFromEEPROM(const byte eeprom_address, int& temp_var) {
   temp_var = (int)EEPROM.read(eeprom_address);  // Guardar em EEPROM
-  ++eeprom_address;
 
-  return eeprom_address;
+  return eeprom_address + 1;
 }
 
 byte readIntFromEEPROM(const byte eeprom_address, int& temp_var) {
-  temp_var = (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
+  byte updated_eeprom_address = eeprom_address;
+  temp_var = (int)EEPROM.read(updated_eeprom_address);
+  ++updated_eeprom_address;
   temp_var = temp_var << 8;
-  temp_var += (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
+  temp_var += (int)EEPROM.read(updated_eeprom_address);
+  ++updated_eeprom_address;
 
-  return eeprom_address;
+  return updated_eeprom_address;
 }
 
 // Write values on EEPROM <> Escrever valores na EEPROM
 void writeMenuEEPROM() {
   byte eeprom_address = 20;
-  eeprom_address = writeByteToEEPROM(eeprom_address, low_byte(g_speed));
+  eeprom_address = writeByteToEEPROM(eeprom_address, lowByte(g_speed));
 
-  eeprom_address = writeByteToEEPROM(eeprom_address, low_byte(g_wheel_boost));
+  eeprom_address = writeByteToEEPROM(eeprom_address, lowByte(g_wheel_boost));
 
   int temp_var = (int)(g_line_gain * 1000.0);
   eeprom_address = writeIntToEEPROM(eeprom_address, temp_var);
@@ -249,13 +265,14 @@ void readMenuEEPROM() {
 
   eeprom_address = readByteFromEEPROM(eeprom_address, g_wheel_boost);
 
-  eeprom_address = readIntFromEEPROM(eeprom_address, g_line_gain);
-  g_line_gain = (float)g_line_gain / 1000.0;
+  int temp_var;
+  eeprom_address = readIntFromEEPROM(eeprom_address, temp_var);
+  g_line_gain = (float)temp_var / 1000.0;
 
   eeprom_address = readIntFromEEPROM(eeprom_address, g_min_speed_lim);
 
-  eeprom_address = readIntFromEEPROM(eeprom_address, g_wheel_boost_factor);
-  g_wheel_boost_factor = (float)g_wheel_boost_factor / 1000.0;
+  eeprom_address = readIntFromEEPROM(eeprom_address, temp_var);
+  g_wheel_boost_factor = (float)temp_var / 1000.0;
 
   if (!isWithinLimits<byte>(g_speed, 0, 100)) g_speed = 50;
   if (!isWithinLimits<byte>(g_wheel_boost, 0, 100)) g_wheel_boost = 4;
@@ -290,9 +307,11 @@ void setup() {
     readMenuEEPROM();  // read control values from EEPROM <> Ler valores de
                        // controlo da EEPROM
   // Wait a button to be pressed <> Espera que pressione um botão
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   // Wait for button release <> Espera que largue o botão
-  while (one.readButton() != 0);
+  while (one.readButton() != 0)
+    ;
   delay(125);  // Debounce delay
   one.lcd2("www.botnroll.com");
 }

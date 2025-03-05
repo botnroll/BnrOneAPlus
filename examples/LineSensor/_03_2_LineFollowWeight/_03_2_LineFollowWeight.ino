@@ -22,13 +22,13 @@ BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definitions
 #define SSPIN 2  // Slave Select (SS) pin for SPI communication
-#define M1 1     // Motor1
-#define M2 2     // Motor2
+#define M1 1  // Motor1
+#define M2 2  // Motor2
 
-#define BW_THRESHOLD 300        // Line follower limit between white and black
+#define BW_THRESHOLD 300  // Line follower limit between white and black
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
-int speed = 50;
+int speed = 20;
 
 void setup() {
   Serial.begin(115200);   // sets baud rate to 115200bps for printing values at
@@ -42,19 +42,20 @@ void setup() {
   one.lcd2("Press a button!");
   // Wait for a button to be pressed to move motors
   // Espera pressionar um botão para mover motores
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   one.lcd2("Line Following!");
 }
 
 void loop() {
   // Speed for line value 25 <> Velocidade para o valor da linha 25
-  int v25 = 10;
-  int v37 = 15;
-  int v50 = 20;
-  int v62 = 25;
-  int v75 = 30;
-  int v87 = 30;
-  int v100 = 35;
+  int v25 = 3;
+  int v37 = 6;
+  int v50 = 9;
+  int v62 = 12;
+  int v75 = 20;
+  int v87 = 22;
+  int v100 = 25;
 
   int line = readLine();
   Serial.print("  Line:");
@@ -62,11 +63,11 @@ void loop() {
 
   switch (line) {
     case -100:
-      one.move(-1, speed + v100);
+      one.move(speed - v100, speed + v100);
       break;
 
     case -87:
-      one.move(-1, speed + v87);
+      one.move(speed - v87, speed + v87);
       break;
 
     case -75:
@@ -114,11 +115,11 @@ void loop() {
       break;
 
     case 87:
-      one.move(speed + v87, -1);
+      one.move(speed + v87, speed - v87);
       break;
 
     case 100:
-      one.move(speed + v100, -1);
+      one.move(speed + v100, speed - v100);
       break;
   }
 }

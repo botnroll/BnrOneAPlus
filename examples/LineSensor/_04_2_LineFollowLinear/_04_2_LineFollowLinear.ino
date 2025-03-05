@@ -36,23 +36,25 @@ BnrOneAPlus
     one;  // declaration of object variable to control the Bot'n Roll ONE A
 
 // constants definitions
-#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
-#define ML 1                    // Motor1
-#define MR 2                    // Motor2
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
+#define ML 1  // Motor1
+#define MR 2  // Motor2
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 // variables definitions
-int g_speed = 60;
-double g_linear_gain = 1.10;  // Linear gain <> Ganho linear
-int g_extra_speed = 8;  // Curve outside wheel max g_speed limit <> Limite de
+int g_speed = 30;
+double g_linear_gain = 0.75;  // Linear gain <> Ganho linear
+int g_extra_speed = 4;  // Curve outside wheel max g_speed limit <> Limite de
 
 // velocidade da roda exterior na curva
 
 void waitButtonClick() {
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   delay(125);  // Debounce delay
   // Wait for button release <> Espera que largue o botão
-  while (one.readButton() != 0);
+  while (one.readButton() != 0)
+    ;
   delay(125);  // Debounce delay
 }
 
@@ -81,10 +83,8 @@ void loop() {
 
   // Limit motors maximum and minimum g_speed <> Limitar mínimos e máximos da
   // velocidade dos motores
-  // Minimum g_speed -1 causes motor to brake <> Velocidade mínima -1 faz o
-  // motor travar
-  left_speed = constrain(left_speed, -1, g_speed + g_extra_speed);
-  right_speed = constrain(right_speed, -1, g_speed + g_extra_speed);
+  left_speed = constrain(left_speed, -5, g_speed + g_extra_speed);
+  right_speed = constrain(right_speed, -5, g_speed + g_extra_speed);
 
   one.move(left_speed, right_speed);
 
@@ -101,9 +101,12 @@ void menu() {
   one.lcd1("  Menu Config:");
   one.lcd2("PB1+ PB2-  PB3ok");
   // Wait PB3 to be released <> Espera que se largue o botão 3
-  while (one.readButton() == 3);
-  while (one.readButton() == 0);
-  while (one.readButton() == 3);
+  while (one.readButton() == 3)
+    ;
+  while (one.readButton() == 0)
+    ;
+  while (one.readButton() == 3)
+    ;
 
   //***** Maximum g_speed <> Velocidade Maxima ******
   temp_var = g_speed;
@@ -176,36 +179,37 @@ void menu() {
 }
 
 byte writeByteToEEPROM(const byte eeprom_address, const int temp_var) {
-  EEPROM.write(eeprom_address, low_byte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
+  EEPROM.write(eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
 
-  return eeprom_address;
+  return eeprom_address + 1;
 }
 
 byte writeIntToEEPROM(const byte eeprom_address, const int temp_var) {
-  EEPROM.write(eeprom_address, high_byte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
-  EEPROM.write(eeprom_address, low_byte(temp_var));  // Guardar em EEPROM
-  ++eeprom_address;
+  byte updated_eeprom_address = eeprom_address;
+  EEPROM.write(updated_eeprom_address,
+               highByte(temp_var));  // Guardar em EEPROM
+  ++updated_eeprom_address;
+  EEPROM.write(updated_eeprom_address, lowByte(temp_var));  // Guardar em EEPROM
+  ++updated_eeprom_address;
 
-  return eeprom_address;
+  return updated_eeprom_address;
 }
 
 byte readByteFromEEPROM(const byte eeprom_address, int& temp_var) {
   temp_var = (int)EEPROM.read(eeprom_address);  // Guardar em EEPROM
-  ++eeprom_address;
 
-  return eeprom_address;
+  return eeprom_address + 1;
 }
 
 byte readIntFromEEPROM(const byte eeprom_address, int& temp_var) {
-  temp_var = (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
+  byte updated_eeprom_address = eeprom_address;
+  temp_var = (int)EEPROM.read(updated_eeprom_address);
+  ++updated_eeprom_address;
   temp_var = temp_var << 8;
-  temp_var += (int)EEPROM.read(eeprom_address);
-  ++eeprom_address;
+  temp_var += (int)EEPROM.read(updated_eeprom_address);
+  ++updated_eeprom_address;
 
-  return eeprom_address;
+  return updated_eeprom_address;
 }
 
 // Write Menu values on EEPROM <> Escrever valores na EEPROM
