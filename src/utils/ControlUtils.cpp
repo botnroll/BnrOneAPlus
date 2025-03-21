@@ -108,23 +108,23 @@ float ControlUtils::computeArcLength(const float angle_rad,
   return arc_length_mm;
 }
 
-int ControlUtils::computePulsesFromRev(const float revolutions) const {
-  return static_cast<int>(round(pulses_per_rev_ * revolutions));
+long int ControlUtils::computePulsesFromRev(const float revolutions) const {
+  return static_cast<long int>(round(pulses_per_rev_ * revolutions));
 }
 
-int ControlUtils::computePulsesFromSpeed(const float speed_mmps,
-                                         const int time_ms) const {
+long int ControlUtils::computePulsesFromSpeed(const float speed_mmps,
+                                              const int time_ms) const {
   const float distance_mm = computeDistanceFromSpeed(speed_mmps, time_ms);
   const float revolutions = computeRevolutionsFromDistance(distance_mm);
   return computePulsesFromRev(revolutions);
 }
 
-int ControlUtils::computePulsesFromDistance(const float distance) const {
+long int ControlUtils::computePulsesFromDistance(const float distance) const {
   const float revolutions = computeRevolutionsFromDistance(distance);
   return computePulsesFromRev(revolutions);
 }
 
-int ControlUtils::computePulsesFromAngleAndCurvature(
+long int ControlUtils::computePulsesFromAngleAndCurvature(
     const float angle_rad, const float radius_of_curvature_mm) const {
   const float arc_length_mm =
       computeArcLength(angle_rad, radius_of_curvature_mm);

@@ -213,7 +213,7 @@ class ControlUtils {
    * @param revolutions Number of revolutions.
    * @return Number of pulses.
    */
-  int computePulsesFromRev(const float revolutions) const;
+  long int computePulsesFromRev(const float revolutions) const;
 
   /**
    * @brief Computes the number of pulses from the speed and time.
@@ -221,14 +221,15 @@ class ControlUtils {
    * @param time_ms Time in milliseconds.
    * @return Number of pulses.
    */
-  int computePulsesFromSpeed(const float speed_mmps, const int time_ms) const;
+  long int computePulsesFromSpeed(const float speed_mmps,
+                                  const int time_ms) const;
 
   /**
    * @brief Computes the number of pulses from the distance.
    * @param distance Distance in millimeters.
    * @return Number of pulses.
    */
-  int computePulsesFromDistance(const float distance) const;
+  long int computePulsesFromDistance(const float distance) const;
 
   /**
    * @brief Computes the number of pulses from the angle and radius of
@@ -237,7 +238,7 @@ class ControlUtils {
    * @param radius_of_curvature_mm Radius of curvature in millimeters.
    * @return Number of pulses.
    */
-  int computePulsesFromAngleAndCurvature(
+  long int computePulsesFromAngleAndCurvature(
       const float angle_rad, const float radius_of_curvature_mm = 0) const;
 
   /**
