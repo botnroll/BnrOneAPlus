@@ -65,8 +65,8 @@ class MotionGeneratorTest {
 
   PoseSpeeds maybeSlowDown(const PoseSpeeds& pose_speeds,
                            const float speed,
-                           const float pulses_remaining,
-                           const float slow_down_thresh,
+                           const long int pulses_remaining,
+                           const long int slow_down_thresh,
                            const float radius_of_curvature_mm,
                            const int direction) const {
     if (pulses_remaining < TICKS_LEFT_LOW_SPEED &&
@@ -83,7 +83,7 @@ class MotionGeneratorTest {
                        const float speed,
                        const int direction,
                        const float radius_of_curvature_mm,
-                       const float slow_down_thresh) const {
+                       const long int slow_down_thresh) const {
     const auto pose_speeds =
         computePoseSpeeds(speed, radius_of_curvature_mm, direction);
 

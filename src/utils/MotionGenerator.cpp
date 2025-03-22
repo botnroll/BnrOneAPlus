@@ -6,7 +6,7 @@
 
 #define STRAIGHT_MOTION 32767
 #define TICKS_LEFT_LOW_SPEED 4000
-#define MIN_SPEED_MMPS 100
+#define MIN_SPEED_MMPS 80
 
 MotionGenerator::MotionGenerator(const BnrOneAPlus& one,
                                  const float slip_factor,
@@ -40,13 +40,15 @@ PoseSpeeds MotionGenerator::computePoseSpeeds(
 
 PoseSpeeds MotionGenerator::maybeSlowDown(const PoseSpeeds& pose_speeds,
                                           const float speed,
-                                          const float pulses_remaining,
-                                          const float slow_down_thresh,
+                                          const long int pulses_remaining,
+                                          const long int slow_down_thresh,
                                           const float radius_of_curvature_mm,
                                           const int direction) const {
   if (pulses_remaining < TICKS_LEFT_LOW_SPEED &&
       pulses_remaining < slow_down_thresh && pulses_remaining > 0) {
-    float ratio = pulses_remaining / TICKS_LEFT_LOW_SPEED;
+    float ratio =
+        pulses_remaining / (float)min(TICKS_LEFT_LOW_SPEED, slow_down_thresh);
+
     float slow_speed = speed * ratio;
     slow_speed = max(MIN_SPEED_MMPS, slow_speed);  // Cap to min speed
     return computePoseSpeeds(slow_speed, radius_of_curvature_mm, direction);
@@ -58,24 +60,29 @@ void MotionGenerator::moveAndSlowDown(const long int total_pulses,
                                       const float speed,
                                       const int direction,
                                       const float radius_of_curvature_mm,
-                                      const float slow_down_thresh) const {
-  const auto pose_speeds =
+                                      const long int slow_down_thresh) const {
+  auto pose_speeds =
       computePoseSpeeds(speed, radius_of_curvature_mm, direction);
 
   long int encoder_count = 0;
-  one_.moveRpm(200, 200);
+
   while (encoder_count < total_pulses) {
     int left_encoder = one_.readAndResetLeftEncoder();
     int right_encoder = one_.readAndResetRightEncoder();
     encoder_count += (long int)((abs(left_encoder) + abs(right_encoder)) / 2);
     long int pulses_remaining = round(total_pulses - encoder_count);
+
     if (pulses_remaining < 0) break;
-    maybeSlowDown(pose_speeds,
-                  speed,
-                  pulses_remaining,
-                  slow_down_thresh,
-                  radius_of_curvature_mm,
-                  direction);
+    auto linear_mmps = pose_speeds.getLinearMmps();
+    if (abs(linear_mmps) < 0.01) {
+      linear_mmps = speed;
+    }
+    pose_speeds = maybeSlowDown(pose_speeds,
+                                linear_mmps,
+                                pulses_remaining,
+                                slow_down_thresh,
+                                radius_of_curvature_mm,
+                                direction);
     const auto wheel_speeds_mmps = cut_.computeWheelSpeeds(
         pose_speeds.getLinearMmps(), pose_speeds.getAngularRad());
     const auto wheel_speeds_rpm = cut_.computeSpeedsRpm(wheel_speeds_mmps);

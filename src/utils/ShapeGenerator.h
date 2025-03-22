@@ -74,7 +74,7 @@ class ShapeGenerator {
    * @param side_mm Length of each side in millimeters.
    * @param speed Speed to move at.
    */
-  void square(const float side_mm, const float speed = 150) const;
+  void square(const float side_mm, const float speed = 200) const;
 
   /**
    * @brief Describes a circular motion with the given radius.

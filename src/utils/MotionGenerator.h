@@ -75,8 +75,8 @@ class MotionGenerator {
    */
   PoseSpeeds maybeSlowDown(const PoseSpeeds& pose_speeds,
                            const float speed,
-                           const float pulses_remaining,
-                           const float slow_down_thresh,
+                           const long int pulses_remaining,
+                           const long int slow_down_thresh,
                            const float radius_of_curvature_mm,
                            const int direction) const;
 
@@ -93,7 +93,7 @@ class MotionGenerator {
                        const float speed = 50,
                        const int direction = 1,
                        const float radius_of_curvature_mm = 0,
-                       const float slow_down_thresh = 4000) const;
+                       const long int slow_down_thresh = 4000) const;
 
   /**
    * @brief Gets the sign of a value.

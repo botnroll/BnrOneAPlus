@@ -155,11 +155,24 @@ WheelSpeeds ControlUtils::computeWheelSpeeds(
   return WheelSpeeds(left_speed, right_speed);
 }
 
+float ControlUtils::mmpsToRpm(const float mmps) const {
+  return (mmps * 60) / (wheel_diameter_mm_ * PI);
+}
+
 WheelSpeeds ControlUtils::computeSpeedsRpm(
     const WheelSpeeds& wheel_speeds_mmps) const {
-  const auto left_rpm =
-      (wheel_speeds_mmps.getLeft() * 60) / (wheel_diameter_mm_ * PI);
-  const auto right_rpm =
-      (wheel_speeds_mmps.getRight() * 60) / (wheel_diameter_mm_ * PI);
+  const auto left_rpm = mmpsToRpm(wheel_speeds_mmps.getLeft());
+  const auto right_rpm = mmpsToRpm(wheel_speeds_mmps.getRight());
   return WheelSpeeds(left_rpm, right_rpm);
+}
+
+float ControlUtils::rpmToMmps(const float speed_rpm) const {
+  return (speed_rpm / 60.0) * (wheel_diameter_mm_ * PI);
+}
+
+WheelSpeeds ControlUtils::computeSpeedsMmps(
+    const WheelSpeeds& wheel_speeds_rpm) const {
+  float left_mmps = rpmToMmps(wheel_speeds_rpm.getLeft());
+  float right_mmps = rpmToMmps(wheel_speeds_rpm.getRight());
+  return WheelSpeeds(left_mmps, right_mmps);
 }

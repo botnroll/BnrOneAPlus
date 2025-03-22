@@ -274,6 +274,14 @@ class ControlUtils {
                                  const float angular_speed_rad) const;
 
   /**
+   * @brief Converts the speed in mm/s to rpm
+   *
+   * @param mmps speed in mm/s
+   * @return float
+   */
+  float mmpsToRpm(const float mmps) const;
+
+  /**
    * @brief Computes the speeds in RPM from the speeds in millimeters per
    * second.
    * @param wheel_speeds_mmps WheelSpeeds object containing the speeds in
@@ -281,6 +289,21 @@ class ControlUtils {
    * @return WheelSpeeds object containing the speeds in RPM.
    */
   WheelSpeeds computeSpeedsRpm(const WheelSpeeds& wheel_speeds_mmps) const;
+
+  /**
+   * @brief Converts the speed in RPM to mm/s
+   *
+   * @param speed_rpm speed in RPM
+   * @return float
+   */
+  float rpmToMmps(const float speed_rpm) const;
+
+  /**
+   * @brief Computes the speeds in mm/s from the speeds in RPM.
+   * @param wheel_speeds_rpm WheelSpeeds object containing the speeds in RPM.
+   * @return WheelSpeeds object containing the speeds in mm/s.
+   */
+  WheelSpeeds computeSpeedsMmps(const WheelSpeeds& wheel_speeds_rpm) const;
 
  private:
   float axis_length_mm_;      ///< Axis length in millimeters.

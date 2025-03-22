@@ -30,8 +30,8 @@ void ShapeGenerator::polygon(const float side_mm,
                              const float speed) const {
   float angle_deg = 180 - ((num_sides - 2) * 180.0) / num_sides;
   for (int i = 0; i < num_sides; ++i) {
-    mg_.moveStraightAtSpeed(side_mm, speed);
-    mg_.rotateAngleDegAtSpeed(angle_deg, speed);
+    mg_.moveStraightAtSpeed(side_mm, speed, side_mm / 5.0);
+    mg_.rotateAngleDegAtSpeed(angle_deg, speed, 0, 45);
   }
 }
 
