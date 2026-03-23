@@ -64,8 +64,8 @@ int BnrOneAPlus::spiRequestWord(const byte command) const {
     value[i] = SPI.transfer(0x00);  // Reads one byte
     delayMicroseconds(DELAY_TR);
   }
-  digitalWrite(sspin_, HIGH);   // Close communication with slave device.
-  delayMicroseconds(DELAY_SS);  //+160
+  digitalWrite(sspin_, HIGH);  // Close communication with slave device.
+  delayMicroseconds(DELAY_SS);
 
   i = value[0];
   i = i << 8;
