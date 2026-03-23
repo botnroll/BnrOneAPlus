@@ -15,7 +15,7 @@
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A
 
 // constants definition
-#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 void setup() {
@@ -27,7 +27,8 @@ void setup() {
   one.lcd1(" Motors Testing ");
   one.lcd2(" Press a button ");
   // Wait a button to be pushed <> Espera que pressione um botão
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
 }
 
 void moveForwards(const int speed, const int time) {

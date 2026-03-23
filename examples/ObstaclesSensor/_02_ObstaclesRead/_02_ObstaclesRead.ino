@@ -8,9 +8,9 @@
 
 Description:
 Read obstacle sensors range distance for left and right IR sensors.
-Range varies from 0 to 25:
+Range varies from 0 to 20:
  -> 0 means no obstacle is detected
- -> 25 means obstacle is very close to the sensor
+ -> 20 means obstacle is very close to the sensor
 The robot has new readings every 25ms (40 readings per second)
 Note: Valid for TSSP4056 IR sensors shipped with robots from 2023.
 */

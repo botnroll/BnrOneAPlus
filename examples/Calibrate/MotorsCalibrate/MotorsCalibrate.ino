@@ -15,7 +15,7 @@
 BnrOneAPlus one;  // object to control the Bot'n Roll ONE A+
 
 // constants definition
-#define SSPIN 2                 // Slave Select (SS) pin for SPI communication
+#define SSPIN 2  // Slave Select (SS) pin for SPI communication
 #define MINIMUM_BATTERY_V 10.5  // safety voltage for discharging the battery
 
 int g_motor_power = 40;
@@ -86,17 +86,17 @@ void maxPulsesDetection() {
   if (!g_error_flag) {
     one.lcd2(100, 0, 0);
     one.moveRAW(100, 100);
-    delay(1500);
+    delay(1000);
     t_cycle = millis();
-    end_time = millis() + 5000;
+    end_time = millis() + 2500;
     int left_enc = one.readAndResetLeftEncoder();    // Clear encoder count
     int right_enc = one.readAndResetRightEncoder();  // Clear encoder count
     while (millis() < end_time) {
       if (millis() >= t_cycle) {
         t_cycle += 25;
         left_enc = one.readAndResetLeftEncoder();
-        right_enc = one.readAndResetRightEncoder();
         if (left_enc > g_left_enc_max) g_left_enc_max = left_enc;
+        right_enc = one.readAndResetRightEncoder();
         if (right_enc > g_right_enc_max) g_right_enc_max = right_enc;
         printDebugInfo(left_enc, right_enc);
       }
@@ -137,7 +137,8 @@ void sendValues() {
       delay(2500);
     }
   }
-  while (1);
+  while (1)
+    ;
 }
 
 void setup() {
@@ -149,7 +150,8 @@ void setup() {
 
   one.lcd1(" Press a button ");
   one.lcd2("   to start!    ");
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   one.lcd1("Motors Calibrate");
   one.lcd2(" !!Attention!!  ");
   delay(2000);
@@ -158,7 +160,8 @@ void setup() {
   delay(2000);
   one.lcd1(" Press a button ");
   one.lcd2("   to start!    ");
-  while (one.readButton() == 0);
+  while (one.readButton() == 0)
+    ;
   one.lcd1("Power EncL EncR ");
 }
 
